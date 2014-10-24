@@ -8,6 +8,7 @@
 (tool-bar-mode -1)
 (mouse-wheel-mode t)
 (show-paren-mode t)
+(setq linum-format "%d ")
 
 ;; Hook functions
 
