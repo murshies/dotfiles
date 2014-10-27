@@ -8,7 +8,6 @@
 (tool-bar-mode -1)
 (mouse-wheel-mode t)
 (show-paren-mode t)
-(setq linum-format "%d ")
 
 ;; Hook functions
 
@@ -43,8 +42,6 @@
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
-(global-set-key [next] 'scroll-up-command)
-(global-set-key [prior] 'scroll-down-command)
 (global-set-key [home] 'small-scroll-down)
 (global-set-key [end] 'small-scroll-up)
 (global-set-key (kbd "C-x p") 'move-backwards)
