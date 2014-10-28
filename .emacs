@@ -57,7 +57,7 @@
 (setq c++-default-style "linux" c++-basic-offset 3)
 (global-visual-line-mode t)
 (set-scroll-bar-mode 'right)
-(load-theme 'zenburn t)
+(require 'zenburn-theme)
 
 ;; Backup file behavior
 
