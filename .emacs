@@ -20,9 +20,13 @@
 (defun emacs-lisp-hook ()
   (linum-mode 1))
 
+(defun text-hook ()
+  (linum-mode 1))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
+(add-hook 'text-mode-hook 'text-hook)
 
 ;; Key binding functions
 
