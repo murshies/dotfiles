@@ -63,6 +63,7 @@
 (global-set-key [home] 'small-scroll-down)
 (global-set-key [end] 'small-scroll-up)
 (global-set-key (kbd "C-x p") 'move-backwards)
+(global-set-key [(control shift delete)] 'delete-region)
 
 ;; Style settings
 
