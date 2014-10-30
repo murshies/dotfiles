@@ -8,6 +8,7 @@
 (tool-bar-mode -1)
 (mouse-wheel-mode t)
 (show-paren-mode t)
+(column-number-mode t)
 
 ;; Hook functions
 
@@ -24,6 +25,10 @@
   (linum-mode 1))
 
 (defun sh-hook ()
+  (setq indent-tabs-mode t)
+  (setq tab-stop-list (number-sequence 8 200 8))
+  (setq tab-width 8)
+  (setq indent-line-function 'insert-tab)
   (linum-mode 1))
 
 (add-hook 'c++-mode-hook 'c++-hook)
