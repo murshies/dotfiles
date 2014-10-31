@@ -58,6 +58,7 @@
 (global-set-key [f1] 'goto-line)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
+(global-set-key [f9] 'server-start)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
 (global-set-key [home] 'small-scroll-down)
