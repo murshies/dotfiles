@@ -76,11 +76,13 @@
 (setq c-default-style "linux" c-basic-offset 3)
 (setq c++-default-style "linux" c++-basic-offset 3)
 (global-visual-line-mode t)
+(global-hl-line-mode t)
 (set-scroll-bar-mode 'right)
 ; Colors from Monokai theme
 (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
 (add-to-list 'default-frame-alist '(background-color . "#272822"))
 (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))
+(set-face-background 'hl-line "#3E3D32")
 
 ;; Backup file behavior
 
