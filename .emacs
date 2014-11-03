@@ -31,11 +31,15 @@
   (setq indent-line-function 'insert-tab)
   (linum-mode 1))
 
+(defun python-hook ()
+  (linum-mode 1))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
 (add-hook 'text-mode-hook 'text-hook)
 (add-hook 'sh-mode-hook 'sh-hook)
+(add-hook 'python-mode-hook 'python-hook)
 
 ;; Key binding functions
 
@@ -58,6 +62,7 @@
 (global-set-key [f1] 'goto-line)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
+(global-set-key [f6] 'compile)
 (global-set-key [f9] 'server-start)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
