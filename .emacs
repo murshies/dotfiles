@@ -13,26 +13,32 @@
 ;; Hook functions
 
 (defun c++-hook ()
-  (linum-mode 1))
+  (linum-mode t)
+  (hl-line-mode t))
 
 (defun c-hook ()
-  (linum-mode 1))
+  (linum-mode t)
+  (hl-line-mode t))
 
 (defun emacs-lisp-hook ()
-  (linum-mode 1))
+  (linum-mode t)
+  (hl-line-mode t))
 
 (defun text-hook ()
-  (linum-mode 1))
+  (linum-mode t)
+  (hl-line-mode t))
 
 (defun sh-hook ()
   (setq indent-tabs-mode t)
   (setq tab-stop-list (number-sequence 8 200 8))
   (setq tab-width 8)
   (setq indent-line-function 'insert-tab)
-  (linum-mode 1))
+  (linum-mode t)
+  (hl-line-mode t))
 
 (defun python-hook ()
-  (linum-mode 1))
+  (linum-mode t)
+  (hl-line-mode t))
 
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -76,7 +82,6 @@
 (setq c-default-style "linux" c-basic-offset 3)
 (setq c++-default-style "linux" c++-basic-offset 3)
 (global-visual-line-mode t)
-(global-hl-line-mode t)
 (set-scroll-bar-mode 'right)
 ; Colors from Monokai theme
 (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
