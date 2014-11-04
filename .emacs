@@ -9,24 +9,29 @@
 (mouse-wheel-mode t)
 (show-paren-mode t)
 (column-number-mode t)
+(setq hl-line-color "#3E3D32")
 
 ;; Hook functions
 
 (defun c++-hook ()
   (linum-mode t)
-  (hl-line-mode t))
+  (hl-line-mode t)
+  (set-face-background 'hl-line hl-line-color))
 
 (defun c-hook ()
   (linum-mode t)
-  (hl-line-mode t))
+  (hl-line-mode t)
+  (set-face-background 'hl-line hl-line-color))
 
 (defun emacs-lisp-hook ()
   (linum-mode t)
-  (hl-line-mode t))
+  (hl-line-mode t)
+  (set-face-background 'hl-line hl-line-color))
 
 (defun text-hook ()
   (linum-mode t)
-  (hl-line-mode t))
+  (hl-line-mode t)
+  (set-face-background 'hl-line hl-line-color))
 
 (defun sh-hook ()
   (setq indent-tabs-mode t)
@@ -34,11 +39,13 @@
   (setq tab-width 8)
   (setq indent-line-function 'insert-tab)
   (linum-mode t)
-  (hl-line-mode t))
+  (hl-line-mode t)
+  (set-face-background 'hl-line hl-line-color))
 
 (defun python-hook ()
   (linum-mode t)
-  (hl-line-mode t))
+  (hl-line-mode t)
+  (set-face-background 'hl-line hl-line-color))
 
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -87,7 +94,6 @@
 (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
 (add-to-list 'default-frame-alist '(background-color . "#272822"))
 (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))
-(set-face-background 'hl-line "#3E3D32")
 
 ;; Backup file behavior
 
