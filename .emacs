@@ -13,12 +13,33 @@
 
 ;; Hook functions
 
+; The next two functions are to be (sometimes) called by c++-hook and c-hook,
+; depending on if we're developing on a machine that we want tabs instead of
+; spaces.
+(defun c++-tab-mode-helper ()
+  (setq c++-tab-always-indent t)
+  (setq c-basic-offset 4)
+  (setq c-indent-level 4)
+  (setq tab-stop-list (number-sequence 4 200 4))
+  (setq tab-width 4)
+  (setq indent-tabs-mode t))
+
+(defun c-tab-mode-helper ()
+  (setq c-tab-always-indent t)
+  (setq c-basic-offset 4)
+  (setq c-indent-level 4)
+  (setq tab-stop-list (number-sequence 4 200 4))
+  (setq tab-width 4)
+  (setq indent-tabs-mode t))
+
 (defun c++-hook ()
+  ;(c++-tab-mode-helper) ; uncomment for tabs in C++.
   (linum-mode t)
   (hl-line-mode t)
   (set-face-background 'hl-line hl-line-color))
 
 (defun c-hook ()
+  ;(c-tab-mode-helper) ; uncomment for tabs in C.
   (linum-mode t)
   (hl-line-mode t)
   (set-face-background 'hl-line hl-line-color))
