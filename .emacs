@@ -116,6 +116,16 @@
 (add-to-list 'default-frame-alist '(background-color . "#272822"))
 (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))
 
+; eshell custom prompt
+(setq eshell-prompt-function
+      (lambda ()
+	(concat
+	 "("
+	 (format-time-string "%a %Y-%m-%d %H:%M:%S")
+	 ") "
+	 (car (reverse (split-string (eshell/pwd) "/")))
+	 (if (= (user-uid) 0) " # " " $ "))))
+
 ;; Backup file behavior
 
 (setq vc-make-backup-files t)
