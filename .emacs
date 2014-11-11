@@ -119,12 +119,15 @@
 ; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
-	(concat
-	 "["
-	 (format-time-string "%a %Y-%m-%d %H:%M:%S")
-	 "]\n"
-	 (car (reverse (split-string (eshell/pwd) "/")))
-	 (if (= (user-uid) 0) " #" " $ "))))
+	(propertize
+	 (concat
+	  "["
+	  (format-time-string "%a %Y-%m-%d %H:%M:%S")
+	  "]\n"
+	  (car (reverse (split-string (eshell/pwd) "/")))
+	  (if (= (user-uid) 0) " # " " $ "))
+	 'face `(:foreground "#00CC00"))))
+(setq eshell-highlight-prompt nil)
 
 ;; Backup file behavior
 
@@ -150,4 +153,9 @@
   ;; of per-save backups consistent.
   (let ((buffer-backed-up nil))
     (backup-buffer)))
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
 
