@@ -104,6 +104,7 @@
 (global-set-key [end] 'small-scroll-up)
 (global-set-key (kbd "C-x p") 'move-backwards)
 (global-set-key [(control shift delete)] 'delete-region)
+(global-set-key (kbd "C-x r") 'rename-buffer)
 
 ;; Style settings
 
@@ -155,9 +156,4 @@
   ;; of per-save backups consistent.
   (let ((buffer-backed-up nil))
     (backup-buffer)))
-
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
 
