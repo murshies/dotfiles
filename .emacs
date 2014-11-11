@@ -123,7 +123,7 @@
 	(concat
 	 (propertize
 	  (concat
-	   "["
+	   "\n["
 	   (format-time-string "%a %Y-%m-%d %H:%M:%S")
 	   "]\n"
 	   (car (reverse (split-string (eshell/pwd) "/")))
@@ -156,4 +156,9 @@
   ;; of per-save backups consistent.
   (let ((buffer-backed-up nil))
     (backup-buffer)))
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
 
