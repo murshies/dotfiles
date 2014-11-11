@@ -68,12 +68,16 @@
   (hl-line-mode t)
   (set-face-background 'hl-line hl-line-color))
 
+(defun eshell-hook ()
+  (setq pcomplete-cycle-completions nil))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
 (add-hook 'text-mode-hook 'text-hook)
 (add-hook 'sh-mode-hook 'sh-hook)
 (add-hook 'python-mode-hook 'python-hook)
+(add-hook 'eshell-mode-hook 'eshell-hook)
 
 ;; Key binding functions
 
