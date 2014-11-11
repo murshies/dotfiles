@@ -120,11 +120,11 @@
 (setq eshell-prompt-function
       (lambda ()
 	(concat
-	 "("
+	 "["
 	 (format-time-string "%a %Y-%m-%d %H:%M:%S")
-	 ") "
+	 "]\n"
 	 (car (reverse (split-string (eshell/pwd) "/")))
-	 (if (= (user-uid) 0) " # " " $ "))))
+	 (if (= (user-uid) 0) " #" " $ "))))
 
 ;; Backup file behavior
 
