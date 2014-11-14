@@ -116,10 +116,12 @@
 (setq c++-default-style "linux" c++-basic-offset 3)
 (global-visual-line-mode t)
 (set-scroll-bar-mode 'right)
-; Colors from Monokai theme
-(add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
-(add-to-list 'default-frame-alist '(background-color . "#272822"))
-(add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))
+; Colors from Monokai theme. Only apply colors when running in GUI mode.
+(when (display-graphic-p)
+  (progn
+    (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
+    (add-to-list 'default-frame-alist '(background-color . "#272822"))
+    (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))))
 
 ; eshell custom prompt
 (setq eshell-prompt-function
