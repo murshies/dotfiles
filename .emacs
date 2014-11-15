@@ -12,6 +12,7 @@
 (setq hl-line-color "#3E3D32")
 ; do not recenter on point when scrolling off screen
 (setq scroll-conservatively 1)
+(set-frame-size (selected-frame) 85 45)
 
 ;; Hook functions
 
