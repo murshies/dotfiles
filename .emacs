@@ -12,7 +12,8 @@
 (setq hl-line-color "#3E3D32")
 ; do not recenter on point when scrolling off screen
 (setq scroll-conservatively 1)
-(set-frame-size (selected-frame) 85 45)
+(when (or (not (boundp 'do-not-resize)) (not do-not-resize))
+  (set-frame-size (selected-frame) 85 45))
 
 ;; Hook functions
 
@@ -98,7 +99,9 @@
 
 (defun reload-emacs-config ()
   (interactive)
-  (load-file "~/.emacs"))
+  (setq do-not-resize t)
+  (load-file "~/.emacs")
+  (setq do-not-resize nil))
 
 (global-set-key [f1] 'goto-line)
 (global-set-key [f2] 'revert-buffer)
@@ -113,6 +116,7 @@
 (global-set-key [(control shift delete)] 'delete-region)
 (global-set-key (kbd "C-x r") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Style settings
 
