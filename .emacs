@@ -1,13 +1,11 @@
 
-(add-to-list 'load-path "~/.emacs.d/")
-
 ;; Miscellaneous settings
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
 (when (display-graphic-p)
-  (tool-bar-mode -1))
-(mouse-wheel-mode t)
+  (tool-bar-mode -1)
+  (mouse-wheel-mode t))
 (show-paren-mode t)
 (column-number-mode t)
 (setq hl-line-color "#3E3D32")
@@ -124,10 +122,10 @@
 (setq c-default-style "linux" c-basic-offset 3)
 (setq c++-default-style "linux" c++-basic-offset 3)
 (global-visual-line-mode t)
-(set-scroll-bar-mode 'right)
-; Colors from Monokai theme. Only apply colors when running in GUI mode.
 (when (display-graphic-p)
   (progn
+    (set-scroll-bar-mode 'right)
+    ; Colors from Monokai theme.
     (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
     (add-to-list 'default-frame-alist '(background-color . "#272822"))
     (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))))
