@@ -5,14 +5,14 @@
 (setq inhibit-startup-screen t)
 (when (display-graphic-p)
   (tool-bar-mode -1)
-  (mouse-wheel-mode t))
+  (mouse-wheel-mode t)
+  (when (or (not (boundp 'do-not-resize)) (not do-not-resize))
+    (set-frame-size (selected-frame) 85 45)))
 (show-paren-mode t)
 (column-number-mode t)
 (setq hl-line-color "#3E3D32")
 ; do not recenter on point when scrolling off screen
 (setq scroll-conservatively 1)
-(when (or (not (boundp 'do-not-resize)) (not do-not-resize))
-  (set-frame-size (selected-frame) 85 45))
 
 ;; Hook functions
 
