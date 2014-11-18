@@ -5,7 +5,8 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
-(tool-bar-mode -1)
+(when (display-graphic-p)
+  (tool-bar-mode -1))
 (mouse-wheel-mode t)
 (show-paren-mode t)
 (column-number-mode t)
