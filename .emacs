@@ -116,6 +116,7 @@
 (global-set-key (kbd "C-x r") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-S-a") 'back-to-indentation)
 
 ;; Style settings
 
