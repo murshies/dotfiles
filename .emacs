@@ -106,6 +106,7 @@
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
 (global-set-key [f6] 'compile)
+(global-set-key [f7] 'recompile)
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
