@@ -102,11 +102,11 @@
   (load-file "~/.emacs")
   (setq do-not-resize nil))
 
-(global-set-key [f1] 'goto-line)
+(global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
 (global-set-key [f6] 'compile)
-(global-set-key [f9] 'server-start)
+(global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
 (global-set-key [home] 'small-scroll-down)
