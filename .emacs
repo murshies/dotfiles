@@ -131,6 +131,7 @@
     (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
     (add-to-list 'default-frame-alist '(background-color . "#272822"))
     (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))))
+(set-face-attribute 'default nil :height 100)
 
 ; eshell custom prompt
 (setq eshell-prompt-function
