@@ -13,6 +13,9 @@
 (setq hl-line-color "#3E3D32")
 ; do not recenter on point when scrolling off screen
 (setq scroll-conservatively 1)
+; Tell Emacs to automatically place the point at the end of the compilation
+; buffer.
+(setq compilation-scroll-output t)
 
 ;; Hook functions
 
