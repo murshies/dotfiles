@@ -77,6 +77,9 @@
 (defun eshell-hook ()
   (setq pcomplete-cycle-completions nil))
 
+(defun org-hook ()
+  (org-indent-mode))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -84,6 +87,7 @@
 (add-hook 'sh-mode-hook 'sh-hook)
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
+(add-hook 'org-mode-hook 'org-hook)
 
 ;; Key binding functions
 
