@@ -16,6 +16,7 @@
 ; Tell Emacs to automatically place the point at the end of the compilation
 ; buffer.
 (setq compilation-scroll-output t)
+(setq org-replace-disputed-keys t)
 
 ;; Hook functions
 
