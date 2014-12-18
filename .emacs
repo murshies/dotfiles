@@ -134,8 +134,8 @@
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
-(global-set-key [(control shift left)] 'previous-buffer)
-(global-set-key [(control shift right)] 'next-buffer)
+(global-set-key (kbd "C-{") 'previous-buffer)
+(global-set-key (kbd "C-}") 'next-buffer)
 
 ;; Style settings
 
