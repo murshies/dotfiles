@@ -80,6 +80,13 @@
 (defun org-hook ()
   (org-indent-mode))
 
+; Based off of the function in the "Auto-Saving the Desktop" section on
+; http://www.emacswiki.org/DeskTop
+;(defun desktop-hook ()
+;  (interactive)
+;  (if (eq (desktop-owner) (emacs-pid))
+;      (desktop-save "~/.emacs.d")))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -88,6 +95,7 @@
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
+;(add-hook 'auto-save-hook 'desktop-hook)
 
 ;; Key binding functions
 
@@ -125,6 +133,8 @@
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
+(global-set-key [(control shift left)] 'previous-buffer)
+(global-set-key [(control shift right)] 'next-buffer)
 
 ;; Style settings
 
@@ -184,4 +194,12 @@
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+
+;; Desktop Mode settings
+
+;(desktop-save-mode t)
+;(setq history-length 200)
+;(setq desktop-path '("~/.emacs.d/"))
+;(setq desktop-dirname "~/.emacs.d/")
+;(add-to-list 'desktop-globals-to-save 'file-name-history)
 
