@@ -101,7 +101,7 @@
   (interactive)
   (scroll-up 4))
 
-(defun previous-window ()
+(defun move-backwards ()
   (interactive)
   (other-window -1))
 
@@ -122,8 +122,8 @@
 (global-set-key [home] 'small-scroll-down)
 (global-set-key [end] 'small-scroll-up)
 (global-set-key (kbd "C-\"") 'other-window)
-(global-set-key (kbd "C-:") 'previous-window)
-(global-set-key (kbd "C-x p") 'previous-window)
+(global-set-key (kbd "C-:") 'move-backwards)
+(global-set-key (kbd "C-x p") 'move-backwards)
 (global-set-key [(control shift delete)] 'delete-region)
 (global-set-key (kbd "C-x r") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
