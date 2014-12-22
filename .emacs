@@ -81,13 +81,6 @@
 (defun org-hook ()
   (org-indent-mode))
 
-; Based off of the function in the "Auto-Saving the Desktop" section on
-; http://www.emacswiki.org/DeskTop
-;(defun desktop-hook ()
-;  (interactive)
-;  (if (eq (desktop-owner) (emacs-pid))
-;      (desktop-save "~/.emacs.d")))
-
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -108,7 +101,7 @@
   (interactive)
   (scroll-up 4))
 
-(defun move-backwards ()
+(defun previous-window ()
   (interactive)
   (other-window -1))
 
@@ -128,7 +121,9 @@
 (global-set-key [(meta right)] 'forward-sexp)
 (global-set-key [home] 'small-scroll-down)
 (global-set-key [end] 'small-scroll-up)
-(global-set-key (kbd "C-x p") 'move-backwards)
+(global-set-key [(control tab)] 'other-window)
+(global-set-key [(control shift tab)] 'previous-window)
+(global-set-key (kbd "C-x p") 'previous-window)
 (global-set-key [(control shift delete)] 'delete-region)
 (global-set-key (kbd "C-x r") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
