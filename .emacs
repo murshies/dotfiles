@@ -121,6 +121,8 @@
 (global-set-key [(meta right)] 'forward-sexp)
 (global-set-key [home] 'small-scroll-down)
 (global-set-key [end] 'small-scroll-up)
+(global-set-key (kbd "C-<") 'small-scroll-down)
+(global-set-key (kbd "C->") 'small-scroll-up)
 (global-set-key (kbd "C-\"") 'other-window)
 (global-set-key (kbd "C-:") 'move-backwards)
 (global-set-key (kbd "C-x p") 'move-backwards)
@@ -190,12 +192,4 @@
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
-
-;; Desktop Mode settings
-
-;(desktop-save-mode t)
-;(setq history-length 200)
-;(setq desktop-path '("~/.emacs.d/"))
-;(setq desktop-dirname "~/.emacs.d/")
-;(add-to-list 'desktop-globals-to-save 'file-name-history)
 
