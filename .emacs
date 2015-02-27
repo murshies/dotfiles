@@ -89,7 +89,18 @@
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
-;(add-hook 'auto-save-hook 'desktop-hook)
+
+;; Project management
+;; Loading helm/projectile can take a second or two, and it isn't really needed
+;; if we're just doing quick edits. Only load them when this function is
+;; called.
+(defun load-project-management ()
+  (interactive)
+  (require 'helm-config)
+  (helm-mode 1)
+  (projectile-global-mode)
+  (helm-projectile-on)
+  (setq projectile-completion-system 'helm))
 
 ;; Key binding functions
 
@@ -116,6 +127,7 @@
 (global-set-key [f5] 'reload-emacs-config)
 (global-set-key [f6] 'compile)
 (global-set-key [f7] 'recompile)
+(global-set-key [f8] 'load-project-management)
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
