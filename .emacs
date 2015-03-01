@@ -1,4 +1,7 @@
 
+;; Packages that I install:
+;; helm, projectile, helm-projectile, sr-speedbar, projectile-speedbar
+
 ;; Miscellaneous settings
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -100,7 +103,8 @@
   (helm-mode 1)
   (projectile-global-mode)
   (helm-projectile-on)
-  (setq projectile-completion-system 'helm))
+  (setq projectile-completion-system 'helm)
+  (set-additional-project-keys))
 
 ;; Key binding functions
 
@@ -121,6 +125,9 @@
   (setq do-not-resize t)
   (load-file "~/.emacs")
   (setq do-not-resize nil))
+
+(defun set-additional-project-keys ()
+  (global-set-key (kbd "C-c h") 'projectile-grep))
 
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
