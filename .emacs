@@ -13,6 +13,7 @@
     (set-frame-size (selected-frame) 85 45)))
 (show-paren-mode t)
 (column-number-mode t)
+(global-hi-lock-mode t)
 (setq hl-line-color "#3E3D32")
 ; do not recenter on point when scrolling off screen
 (setq scroll-conservatively 1)
@@ -126,6 +127,16 @@
   (load-file "~/.emacs")
   (setq do-not-resize nil))
 
+(defun highlight-all-current-region (&optional face)
+  (interactive
+   (list
+    (hi-lock-read-face-name)))
+  (or (facep face) (setq face 'hi-yellow))
+  (hi-lock-set-pattern 
+   (buffer-substring (mark) (point))
+   face)
+  (deactivate-mark))
+
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") 'projectile-grep))
 
@@ -150,6 +161,7 @@
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
+(global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
 (global-set-key (kbd "C-{") 'previous-buffer)
 (global-set-key (kbd "C-}") 'next-buffer)
 
