@@ -1,6 +1,9 @@
 
 ;; Packages that I install:
 ;; helm, projectile, helm-projectile, sr-speedbar, projectile-speedbar
+;; Note: installing helm-projectile will automatically install helm and
+;; projectile, since they are dependencies. sr-speedbar and projectile-speedbar
+;; will still need to be installed independently.
 
 ;; Miscellaneous settings
 
