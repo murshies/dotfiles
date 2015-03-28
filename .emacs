@@ -222,8 +222,32 @@
   (let ((buffer-backed-up nil))
     (backup-buffer)))
 
+;; Package management. This only works with emacs 24 or greater.
+
+;; The list of packages to install when calling install-selected-packages.
+(setq packages-to-install
+      '(helm-projectile
+	sr-speedbar
+	projectile-speedbar))
+
+;; General function for ensuring that a list of packages if installed.
+(defun install-packages-if-not-installed (package-list)
+  (if package-list
+      (let ((curr-package (car package-list)))
+	(progn
+	  (if (not (package-installed-p curr-package))
+	      (package-install curr-package))
+	  (install-packages-if-not-installed (cdr package-list))))))
+
+;; Interactive function to ensure that all packages in the list
+;; "packages-to-install" are installed.
+(defun install-selected-packages ()
+  (interactive)
+  (install-packages-if-not-installed packages-to-install))
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+  (add-to-list 'package-archives
+	       '("melpa" . "http://melpa.milkbox.net/packages/") t))
 
