@@ -1,11 +1,7 @@
 
-;; Packages that I install:
-;; helm, projectile, helm-projectile, sr-speedbar, projectile-speedbar
-;; Note: installing helm-projectile will automatically install helm and
-;; projectile, since they are dependencies. sr-speedbar and projectile-speedbar
-;; will still need to be installed independently.
-
 ;; Miscellaneous settings
+
+; (setq ring-bell-function 'ignore)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
@@ -231,6 +227,7 @@
 	projectile-speedbar))
 
 ;; General function for ensuring that a list of packages if installed.
+	
 (defun install-packages-if-not-installed (package-list)
   (if package-list
       (let ((curr-package (car package-list)))
@@ -243,6 +240,7 @@
 ;; "packages-to-install" are installed.
 (defun install-selected-packages ()
   (interactive)
+  (package-refresh-contents)
   (install-packages-if-not-installed packages-to-install))
 
 (when (>= emacs-major-version 24)
