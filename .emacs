@@ -1,11 +1,7 @@
 
-;; Packages that I install:
-;; helm, projectile, helm-projectile, sr-speedbar, projectile-speedbar
-;; Note: installing helm-projectile will automatically install helm and
-;; projectile, since they are dependencies. sr-speedbar and projectile-speedbar
-;; will still need to be installed independently.
-
 ;; Miscellaneous settings
+
+; (setq ring-bell-function 'ignore)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
@@ -143,12 +139,30 @@
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") 'projectile-grep))
 
+(setq buffers-to-hide
+      '("*grep*" "*Help*"))
+
+(defun delete-windows-with-names (open-windows buffer-names)
+  (if open-windows
+      (let ((curr-window (car open-windows)))
+	(progn
+	  (if (member
+	       (buffer-name (window-buffer curr-window))
+	       buffer-names)
+	      (delete-window curr-window))
+	  (delete-windows-with-names (cdr open-windows) buffer-names)))))
+
+(defun delete-specific-windows ()
+  (interactive)
+  (delete-windows-with-names (window-list) buffers-to-hide))
+
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
 (global-set-key [f6] 'compile)
 (global-set-key [f7] 'recompile)
 (global-set-key [f8] 'load-project-management)
+(global-set-key [f9] 'delete-specific-windows)
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
@@ -231,6 +245,7 @@
 	projectile-speedbar))
 
 ;; General function for ensuring that a list of packages if installed.
+	
 (defun install-packages-if-not-installed (package-list)
   (if package-list
       (let ((curr-package (car package-list)))
@@ -243,6 +258,7 @@
 ;; "packages-to-install" are installed.
 (defun install-selected-packages ()
   (interactive)
+  (package-refresh-contents)
   (install-packages-if-not-installed packages-to-install))
 
 (when (>= emacs-major-version 24)
