@@ -139,12 +139,30 @@
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") 'projectile-grep))
 
+(setq buffers-to-hide
+      '("*grep*" "*Help*"))
+
+(defun delete-windows-with-names (open-windows buffer-names)
+  (if open-windows
+      (let ((curr-window (car open-windows)))
+	(progn
+	  (if (member
+	       (buffer-name (window-buffer curr-window))
+	       buffer-names)
+	      (delete-window curr-window))
+	  (delete-windows-with-names (cdr open-windows) buffer-names)))))
+
+(defun delete-specific-windows ()
+  (interactive)
+  (delete-windows-with-names (window-list) buffers-to-hide))
+
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
 (global-set-key [f6] 'compile)
 (global-set-key [f7] 'recompile)
 (global-set-key [f8] 'load-project-management)
+(global-set-key [f9] 'delete-specific-windows)
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
