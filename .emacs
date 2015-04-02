@@ -137,24 +137,32 @@
   (deactivate-mark))
 
 (defun set-additional-project-keys ()
-  (global-set-key (kbd "C-c h") 'projectile-grep))
+  (global-set-key (kbd "C-c h") 'projectile-grep)
+  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-j") 'helm-select-action))
 
-(setq buffers-to-hide
-      '("*grep*" "*Help*"))
+(defun matches-any-regex (regex-list str)
+  (if (not regex-list) nil
+    (let ((next-regex (car regex-list)))
+      (if (string-match-p next-regex str) t
+	(matches-any-regex (cdr regex-list) str)))))
+
+(setq buffer-regexs-to-hide
+      '("*grep*" "*Help*" "*Messages*" "^*Python check"))
 
 (defun delete-windows-with-names (open-windows buffer-names)
   (if open-windows
       (let ((curr-window (car open-windows)))
 	(progn
-	  (if (member
-	       (buffer-name (window-buffer curr-window))
-	       buffer-names)
+	  (if (matches-any-regex
+	       buffer-names
+	       (buffer-name (window-buffer curr-window)))
 	      (delete-window curr-window))
 	  (delete-windows-with-names (cdr open-windows) buffer-names)))))
 
 (defun delete-specific-windows ()
   (interactive)
-  (delete-windows-with-names (window-list) buffers-to-hide))
+  (delete-windows-with-names (window-list) buffer-regexs-to-hide))
 
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
@@ -244,7 +252,7 @@
 	sr-speedbar
 	projectile-speedbar))
 
-;; General function for ensuring that a list of packages if installed.
+;; General function for ensuring that a list of packages is installed.
 	
 (defun install-packages-if-not-installed (package-list)
   (if package-list
