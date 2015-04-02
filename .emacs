@@ -250,7 +250,7 @@
 	sr-speedbar
 	projectile-speedbar))
 
-;; General function for ensuring that a list of packages if installed.
+;; General function for ensuring that a list of packages is installed.
 	
 (defun install-packages-if-not-installed (package-list)
   (if package-list
