@@ -251,7 +251,8 @@
 (setq packages-to-install
       '(helm-projectile
 	sr-speedbar
-	projectile-speedbar))
+	projectile-speedbar
+	redo+))
 
 ;; General function for ensuring that a list of packages is installed.
 	
@@ -270,9 +271,16 @@
   (package-refresh-contents)
   (install-packages-if-not-installed packages-to-install))
 
+(defun load-redo+ ()
+  (if (package-installed-p 'redo+)
+      (progn
+	(require 'redo+)
+	(global-set-key (kbd "C-?") 'redo))))
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives
-	       '("melpa" . "http://melpa.milkbox.net/packages/") t))
+	       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (load-redo+))
 
