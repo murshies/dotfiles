@@ -21,6 +21,8 @@
 ; buffer.
 (setq compilation-scroll-output t)
 (setq org-replace-disputed-keys t)
+(setq frame-title-format
+      '(:eval (if buffer-file-name "%b (%f)" "%b")))
 
 ;; Hook functions
 
@@ -283,4 +285,4 @@
   (add-to-list 'package-archives
 	       '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (load-redo+))
-
+	
