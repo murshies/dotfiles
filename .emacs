@@ -177,6 +177,11 @@
   (interactive)
   (delete-windows-with-names (window-list) buffer-regexs-to-hide))
 
+(defun create-new-buffer ()
+  (interactive)
+  (let ((new-buf (generate-new-buffer "new")))
+    (switch-to-buffer new-buf)))
+
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
@@ -202,6 +207,7 @@
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
 (global-set-key (kbd "C-{") 'previous-buffer)
 (global-set-key (kbd "C-}") 'next-buffer)
+(global-set-key (kbd "C-n") 'create-new-buffer)
 
 ;; Style settings
 
