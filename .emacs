@@ -23,6 +23,8 @@
 (setq org-replace-disputed-keys t)
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
+; New buffers have text-mode as the default
+(setq-default major-mode 'text-mode)
 
 ;; Hook functions
 
@@ -180,7 +182,8 @@
 (defun create-new-buffer ()
   (interactive)
   (let ((new-buf (generate-new-buffer "new")))
-    (switch-to-buffer new-buf)))
+    (switch-to-buffer new-buf)
+    (set-buffer-major-mode new-buf)))
 
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
