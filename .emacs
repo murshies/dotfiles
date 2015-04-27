@@ -161,7 +161,8 @@
 	(matches-any-regex (cdr regex-list) str)))))
 
 (setq buffer-regexs-to-hide
-      '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"))
+      '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
+		"*Shell Command Output*"))
 
 (defun delete-windows-with-names (open-windows buffer-names)
   (if open-windows
