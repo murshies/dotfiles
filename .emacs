@@ -21,6 +21,10 @@
 ; buffer.
 (setq compilation-scroll-output t)
 (setq org-replace-disputed-keys t)
+(setq frame-title-format
+      '(:eval (if buffer-file-name "%b (%f)" "%b")))
+; New buffers have text-mode as the default
+(setq-default major-mode 'text-mode)
 
 ;; Hook functions
 
@@ -85,6 +89,14 @@
 (defun org-hook ()
   (org-indent-mode))
 
+(defun lisp-hook ()
+  (hl-line-mode t)
+  (linum-mode t))
+
+(defun racket-hook ()
+  (hl-line-mode t)
+  (linum-mode t))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -93,6 +105,8 @@
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
+(add-hook 'lisp-mode-hook 'lisp-hook)
+(add-hook 'racket-mode-hook 'racket-hook)
 
 ;; Project management
 ;; Loading helm/projectile can take a second or two, and it isn't really needed
@@ -149,7 +163,8 @@
 	(matches-any-regex (cdr regex-list) str)))))
 
 (setq buffer-regexs-to-hide
-      '("*grep*" "*Help*" "*Messages*" "^*Python check"))
+      '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
+		"*Shell Command Output*"))
 
 (defun delete-windows-with-names (open-windows buffer-names)
   (if open-windows
@@ -164,6 +179,12 @@
 (defun delete-specific-windows ()
   (interactive)
   (delete-windows-with-names (window-list) buffer-regexs-to-hide))
+
+(defun create-new-buffer ()
+  (interactive)
+  (let ((new-buf (generate-new-buffer "new")))
+    (switch-to-buffer new-buf)
+    (set-buffer-major-mode new-buf)))
 
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
@@ -190,6 +211,7 @@
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
 (global-set-key (kbd "C-{") 'previous-buffer)
 (global-set-key (kbd "C-}") 'next-buffer)
+(global-set-key (kbd "C-n") 'create-new-buffer)
 
 ;; Style settings
 
@@ -251,7 +273,8 @@
 (setq packages-to-install
       '(helm-projectile
 	sr-speedbar
-	projectile-speedbar))
+	projectile-speedbar
+	redo+))
 
 ;; General function for ensuring that a list of packages is installed.
 	
@@ -270,9 +293,16 @@
   (package-refresh-contents)
   (install-packages-if-not-installed packages-to-install))
 
+(defun load-redo+ ()
+  (if (package-installed-p 'redo+)
+      (progn
+	(require 'redo+)
+	(global-set-key (kbd "C-?") 'redo))))
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives
-	       '("melpa" . "http://melpa.milkbox.net/packages/") t))
+	       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (load-redo+))
 
