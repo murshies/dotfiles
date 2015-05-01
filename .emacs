@@ -26,6 +26,12 @@
 ; New buffers have text-mode as the default
 (setq-default major-mode 'text-mode)
 
+(defun highlight-line-mode ()
+  (if (display-graphic-p)
+      (progn
+	(hl-line-mode t)
+	(set-face-background 'hl-line hl-line-color))))
+
 ;; Hook functions
 
 ; The next two functions are to be (sometimes) called by c++-hook and c-hook,
@@ -50,24 +56,20 @@
 (defun c++-hook ()
   ;(c++-tab-mode-helper) ; uncomment for tabs in C++.
   (linum-mode t)
-  (hl-line-mode t)
-  (set-face-background 'hl-line hl-line-color))
+  (highlight-line-mode))
 
 (defun c-hook ()
   ;(c-tab-mode-helper) ; uncomment for tabs in C.
   (linum-mode t)
-  (hl-line-mode t)
-  (set-face-background 'hl-line hl-line-color))
+  (highlight-line-mode))
 
 (defun emacs-lisp-hook ()
   (linum-mode t)
-  (hl-line-mode t)
-  (set-face-background 'hl-line hl-line-color))
+  (highlight-line-mode))
 
 (defun text-hook ()
   (linum-mode t)
-  (hl-line-mode t)
-  (set-face-background 'hl-line hl-line-color))
+  (highlight-line-mode))
 
 (defun sh-hook ()
   (setq indent-tabs-mode t)
@@ -75,13 +77,11 @@
   (setq tab-width 8)
   (setq indent-line-function 'insert-tab)
   (linum-mode t)
-  (hl-line-mode t)
-  (set-face-background 'hl-line hl-line-color))
+  (highlight-line-mode))
 
 (defun python-hook ()
   (linum-mode t)
-  (hl-line-mode t)
-  (set-face-background 'hl-line hl-line-color))
+  (highlight-line-mode))
 
 (defun eshell-hook ()
   (setq pcomplete-cycle-completions nil))
@@ -90,11 +90,11 @@
   (org-indent-mode))
 
 (defun lisp-hook ()
-  (hl-line-mode t)
+  (highlight-line-mode)
   (linum-mode t))
 
 (defun racket-hook ()
-  (hl-line-mode t)
+  (highlight-line-mode)
   (linum-mode t))
 
 (add-hook 'c++-mode-hook 'c++-hook)
