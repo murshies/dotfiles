@@ -154,7 +154,8 @@
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") 'projectile-grep)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-j") 'helm-select-action))
+  (define-key helm-map (kbd "C-j") 'helm-select-action)
+  (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
 (defun matches-any-regex (regex-list str)
   (if (not regex-list) nil
