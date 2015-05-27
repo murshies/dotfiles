@@ -15,8 +15,8 @@
 (global-hi-lock-mode t)
 (setq hl-line-color
       (if (display-graphic-p) "#3E3D32" "#330000"))
-; do not recenter on point when scrolling off screen
-(setq scroll-conservatively 1)
+; Scroll when we're 1 row away from the edge of the window.
+(setq smooth-scroll-margin 1)
 ; Tell Emacs to automatically place the point at the end of the compilation
 ; buffer.
 (setq compilation-scroll-output t)
@@ -275,7 +275,8 @@
       '(helm-projectile
 	sr-speedbar
 	projectile-speedbar
-	redo+))
+	redo+
+	smooth-scrolling))
 
 ;; General function for ensuring that a list of packages is installed.
 	
