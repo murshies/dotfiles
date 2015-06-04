@@ -15,8 +15,8 @@
 (global-hi-lock-mode t)
 (setq hl-line-color
       (if (display-graphic-p) "#3E3D32" "#330000"))
-; do not recenter on point when scrolling off screen
-(setq scroll-conservatively 1)
+; Scroll when we're 1 row away from the edge of the window.
+(setq smooth-scroll-margin 1)
 ; Tell Emacs to automatically place the point at the end of the compilation
 ; buffer.
 (setq compilation-scroll-output t)
@@ -152,9 +152,10 @@
   (deactivate-mark))
 
 (defun set-additional-project-keys ()
-  (global-set-key (kbd "C-c h") 'projectile-grep)
+  (global-set-key (kbd "C-c h") 'helm-projectile-ack)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-j") 'helm-select-action))
+  (define-key helm-map (kbd "C-j") 'helm-select-action)
+  (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
 (defun matches-any-regex (regex-list str)
   (if (not regex-list) nil
@@ -274,7 +275,8 @@
       '(helm-projectile
 	sr-speedbar
 	projectile-speedbar
-	redo+))
+	redo+
+	smooth-scrolling))
 
 ;; General function for ensuring that a list of packages is installed.
 	
