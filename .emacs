@@ -152,7 +152,7 @@
   (deactivate-mark))
 
 (defun set-additional-project-keys ()
-  (global-set-key (kbd "C-c h") 'helm-projectile-ack)
+  (global-set-key (kbd "C-c h") 'helm-projectile-ag)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
@@ -276,7 +276,8 @@
 	sr-speedbar
 	projectile-speedbar
 	redo+
-	smooth-scrolling))
+	smooth-scrolling
+	helm-ag))
 
 ;; General function for ensuring that a list of packages is installed.
 	
