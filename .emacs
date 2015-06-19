@@ -72,10 +72,10 @@
   (highlight-line-mode))
 
 (defun sh-hook ()
-  (setq indent-tabs-mode t)
-  (setq tab-stop-list (number-sequence 8 200 8))
-  (setq tab-width 8)
-  (setq indent-line-function 'insert-tab)
+  ;(setq indent-tabs-mode t)
+  ;(setq tab-stop-list (number-sequence 8 200 8))
+  ;(setq tab-width 8)
+  ;(setq indent-line-function 'insert-tab)
   (linum-mode t)
   (highlight-line-mode))
 
@@ -212,7 +212,7 @@
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
 (global-set-key (kbd "C-{") 'previous-buffer)
 (global-set-key (kbd "C-}") 'next-buffer)
-(global-set-key (kbd "C-n") 'create-new-buffer)
+(global-set-key (kbd "C-S-n") 'create-new-buffer)
 
 ;; Style settings
 
