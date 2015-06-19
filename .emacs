@@ -72,10 +72,6 @@
   (highlight-line-mode))
 
 (defun sh-hook ()
-  ;(setq indent-tabs-mode t)
-  ;(setq tab-stop-list (number-sequence 8 200 8))
-  ;(setq tab-width 8)
-  ;(setq indent-line-function 'insert-tab)
   (linum-mode t)
   (highlight-line-mode))
 
