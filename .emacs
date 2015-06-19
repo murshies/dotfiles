@@ -87,7 +87,8 @@
   (setq pcomplete-cycle-completions nil))
 
 (defun org-hook ()
-  (org-indent-mode))
+  (org-indent-mode)
+  (setq org-log-done "time"))
 
 (defun lisp-hook ()
   (highlight-line-mode)
