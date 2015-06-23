@@ -130,7 +130,7 @@
 
 (defun move-backwards (count &optional all-frames)
   (interactive "p")
-  (other-window (* -1 count) all-frames))
+  (other-window (- count) all-frames))
 
 (defun reload-emacs-config ()
   (interactive)
