@@ -128,7 +128,7 @@
   (interactive)
   (scroll-up 4))
 
-(defun move-backwards (count &optional all-frames)
+(defun prev-window (count &optional all-frames)
   (interactive "p")
   (other-window (- count) all-frames))
 
@@ -148,8 +148,14 @@
    face)
   (deactivate-mark))
 
+(defun determine-projectile-search-program ()
+  (cond
+   ((executable-find "ag") 'helm-projectile-ag)
+   ((executable-find "ack") 'helm-projectile-ack)
+   (t 'helm-projectile-grep)))
+
 (defun set-additional-project-keys ()
-  (global-set-key (kbd "C-c h") 'helm-projectile-ag)
+  (global-set-key (kbd "C-c h") (determine-projectile-search-program))
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
@@ -199,8 +205,8 @@
 (global-set-key (kbd "C-<") 'small-scroll-down)
 (global-set-key (kbd "C->") 'small-scroll-up)
 (global-set-key (kbd "C-\"") 'other-window)
-(global-set-key (kbd "C-:") 'move-backwards)
-(global-set-key (kbd "C-x p") 'move-backwards)
+(global-set-key (kbd "C-:") 'prev-window)
+(global-set-key (kbd "C-x p") 'prev-window)
 (global-set-key [(control shift delete)] 'delete-region)
 (global-set-key (kbd "C-x r") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
