@@ -34,34 +34,17 @@
 
 ;; Hook functions
 
-; The next two functions are to be (sometimes) called by c++-hook and c-hook,
-; depending on if we're developing on a machine that we want tabs instead of
-; spaces.
-(defun c++-tab-mode-helper ()
-  (setq c++-tab-always-indent t)
-  (setq c-basic-offset 4)
-  (setq c-indent-level 4)
-  (setq tab-stop-list (number-sequence 4 200 4))
-  (setq tab-width 4)
-  (setq indent-tabs-mode t))
-
-(defun c-tab-mode-helper ()
-  (setq c-tab-always-indent t)
-  (setq c-basic-offset 4)
-  (setq c-indent-level 4)
-  (setq tab-stop-list (number-sequence 4 200 4))
-  (setq tab-width 4)
-  (setq indent-tabs-mode t))
-
 (defun c++-hook ()
-  ;(c++-tab-mode-helper) ; uncomment for tabs in C++.
   (linum-mode t)
-  (highlight-line-mode))
+  (highlight-line-mode)
+  (setq c-basic-offset 4)
+  (setq indent-tabs-mode nil))
 
 (defun c-hook ()
-  ;(c-tab-mode-helper) ; uncomment for tabs in C.
   (linum-mode t)
-  (highlight-line-mode))
+  (highlight-line-mode)
+  (setq c-basic-offset 4)
+  (setq indent-tabs-mode nil))
 
 (defun emacs-lisp-hook ()
   (linum-mode t)
@@ -219,8 +202,6 @@
 
 ;; Style settings
 
-(setq c-default-style "linux" c-basic-offset 3)
-(setq c++-default-style "linux" c++-basic-offset 3)
 (global-visual-line-mode t)
 (when (display-graphic-p)
   (progn
