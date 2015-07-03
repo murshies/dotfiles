@@ -151,7 +151,7 @@
 
 (setq buffer-regexs-to-hide
       '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
-		"*Shell Command Output*"))
+	"*Shell Command Output*"))
 
 (defun delete-windows-with-names (open-windows buffer-names)
   (if open-windows
@@ -173,6 +173,35 @@
     (switch-to-buffer new-buf)
     (set-buffer-major-mode new-buf)))
 
+(defun window-browser ()
+  "Enter an interactive browsing mode, where the following keys are mapped to
+specific window navigation functions:
+ [ (91) - display the 'previous buffer' in the current window
+ ] (93) - display the 'next buffer' in the current window
+ ; (59) - move focus to the previous window
+ ' (39) - move focus to the next window
+ , (44) - scroll down in the current buffer (emacs' definition of scroll down)
+ . (46) - scroll up in the current buffer
+Entering any other key or key chord exits the browsing mode."
+  (interactive)
+  (let ((input-done nil))
+    (while (not input-done)
+      ; Catch any errors. Whenever the user tries to scroll off the edges of a
+      ; buffer, Emacs treats this as an error and will exit window browsing.
+      ; This behavior is undesired; instead, the window browsing session should
+      ; continue.
+      (condition-case ex
+	  (let ((char-input (read-char "Browsing")))
+	    (cond
+	     ((= char-input 91) (previous-buffer))
+	     ((= char-input 93) (next-buffer))
+	     ((= char-input 59) (prev-window 1))
+	     ((= char-input 39) (other-window 1))
+	     ((= char-input 44) (small-scroll-down))
+	     ((= char-input 46) (small-scroll-up))
+	     (t (setq input-done t))))
+	('error t)))))
+  
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
@@ -183,22 +212,14 @@
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
-(global-set-key [home] 'small-scroll-down)
-(global-set-key [end] 'small-scroll-up)
-(global-set-key (kbd "C-<") 'small-scroll-down)
-(global-set-key (kbd "C->") 'small-scroll-up)
-(global-set-key (kbd "C-\"") 'other-window)
-(global-set-key (kbd "C-:") 'prev-window)
-(global-set-key (kbd "C-x p") 'prev-window)
 (global-set-key [(control shift delete)] 'delete-region)
 (global-set-key (kbd "C-x r") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
-(global-set-key (kbd "C-{") 'previous-buffer)
-(global-set-key (kbd "C-}") 'next-buffer)
 (global-set-key (kbd "C-S-n") 'create-new-buffer)
+(global-set-key (kbd "C-.") 'window-browser)
 
 ;; Style settings
 
