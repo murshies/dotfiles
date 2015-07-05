@@ -219,7 +219,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
 (global-set-key (kbd "C-S-n") 'create-new-buffer)
-(global-set-key (kbd "C-.") 'window-browser)
+(global-set-key (kbd "M-?") 'window-browser)
 
 ;; Style settings
 
