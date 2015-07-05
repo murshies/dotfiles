@@ -25,6 +25,7 @@
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
 ; New buffers have text-mode as the default
 (setq-default major-mode 'text-mode)
+(setq slime-lisp-implementations '((sbcl ("C:\\sbcl\\1.2.13\\sbcl.exe" "--core" "C:\\sbcl\\1.2.13\\sbcl.core"))))
 
 (defun highlight-line-mode ()
   (if (display-graphic-p)
@@ -219,7 +220,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
 (global-set-key (kbd "C-S-n") 'create-new-buffer)
-(global-set-key (kbd "M-?") 'window-browser)
+(global-set-key (kbd "M-P") 'window-browser)
 
 ;; Style settings
 
