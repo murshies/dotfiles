@@ -307,7 +307,7 @@ Entering any other key or key chord exits the browsing mode."
   (if (package-installed-p 'redo+)
       (progn
 	(require 'redo+)
-	(global-set-key (kbd "C-?") 'redo))))
+	(global-set-key (kbd "M-_") 'redo))))
 
 (when (>= emacs-major-version 24)
   (require 'package)
