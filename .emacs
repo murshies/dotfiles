@@ -223,6 +223,10 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-S-n") 'create-new-buffer)
 (global-set-key (kbd "M-P") 'window-browser)
 (global-set-key (kbd "C-c s") 'eshell)
+(global-set-key (kbd "M-I") 'windmove-up)
+(global-set-key (kbd "M-K") 'windmove-down)
+(global-set-key (kbd "M-J") 'windmove-left)
+(global-set-key (kbd "M-L") 'windmove-right)
 
 ;; Style settings
 
