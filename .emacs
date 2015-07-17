@@ -188,6 +188,8 @@ specific window navigation functions:
  1 (49) - delete all other windows
  2 (50) - split window below
  3 (51) - split window right
+ < (60) - beginning of buffer
+ > (62) - end of buffer
 Entering any other key or key chord exits the browsing mode."
   (interactive)
   (let ((input-done nil))
@@ -209,6 +211,8 @@ Entering any other key or key chord exits the browsing mode."
 	     ((= char-input 49) (delete-other-windows))
 	     ((= char-input 50) (split-window-below))
 	     ((= char-input 51) (split-window-right))
+	     ((= char-input 60) (beginning-of-buffer))
+	     ((= char-input 62) (end-of-buffer))
 	     (t (setq input-done t))))
 	('error t)))))
   
