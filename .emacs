@@ -184,6 +184,10 @@ specific window navigation functions:
  ' (39) - move focus to the next window
  , (44) - scroll down in the current buffer (emacs' definition of scroll down)
  . (46) - scroll up in the current buffer
+ 0 (48) - delete current window
+ 1 (49) - delete all other windows
+ 2 (50) - split window below
+ 3 (51) - split window right
 Entering any other key or key chord exits the browsing mode."
   (interactive)
   (let ((input-done nil))
@@ -201,6 +205,10 @@ Entering any other key or key chord exits the browsing mode."
 	     ((= char-input 39) (other-window 1))
 	     ((= char-input 44) (small-scroll-down))
 	     ((= char-input 46) (small-scroll-up))
+	     ((= char-input 48) (delete-window))
+	     ((= char-input 49) (delete-other-windows))
+	     ((= char-input 50) (split-window-below))
+	     ((= char-input 51) (split-window-right))
 	     (t (setq input-done t))))
 	('error t)))))
   
