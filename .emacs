@@ -239,6 +239,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "M-K") 'windmove-down)
 (global-set-key (kbd "M-J") 'windmove-left)
 (global-set-key (kbd "M-L") 'windmove-right)
+(global-set-key (kbd "C-x j") 'join-line)
 
 ;; Style settings
 
