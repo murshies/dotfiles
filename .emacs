@@ -28,6 +28,7 @@
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (add-to-list 'display-buffer-alist
              '("." nil (reusable-frames . t)))
+(setq-default indent-tabs-mode nil)
 (setq slime-lisp-implementations '((sbcl ("C:\\sbcl\\1.2.13\\sbcl.exe" "--core" "C:\\sbcl\\1.2.13\\sbcl.core"))))
 
 (defun highlight-line-mode ()
