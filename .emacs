@@ -26,8 +26,6 @@
 ; New buffers have text-mode as the default
 (setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
-(add-to-list 'display-buffer-alist
-             '("." nil (reusable-frames . t)))
 (setq-default indent-tabs-mode nil)
 (setq slime-lisp-implementations '((sbcl ("C:\\sbcl\\1.2.13\\sbcl.exe" "--core" "C:\\sbcl\\1.2.13\\sbcl.core"))))
 
@@ -330,10 +328,17 @@ Entering any other key or key chord exits the browsing mode."
 	(require 'redo+)
 	(global-set-key (kbd "M-_") 'redo))))
 
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives
-	       '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (load-redo+))
+(cond
+ ((>= emacs-major-version 24)
+  (progn
+    (require 'package)
+    (package-initialize)
+    (add-to-list 'package-archives
+                 '("melpa" . "http://melpa.milkbox.net/packages/") t)
+    (load-redo+)
+    (add-to-list 'display-buffer-alist
+                 '("." nil (reusable-frames . t)))))
+ (t
+  (progn
+    (setq-default display-buffer-reuse-frames t))))
 
