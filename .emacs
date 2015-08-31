@@ -7,9 +7,7 @@
 (setq inhibit-startup-screen t)
 (when (display-graphic-p)
   (tool-bar-mode -1)
-  (mouse-wheel-mode t)
-  (when (or (not (boundp 'do-not-resize)) (not do-not-resize))
-    (set-frame-size (selected-frame) 85 45)))
+  (mouse-wheel-mode t))
 (show-paren-mode t)
 (column-number-mode t)
 (global-hi-lock-mode t)
@@ -303,7 +301,8 @@ Entering any other key or key chord exits the browsing mode."
 	projectile-speedbar
 	redo+
 	smooth-scrolling
-	helm-ag))
+	helm-ag
+        ggtags))
 
 ;; General function for ensuring that a list of packages is installed.
 	
