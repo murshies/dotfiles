@@ -39,13 +39,15 @@
   (linum-mode t)
   (highlight-line-mode)
   (setq c-basic-offset 4)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+  (setq tab-width 4))
 
 (defun c-hook ()
   (linum-mode t)
   (highlight-line-mode)
   (setq c-basic-offset 4)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+  (setq tab-width 4))
 
 (defun emacs-lisp-hook ()
   (linum-mode t)
