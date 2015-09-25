@@ -118,6 +118,10 @@
   (interactive)
   (scroll-up 4))
 
+(defun move-backwards (count &optional all-frames)
+  (interactive "p")
+  (other-window (* -1 count) all-frames))
+
 (defun prev-window (count &optional all-frames)
   (interactive "p")
   (other-window (- count) all-frames))
