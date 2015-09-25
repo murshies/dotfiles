@@ -245,6 +245,12 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "M-J") 'windmove-left)
 (global-set-key (kbd "M-L") 'windmove-right)
 (global-set-key (kbd "C-x j") 'join-line)
+(global-set-key (kbd "C-{") 'previous-buffer)
+(global-set-key (kbd "C-}") 'next-buffer)
+(global-set-key (kbd "C-<") 'small-scroll-down)
+(global-set-key (kbd "C->") 'small-scroll-up)
+(global-set-key (kbd "C-\"") 'other-window)
+(global-set-key (kbd "C-:") 'move-backwards)
 
 ;; Style settings
 
