@@ -42,6 +42,7 @@
   (setq c-basic-offset 4)
   (setq indent-tabs-mode nil)
   (setq tab-width 4)
+  (c-set-offset 'innamespace 0)
   (if (package-installed-p 'ggtags)
       (ggtags-mode)))
 
