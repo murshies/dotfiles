@@ -26,6 +26,8 @@
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
 (setq-default cursor-type 'bar)
+(define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)
+(define-key c-mode-map (kbd "C-c o") 'ff-find-other-file)
 (setq slime-lisp-implementations '((sbcl ("C:\\sbcl\\1.2.13\\sbcl.exe" "--core" "C:\\sbcl\\1.2.13\\sbcl.core"))))
 
 (defun highlight-line-mode ()
