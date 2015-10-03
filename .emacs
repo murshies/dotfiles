@@ -102,6 +102,7 @@
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'lisp-mode-hook 'lisp-hook)
 (add-hook 'racket-mode-hook 'racket-hook)
+(add-hook 'lua-mode-hook 'lua-hook)
 
 ;; Project management
 ;; Loading helm/projectile can take a second or two, and it isn't really needed
