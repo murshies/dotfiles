@@ -88,6 +88,10 @@
   (highlight-line-mode)
   (linum-mode t))
 
+(defun lua-hook ()
+  (highlight-line-mode)
+  (linum-mode t))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
