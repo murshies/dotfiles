@@ -90,7 +90,8 @@
 
 (defun lua-hook ()
   (highlight-line-mode)
-  (linum-mode t))
+  (linum-mode t)
+  (setq lua-indent-level 4))
 
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
