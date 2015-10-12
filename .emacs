@@ -93,6 +93,10 @@
   (linum-mode t)
   (setq lua-indent-level 4))
 
+(defun web-hook ()
+  (highlight-line-mode)
+  (linum-mode t))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -104,6 +108,26 @@
 (add-hook 'lisp-mode-hook 'lisp-hook)
 (add-hook 'racket-mode-hook 'racket-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
+(add-hook 'web-mode-hook 'web-hook)
+
+;; Set up web-mode
+;; Most of the following code was taken from:
+;; http://emacs.stackexchange.com/questions/17010/in-web-mode-php-block-in-html-file-doesnt-syntax-highlight
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.html$" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.inc$" . web-mode))
+(setq web-mode-engines-alist
+      '(("php"    . "\\.phtml\\'")
+        ("blade"  . "\\.blade\\.")))
 
 ;; Project management
 ;; Loading helm/projectile can take a second or two, and it isn't really needed
