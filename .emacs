@@ -126,8 +126,9 @@
 (add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . web-mode))
 (setq web-mode-engines-alist
-      '(("php"    . "\\.phtml\\'")
-        ("blade"  . "\\.blade\\.")))
+      '(("php"   . "\\.html\\'")
+        ("php"   . "\\.phtml\\'")
+        ("blade" . "\\.blade\\.")))
 
 ;; Project management
 ;; Loading helm/projectile can take a second or two, and it isn't really needed
