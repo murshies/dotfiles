@@ -279,6 +279,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-S-n") 'create-new-buffer)
 (global-set-key (kbd "M-P") 'window-browser)
 (global-set-key (kbd "C-c s") 'eshell)
+(global-set-key (kbd "C-c d") 'eshell-cd-to-current-directory)
 (global-set-key (kbd "M-I") 'windmove-up)
 (global-set-key (kbd "M-K") 'windmove-down)
 (global-set-key (kbd "M-J") 'windmove-left)
@@ -317,6 +318,13 @@ Entering any other key or key chord exits the browsing mode."
 	  'face `(:foreground "#00CC00"))
 	 (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
+
+(defun eshell-cd-to-current-directory ()
+  (interactive)
+  (let ((current-directory default-directory))
+    (eshell)
+    (eshell/cd current-directory)
+    (eshell-interrupt-process)))
 
 ;; Backup file behavior
 
