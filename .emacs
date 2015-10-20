@@ -361,7 +361,8 @@ Entering any other key or key chord exits the browsing mode."
 	redo+
 	smooth-scrolling
 	helm-ag
-        ggtags))
+        ggtags
+        erc-hl-nicks))
 
 ;; General function for ensuring that a list of packages is installed.
 	
