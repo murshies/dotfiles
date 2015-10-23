@@ -2,17 +2,11 @@
 ;; Miscellaneous settings
 
 (setq ring-bell-function 'ignore)
-
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
-(when (display-graphic-p)
-  (tool-bar-mode -1)
-  (mouse-wheel-mode t))
 (show-paren-mode t)
 (column-number-mode t)
 (global-hi-lock-mode t)
-(setq hl-line-color
-      (if (display-graphic-p) "#3E3D32" "#330000"))
 ; Scroll when we're 1 row away from the edge of the window.
 (setq smooth-scroll-margin 1)
 ; Tell Emacs to automatically place the point at the end of the compilation
@@ -33,6 +27,25 @@
       (progn
 	(hl-line-mode t)
 	(set-face-background 'hl-line hl-line-color))))
+
+;; Frame hook setup
+;; This defines a hook that will be run whenever a frame is created, or when
+;; emacs is not started as a daemon.
+(defun frame-creation-hook ()
+  (when (display-graphic-p)
+    (tool-bar-mode -1)
+    (mouse-wheel-mode t)
+    (setq hl-line-color "#3E3D32")
+    (set-scroll-bar-mode 'right)
+    ; Colors from Monokai theme.
+    (set-foreground-color "#F8F8F2")
+    (set-background-color "#272822")
+    (set-cursor-color "#FFFFFF")))
+
+;; We need to do this check + call, since apparently starting emacs in
+;; non-daemon mode doesn't count as creating a frame.
+(when (not (daemonp)) (frame-creation-hook))
+(add-hook 'after-make-frame-function 'frame-creation-hook)
 
 ;; Hook functions
 
@@ -295,13 +308,6 @@ Entering any other key or key chord exits the browsing mode."
 ;; Style settings
 
 (global-visual-line-mode t)
-(when (display-graphic-p)
-  (progn
-    (set-scroll-bar-mode 'right)
-    ; Colors from Monokai theme.
-    (add-to-list 'default-frame-alist '(foreground-color . "#F8F8F2"))
-    (add-to-list 'default-frame-alist '(background-color . "#272822"))
-    (add-to-list 'default-frame-alist '(cursor-color . "#FFFFFF"))))
 (set-face-attribute 'default nil :height 100)
 
 ; eshell custom prompt
