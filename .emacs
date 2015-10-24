@@ -31,21 +31,25 @@
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
-(defun frame-creation-hook ()
-  (when (display-graphic-p)
-    (tool-bar-mode -1)
-    (mouse-wheel-mode t)
-    (setq hl-line-color "#3E3D32")
-    (set-scroll-bar-mode 'right)
-    ; Colors from Monokai theme.
-    (set-foreground-color "#F8F8F2")
-    (set-background-color "#272822")
-    (set-cursor-color "#FFFFFF")))
+(message "Testing1")
+(defun frame-creation-hook (frame)
+  (message "Testing")
+  (with-selected-frame frame
+    (when (not (eq (framep frame) t))
+      (message "Testing2")
+      (tool-bar-mode -1)
+      (mouse-wheel-mode t)
+      (setq hl-line-color "#3E3D32")
+      (set-scroll-bar-mode 'right)
+      ; Colors from Monokai theme.
+      (set-foreground-color "#F8F8F2")
+      (set-background-color "#272822")
+      (set-cursor-color "#FFFFFF"))))
 
 ;; We need to do this check + call, since apparently starting emacs in
 ;; non-daemon mode doesn't count as creating a frame.
-(when (not (daemonp)) (frame-creation-hook))
-(add-hook 'after-make-frame-function 'frame-creation-hook)
+(when (not (daemonp)) (frame-creation-hook (selected-frame)))
+(add-hook 'after-make-frame-functions 'frame-creation-hook)
 
 ;; Hook functions
 
