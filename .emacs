@@ -31,12 +31,9 @@
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
-(message "Testing1")
 (defun frame-creation-hook (frame)
-  (message "Testing")
   (with-selected-frame frame
     (when (not (eq (framep frame) t))
-      (message "Testing2")
       (tool-bar-mode -1)
       (mouse-wheel-mode t)
       (setq hl-line-color "#3E3D32")
