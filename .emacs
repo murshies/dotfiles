@@ -111,6 +111,10 @@
   (highlight-line-mode)
   (linum-mode t))
 
+(defun yaml-hook ()
+  (highlight-line-mode)
+  (linum-mode t))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -123,6 +127,7 @@
 (add-hook 'racket-mode-hook 'racket-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'web-mode-hook 'web-hook)
+(add-hook 'yaml-mode-hook 'yaml-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
