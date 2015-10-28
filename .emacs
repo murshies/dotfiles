@@ -238,6 +238,18 @@
     (switch-to-buffer new-buf)
     (set-buffer-major-mode new-buf)))
 
+(defun tramp-cleanup-all ()
+  "Clean up all tramp connections/buffers. If the current directory of the
+eshell buffer is remote, change the directory to the user's home directory
+before doing the cleanup. This prevents tramp-cleanup-all-buffers from deleting
+the eshell buffer as part of its cleanup."
+  (interactive)
+  (with-current-buffer "*eshell*"
+    (when (string-match-p "ssh:" default-directory)
+      (eshell/cd "~")
+      (eshell-interrupt-process))
+    (tramp-cleanup-all-buffers)))
+
 (defun window-browser ()
   "Enter an interactive browsing mode, where the following keys are mapped to
 specific window navigation functions:
@@ -286,6 +298,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key [f7] 'recompile)
 (global-set-key [f8] 'load-project-management)
 (global-set-key [f9] 'delete-specific-windows)
+(global-set-key [f12] 'tramp-cleanup-all)
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
