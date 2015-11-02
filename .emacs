@@ -322,6 +322,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C->") 'small-scroll-up)
 (global-set-key (kbd "C-\"") 'other-window)
 (global-set-key (kbd "C-:") 'move-backwards)
+(global-set-key (kbd "C-c w") 'whitespace-mode)
 
 ;; Style settings
 
