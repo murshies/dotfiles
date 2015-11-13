@@ -207,6 +207,17 @@
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
+(define-key python-mode-map (kbd "C-c C-v") 'pyflakes-current-file)
+
+(defun pyflakes-current-file ()
+  "Run pyflakes on the current file.
+Even though the documentation for python-check says that the default file is
+supposed to be the current buffer's default, this isn't true after the first
+time that pyflakes it run. This function fixes this issue."
+  (interactive)
+  (python-check (concat "pyflakes " buffer-file-name)))
+  
+
 (defun matches-any-regex (regex-list str)
   (if (not regex-list) nil
     (let ((next-regex (car regex-list)))
@@ -425,4 +436,3 @@ Entering any other key or key chord exits the browsing mode."
  (t
   (progn
     (setq-default display-buffer-reuse-frames t))))
-
