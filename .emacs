@@ -207,7 +207,8 @@
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
-(define-key python-mode-map (kbd "C-c C-v") 'pyflakes-current-file)
+(eval-after-load "python"
+  '(define-key python-mode-map (kbd "C-c C-v") 'pyflakes-current-file))
 
 (defun pyflakes-current-file ()
   "Run pyflakes on the current file.
