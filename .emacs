@@ -226,7 +226,7 @@ time that pyflakes it run. This function fixes this issue."
 
 (setq buffer-regexs-to-hide
       '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
-	"*Shell Command Output*"))
+	"*Shell Command Output*" "*Process List*"))
 
 (defun delete-windows-with-names (open-windows buffer-names)
   (if open-windows
