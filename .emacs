@@ -398,7 +398,8 @@ Entering any other key or key chord exits the browsing mode."
 	smooth-scrolling
 	helm-ag
         ggtags
-        erc-hl-nicks))
+        erc-hl-nicks
+        yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
 	
