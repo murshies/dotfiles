@@ -15,8 +15,8 @@
 (setq org-replace-disputed-keys t)
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
-; New buffers have text-mode as the default
-(setq-default major-mode 'text-mode)
+; New buffers have org-mode as the default
+(setq-default major-mode 'org-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
 
