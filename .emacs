@@ -158,6 +158,8 @@
   (projectile-global-mode)
   (helm-projectile-on)
   (setq projectile-completion-system 'helm)
+  (setq projectile-indexing-mode 'alien)
+  (setq projectile-enable-caching t)
   (set-additional-project-keys))
 
 ;; Key binding functions
