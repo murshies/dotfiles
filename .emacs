@@ -8,7 +8,7 @@
 (column-number-mode t)
 (global-hi-lock-mode t)
 ; Scroll when we're 1 row away from the edge of the window.
-(setq smooth-scroll-margin 1)
+;(setq smooth-scroll-margin 1)
 ; Tell Emacs to automatically place the point at the end of the compilation
 ; buffer.
 (setq compilation-scroll-output t)
@@ -16,7 +16,7 @@
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
 ; New buffers have org-mode as the default
-(setq-default major-mode 'org-mode)
+(setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
 
@@ -205,6 +205,7 @@
 
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") (determine-projectile-search-program))
+  (global-set-key (kbd "C-c p w") 'projectile-global-mode)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
