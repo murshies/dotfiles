@@ -39,7 +39,8 @@
       ; Colors from Monokai theme.
       (set-foreground-color "#F8F8F2")
       (set-background-color "#272822")
-      (set-cursor-color "#FFFFFF"))))
+      (set-cursor-color "#FFFFFF")
+      (set-frame-font "DejaVu Sans Mono"))))
 
 ;; We need to do this check + call, since apparently starting emacs in
 ;; non-daemon mode doesn't count as creating a frame.
