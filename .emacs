@@ -156,7 +156,6 @@
   (interactive)
   (require 'helm-config)
   (helm-mode 1)
-  (projectile-global-mode)
   (helm-projectile-on)
   (setq projectile-completion-system 'helm)
   (setq projectile-indexing-mode 'alien)
