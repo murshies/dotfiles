@@ -40,7 +40,9 @@
       (set-foreground-color "#F8F8F2")
       (set-background-color "#272822")
       (set-cursor-color "#FFFFFF")
-      (set-frame-font "DejaVu Sans Mono"))))
+      (condition-case ex
+          (set-frame-font "DejaVu Sans Mono")
+        ('error t)))))
 
 ;; We need to do this check + call, since apparently starting emacs in
 ;; non-daemon mode doesn't count as creating a frame.
