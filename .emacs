@@ -7,8 +7,8 @@
 (show-paren-mode t)
 (column-number-mode t)
 (global-hi-lock-mode t)
-; Scroll when we're 1 row away from the edge of the window.
-;(setq smooth-scroll-margin 1)
+; Scroll when we're 2 row away from the edge of the window.
+(setq smooth-scroll-margin 2)
 ; Tell Emacs to automatically place the point at the end of the compilation
 ; buffer.
 (setq compilation-scroll-output t)
