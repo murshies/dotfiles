@@ -51,6 +51,15 @@
 
 ;; Hook functions
 
+(defun before-save ()
+  "A hook that runs before a buffer is saved.
+Currently this just deletes trailing whitespace if the buffer is using
+python-mode."
+  (let ((delete-whitespace-major-modes '(python-mode)))
+    (when (member major-mode delete-whitespace-major-modes)
+      (delete-trailing-whitespace))))
+      
+
 (defun c++-hook ()
   (linum-mode t)
   (highlight-line-mode)
@@ -129,6 +138,7 @@
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'web-mode-hook 'web-hook)
 (add-hook 'yaml-mode-hook 'yaml-hook)
+(add-hook 'before-save-hook 'before-save)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
