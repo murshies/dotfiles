@@ -20,7 +20,7 @@
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
 ; The default blue is incredibly difficult to read
-(set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
+;(set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
 
 (defun ssh-ansi (ssh-args)
   "Open an ssh connection in a new buffer.
@@ -35,7 +35,7 @@ This function assumes that there is an ssh command on the user's PATH."
   (let* ((buffer-name (concat "ssh " (car (split-string ssh-args))))
          (full-buffer-name
           (generate-new-buffer-name (concat "*" buffer-name "*")))
-         (ssh-command (concat "ssh " ssh-args)))takes one interactive argument, which is
+         (ssh-command (concat "ssh " ssh-args)))
     (ansi-term "/bin/bash" buffer-name)
     (switch-to-buffer full-buffer-name)
     (insert ssh-command)
