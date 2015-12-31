@@ -407,14 +407,13 @@ Entering any other key or key chord exits the browsing mode."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(helm-projectile
-	sr-speedbar
-	projectile-speedbar
+      '(erc-hl-nicks
+        ggtags
+	helm-ag
+        helm-projectile
 	redo+
 	smooth-scrolling
-	helm-ag
-        ggtags
-        erc-hl-nicks
+        ssh
         yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
