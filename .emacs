@@ -22,6 +22,25 @@
 ; The default blue is incredibly difficult to read
 (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
 
+(defun ssh-ansi (ssh-args)
+  "Open an ssh connection in a new buffer.
+
+This offers functionality similar to the ssh package, but uses an ansi-term
+terminal instead of a shell-mode terminal. This function takes the ssh
+arguments as one interactive parameter. The name of the new ssh buffer is based
+off of the first ssh argument (space delimited).
+
+This function assumes that there is an ssh command on the user's PATH."
+  (interactive "sEnter ssh arguments: ")
+  (let* ((buffer-name (concat "ssh " (car (split-string ssh-args))))
+         (full-buffer-name
+          (generate-new-buffer-name (concat "*" buffer-name "*")))
+         (ssh-command (concat "ssh " ssh-args)))takes one interactive argument, which is
+    (ansi-term "/bin/bash" buffer-name)
+    (switch-to-buffer full-buffer-name)
+    (insert ssh-command)
+    (term-send-input)))
+
 (defun highlight-line-mode ()
   (if (display-graphic-p)
       (progn
