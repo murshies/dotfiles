@@ -19,8 +19,6 @@
 (setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
-; The default blue is incredibly difficult to read
-;(set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
 
 (defun ssh-ansi (ssh-args)
   "Open an ssh connection in a new buffer.
@@ -146,6 +144,10 @@ python-mode."
   (highlight-line-mode)
   (linum-mode t))
 
+(defun term-hook ()
+  ; The default blue is incredibly difficult to read
+  (set-face-attribute 'term-color-blue nil :foreground "SkyBlue"))
+
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
@@ -159,6 +161,7 @@ python-mode."
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'web-mode-hook 'web-hook)
 (add-hook 'yaml-mode-hook 'yaml-hook)
+(add-hook 'term-mode-hook 'term-hook)
 (add-hook 'before-save-hook 'before-save)
 
 ;; Set up web-mode
