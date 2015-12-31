@@ -19,6 +19,8 @@
 (setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
+; The default blue is incredibly difficult to read
+(set-face-attribute 'term-color-blue nil :foreground "red")
 
 (defun highlight-line-mode ()
   (if (display-graphic-p)
@@ -408,7 +410,6 @@ Entering any other key or key chord exits the browsing mode."
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
       '(erc-hl-nicks
-        ggtags
 	helm-ag
         helm-projectile
 	redo+
