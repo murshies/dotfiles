@@ -20,7 +20,7 @@
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
 ; The default blue is incredibly difficult to read
-(set-face-attribute 'term-color-blue nil :foreground "red")
+(set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
 
 (defun highlight-line-mode ()
   (if (display-graphic-p)
