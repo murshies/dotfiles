@@ -146,7 +146,8 @@ python-mode."
 
 (defun term-hook ()
   ; The default blue is incredibly difficult to read
-  (set-face-attribute 'term-color-blue nil :foreground "SkyBlue"))
+  (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
+  (set-face-attribute 'term-color-red nil :foreground "Orchid"))
 
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
