@@ -350,7 +350,6 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key [f8] 'load-project-management)
 (global-set-key [f9] 'delete-specific-windows)
 (global-set-key [f12] 'tramp-cleanup-all)
-(global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
 (global-set-key [(control shift delete)] 'delete-region)
@@ -438,7 +437,8 @@ Entering any other key or key chord exits the browsing mode."
 	redo+
 	smooth-scrolling
         ssh
-        yaml-mode))
+        yaml-mode
+        web-mode))
 
 ;; General function for ensuring that a list of packages is installed.
 	
