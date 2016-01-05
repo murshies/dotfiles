@@ -248,7 +248,8 @@ python-mode."
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
 (eval-after-load "python"
-  '(define-key python-mode-map (kbd "C-c C-v") 'pyflakes-current-file))
+  '(progn (define-key python-mode-map (kbd "C-c v f") 'pyflakes-current-file)
+          (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)))
 
 (defun pyflakes-current-file ()
   "Run pyflakes on the current file.
@@ -257,7 +258,13 @@ supposed to be the current buffer's default, this isn't true after the first
 time that pyflakes it run. This function fixes this issue."
   (interactive)
   (python-check (concat "pyflakes " buffer-file-name)))
-  
+
+(defun pylint-current-file ()
+  "Run pylint on the current file.
+This runs in the same way as pyflakes-current-file (inside a compilation-mode
+buffer), but with pylint instead. It will use the default .pylintrc file."
+  (interactive)
+  (python-check (concat "pylint -f text " buffer-file-name)))  
 
 (defun matches-any-regex (regex-list str)
   (if (not regex-list) nil
