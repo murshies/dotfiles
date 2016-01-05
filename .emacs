@@ -444,8 +444,8 @@ Entering any other key or key chord exits the browsing mode."
 	redo+
 	smooth-scrolling
         ssh
-        yaml-mode
-        web-mode))
+        web-mode
+        yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
 	
