@@ -329,7 +329,12 @@ Entering any other key or key chord exits the browsing mode."
 	     ((= char-input 62) (end-of-buffer))
 	     (t (setq input-done t))))
 	('error t)))))
-  
+
+(defun search-all-buffers (regex)
+  "Search all open buffers for lines matching regex."
+  (interactive "sList lines match regex: ")
+  (multi-occur-in-matching-buffers ".*" regex))
+
 (global-set-key [f1] 'server-start)
 (global-set-key [f2] 'revert-buffer)
 (global-set-key [f5] 'reload-emacs-config)
@@ -362,6 +367,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-\"") 'other-window)
 (global-set-key (kbd "C-:") 'move-backwards)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
+(global-set-key (kbd "M-s M-s") 'search-all-buffers)
 
 ;; Style settings
 
