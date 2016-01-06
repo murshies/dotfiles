@@ -226,6 +226,8 @@ be applied to each major mode in a smarter way."
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
+(add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
+
 (eval-after-load "python"
   '(progn (define-key python-mode-map (kbd "C-c v f") 'pyflakes-current-file)
           (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)))
