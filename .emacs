@@ -77,11 +77,34 @@ python-mode."
   (let ((delete-whitespace-major-modes '(python-mode)))
     (when (member major-mode delete-whitespace-major-modes)
       (delete-trailing-whitespace))))
-      
+
+(defun linum-and-hl-line-hook ()
+  "Defines a base mode hook that enables linum and hl-line minor modes.
+There are many modes on which these should be enabled, so instead of defining a
+function for each and then adding the mode hook separately, this function can
+be applied to each major mode in a smarter way."
+  (linum-mode t)
+  (highlight-line-mode))
+
+(setq modes-for-linum-and-hl-line
+      '(c++-mode-hook
+        c-mode-hook
+        emacs-lisp-mode-hook
+        text-mode-hook
+        sh-mode-hook
+        python-mode-hook
+        org-mode-hook
+        lisp-mode-hook
+        racket-mode-hook
+        lua-mode-hook
+        web-mode-hook
+        yaml-mode-hook
+        conf-mode-hook))
+
+(mapc (lambda (mode-name) (add-hook mode-name 'linum-and-hl-line-hook))
+      modes-for-linum-and-hl-line)
 
 (defun c++-hook ()
-  (linum-mode t)
-  (highlight-line-mode)
   (setq c-basic-offset 4)
   (setq indent-tabs-mode nil)
   (setq tab-width 4)
@@ -91,30 +114,12 @@ python-mode."
       (ggtags-mode)))
 
 (defun c-hook ()
-  (linum-mode t)
-  (highlight-line-mode)
   (setq c-basic-offset 4)
   (setq indent-tabs-mode nil)
   (setq tab-width 4)
   (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file)
   (if (package-installed-p 'ggtags)
       (ggtags-mode)))
-
-(defun emacs-lisp-hook ()
-  (linum-mode t)
-  (highlight-line-mode))
-
-(defun text-hook ()
-  (linum-mode t)
-  (highlight-line-mode))
-
-(defun sh-hook ()
-  (linum-mode t)
-  (highlight-line-mode))
-
-(defun python-hook ()
-  (linum-mode t)
-  (highlight-line-mode))
 
 (defun eshell-hook ()
   (setq pcomplete-cycle-completions nil))
@@ -123,26 +128,8 @@ python-mode."
   (org-indent-mode)
   (setq org-log-done "time"))
 
-(defun lisp-hook ()
-  (highlight-line-mode)
-  (linum-mode t))
-
-(defun racket-hook ()
-  (highlight-line-mode)
-  (linum-mode t))
-
 (defun lua-hook ()
-  (highlight-line-mode)
-  (linum-mode t)
   (setq lua-indent-level 4))
-
-(defun web-hook ()
-  (highlight-line-mode)
-  (linum-mode t))
-
-(defun yaml-hook ()
-  (highlight-line-mode)
-  (linum-mode t))
 
 (defun term-hook ()
   ; The default blue is incredibly difficult to read
@@ -151,17 +138,9 @@ python-mode."
 
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
-(add-hook 'emacs-lisp-mode-hook 'emacs-lisp-hook)
-(add-hook 'text-mode-hook 'text-hook)
-(add-hook 'sh-mode-hook 'sh-hook)
-(add-hook 'python-mode-hook 'python-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
-(add-hook 'lisp-mode-hook 'lisp-hook)
-(add-hook 'racket-mode-hook 'racket-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
-(add-hook 'web-mode-hook 'web-hook)
-(add-hook 'yaml-mode-hook 'yaml-hook)
 (add-hook 'term-mode-hook 'term-hook)
 (add-hook 'before-save-hook 'before-save)
 
