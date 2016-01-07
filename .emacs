@@ -89,17 +89,18 @@ be applied to each major mode in a smarter way."
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
+        conf-mode-hook
         emacs-lisp-mode-hook
-        text-mode-hook
-        sh-mode-hook
-        python-mode-hook
-        org-mode-hook
-        lisp-mode-hook
-        racket-mode-hook
         lua-mode-hook
+        lisp-mode-hook
+        makefile-mode-hook
+        org-mode-hook
+        python-mode-hook
+        racket-mode-hook
+        sh-mode-hook
+        text-mode-hook
         web-mode-hook
-        yaml-mode-hook
-        conf-mode-hook))
+        yaml-mode-hook))
 
 (mapc (lambda (mode-name) (add-hook mode-name 'linum-and-hl-line-hook))
       modes-for-linum-and-hl-line)
