@@ -45,6 +45,12 @@ This function assumes that there is an ssh command on the user's PATH."
 	(hl-line-mode t)
 	(set-face-background 'hl-line hl-line-color))))
 
+(defun copy-line ()
+  "Copies the entire current line to the kill ring."
+  (interactive)
+  (kill-ring-save (line-beginning-position)
+                  (+ (line-end-position) 1)))
+
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
@@ -368,6 +374,7 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-\"") 'other-window)
 (global-set-key (kbd "C-:") 'move-backwards)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
+(global-set-key (kbd "M-W") 'copy-line)
 
 ;; Style settings
 
