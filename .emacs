@@ -49,7 +49,7 @@ This function assumes that there is an ssh command on the user's PATH."
   "Copies the entire current line to the kill ring."
   (interactive)
   (kill-ring-save (line-beginning-position)
-                  (+ (line-end-position) 1)))
+                  (line-end-position)))
 
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
