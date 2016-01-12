@@ -97,6 +97,7 @@ be applied to each major mode in a smarter way."
         c-mode-hook
         conf-mode-hook
         emacs-lisp-mode-hook
+        js-mode-hook
         lua-mode-hook
         lisp-mode-hook
         makefile-mode-hook
