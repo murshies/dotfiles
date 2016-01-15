@@ -66,9 +66,6 @@ If there is an issue reading dir, display an error message."
           (mapc 'try-to-load-elisp (directory-files dir t "\\.el$"))
         ('error (message "%s" ex)))))
 
-(when (or (not (boundp 'reload-elisp)) reload-elisp)
-  (load-lisp-in-dir "~/elisp"))
-
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
@@ -498,3 +495,6 @@ Entering any other key or key chord exits the browsing mode."
  (t
   (progn
     (setq-default display-buffer-reuse-frames t))))
+
+(when (or (not (boundp 'reload-elisp)) reload-elisp)
+  (load-lisp-in-dir "~/elisp"))
