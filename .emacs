@@ -51,6 +51,24 @@ This function assumes that there is an ssh command on the user's PATH."
   (kill-ring-save (line-beginning-position)
                   (line-end-position)))
 
+(defun try-to-load-elisp (elisp-file)
+  "Try to call load-file on elisp-file.
+If the file cannot be loaded, display an error message."
+  (condition-case ex
+      (load-file elisp-file)
+    ('error (message "%s" ex))))
+
+(defun load-lisp-in-dir (dir)
+  "Load all elisp files (ending in .el extension) in dir.
+If there is an issue reading dir, display an error message."
+  (if (file-exists-p dir)
+      (condition-case ex
+          (mapc 'try-to-load-elisp (directory-files dir t "\\.el$"))
+        ('error (message "%s" ex)))))
+
+(when (or (not (boundp 'reload-elisp)) reload-elisp)
+  (load-lisp-in-dir "~/elisp"))
+
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
@@ -206,10 +224,12 @@ be applied to each major mode in a smarter way."
   (other-window (- count) all-frames))
 
 (defun reload-emacs-config ()
+  "Reload ~/.emacs
+When a prefix argument is used, do not reload the files in ~/elisp"
   (interactive)
-  (setq do-not-resize t)
+  (when current-prefix-arg (setq reload-elisp nil))
   (load-file "~/.emacs")
-  (setq do-not-resize nil))
+  (setq reload-elisp t))
 
 (defun highlight-all-current-region (&optional face)
   (interactive
