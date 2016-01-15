@@ -308,11 +308,12 @@ eshell buffer is remote, change the directory to the user's home directory
 before doing the cleanup. This prevents tramp-cleanup-all-buffers from deleting
 the eshell buffer as part of its cleanup."
   (interactive)
-  (with-current-buffer "*eshell*"
-    (when (string-match-p "ssh:" default-directory)
-      (eshell/cd "~")
-      (eshell-interrupt-process))
-    (tramp-cleanup-all-buffers)))
+  (when (get-buffer "*eshell*")
+    (with-current-buffer "*eshell*"
+      (when (string-match-p "ssh:" default-directory)
+        (eshell/cd "~")
+        (eshell-interrupt-process))))
+  (tramp-cleanup-all-buffers))
 
 (defun window-browser ()
   "Enter an interactive browsing mode, where the following keys are mapped to
