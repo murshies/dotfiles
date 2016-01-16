@@ -1,5 +1,7 @@
 
+;; ============================================================================
 ;; Miscellaneous settings
+;; ============================================================================
 
 (setq ring-bell-function 'ignore)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -19,6 +21,30 @@
 (setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
+(setq buffer-regexs-to-hide
+      '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
+	"*Shell Command Output*" "*Process List*"))
+(global-visual-line-mode t)
+(set-face-attribute 'default nil :height 100)
+
+; eshell custom prompt
+(setq eshell-prompt-function
+      (lambda ()
+	(concat
+	 (propertize
+	  (concat
+	   "\n["
+	   (format-time-string "%a %Y-%m-%d %H:%M:%S")
+	   "]\n"
+	   (car (reverse (split-string (eshell/pwd) "/")))
+	   (if (= (user-uid) 0) " #" " $"))
+	  'face `(:foreground "#00CC00"))
+	 (propertize " " 'face `(:foreground "#FFFFFF")))))
+(setq eshell-highlight-prompt nil)
+
+;; ============================================================================
+;; Utility functions
+;; ============================================================================
 
 (defun ssh-ansi (ssh-args)
   "Open an ssh connection in a new buffer.
@@ -66,6 +92,136 @@ If there is an issue reading dir, display an error message."
           (mapc 'try-to-load-elisp (directory-files dir t "\\.el$"))
         ('error (message "%s" ex)))))
 
+(defun small-scroll-down ()
+  (interactive)
+  (scroll-down 4))
+
+(defun small-scroll-up ()
+  (interactive)
+  (scroll-up 4))
+
+(defun move-backwards (count &optional all-frames)
+  (interactive "p")
+  (other-window (* -1 count) all-frames))
+
+(defun prev-window (count &optional all-frames)
+  (interactive "p")
+  (other-window (- count) all-frames))
+
+(defun reload-emacs-config ()
+  "Reload ~/.emacs
+When a prefix argument is used, do not reload the files in ~/elisp"
+  (interactive)
+  (when current-prefix-arg (setq reload-elisp nil))
+  (load-file "~/.emacs")
+  (setq reload-elisp t))
+
+(defun highlight-all-current-region (&optional face)
+  (interactive
+   (list
+    (hi-lock-read-face-name)))
+  (or (facep face) (setq face 'hi-yellow))
+  (hi-lock-set-pattern 
+   (buffer-substring (mark) (point))
+   face)
+  (deactivate-mark))
+
+(defun matches-any-regex (regex-list str)
+  (if (not regex-list) nil
+    (let ((next-regex (car regex-list)))
+      (if (string-match-p next-regex str) t
+	(matches-any-regex (cdr regex-list) str)))))
+
+(defun delete-windows-with-names (open-windows buffer-names)
+  (if open-windows
+      (let ((curr-window (car open-windows)))
+	(progn
+	  (if (matches-any-regex
+	       buffer-names
+	       (buffer-name (window-buffer curr-window)))
+	      (delete-window curr-window))
+	  (delete-windows-with-names (cdr open-windows) buffer-names)))))
+
+(defun delete-specific-windows ()
+  (interactive)
+  (delete-windows-with-names (window-list) buffer-regexs-to-hide))
+
+(defun create-new-buffer ()
+  (interactive)
+  (let ((new-buf (generate-new-buffer "new")))
+    (switch-to-buffer new-buf)
+    (set-buffer-major-mode new-buf)))
+
+(defun tramp-cleanup-all ()
+  "Clean up all tramp connections/buffers. If the current directory of the
+eshell buffer is remote, change the directory to the user's home directory
+before doing the cleanup. This prevents tramp-cleanup-all-buffers from deleting
+the eshell buffer as part of its cleanup."
+  (interactive)
+  (when (get-buffer "*eshell*")
+    (with-current-buffer "*eshell*"
+      (when (string-match-p "ssh:" default-directory)
+        (eshell/cd "~")
+        (eshell-interrupt-process))))
+  (tramp-cleanup-all-buffers))
+
+(defun window-browser ()
+  "Enter an interactive browsing mode, where the following keys are mapped to
+specific window navigation functions:
+ [ (91) - display the 'previous buffer' in the current window
+ ] (93) - display the 'next buffer' in the current window
+ ; (59) - move focus to the previous window
+ ' (39) - move focus to the next window
+ , (44) - scroll down in the current buffer (emacs' definition of scroll down)
+ . (46) - scroll up in the current buffer
+ 0 (48) - delete current window
+ 1 (49) - delete all other windows
+ 2 (50) - split window below
+ 3 (51) - split window right
+ < (60) - beginning of buffer
+ > (62) - end of buffer
+Entering any other key or key chord exits the browsing mode."
+  (interactive)
+  (let ((input-done nil))
+    (while (not input-done)
+      ; Catch any errors. Whenever the user tries to scroll off the edges of a
+      ; buffer, Emacs treats this as an error and will exit window browsing.
+      ; This behavior is undesired; instead, the window browsing session should
+      ; continue.
+      (condition-case ex
+	  (let ((char-input (read-char "Browsing")))
+	    (cond
+	     ((= char-input 91) (previous-buffer))
+	     ((= char-input 93) (next-buffer))
+	     ((= char-input 59) (prev-window 1))
+	     ((= char-input 39) (other-window 1))
+	     ((= char-input 44) (small-scroll-down))
+	     ((= char-input 46) (small-scroll-up))
+	     ((= char-input 48) (delete-window))
+	     ((= char-input 49) (delete-other-windows))
+	     ((= char-input 50) (split-window-below))
+	     ((= char-input 51) (split-window-right))
+	     ((= char-input 60) (beginning-of-buffer))
+	     ((= char-input 62) (end-of-buffer))
+	     (t (setq input-done t))))
+	('error t)))))
+
+(defun search-all-buffers (regex)
+  "Search all open buffers for lines matching regex."
+  (interactive "sList lines match regex: ")
+  (multi-occur-in-matching-buffers ".*" regex))
+
+(defun eshell-cd-to-current-directory ()
+  (interactive)
+  (let ((current-directory default-directory))
+    (eshell)
+    (eshell/cd current-directory)
+    (eshell-interrupt-process)))
+
+;; ============================================================================
+;; Hooks and mode-specific setup
+;; ============================================================================
+
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
@@ -89,8 +245,6 @@ If there is an issue reading dir, display an error message."
 (when (not (daemonp)) (frame-creation-hook (selected-frame)))
 (add-hook 'after-make-frame-functions 'frame-creation-hook)
 
-;; Hook functions
-
 (defun before-save ()
   "A hook that runs before a buffer is saved.
 Currently this just deletes trailing whitespace if the buffer is using
@@ -104,7 +258,7 @@ python-mode."
 There are many modes on which these should be enabled, so instead of defining a
 function for each and then adding the mode hook separately, this function can
 be applied to each major mode in a smarter way."
-  (linum-mode t)
+  (linum-mode)
   (highlight-line-mode))
 
 (setq modes-for-linum-and-hl-line
@@ -187,70 +341,6 @@ be applied to each major mode in a smarter way."
         ("php"   . "\\.phtml\\'")
         ("blade" . "\\.blade\\.")))
 
-;; Project management
-;; Loading helm/projectile can take a second or two, and it isn't really needed
-;; if we're just doing quick edits. Only load them when this function is
-;; called.
-(defun load-project-management ()
-  (interactive)
-  (require 'helm-config)
-  (helm-mode 1)
-  (helm-projectile-on)
-  (setq projectile-completion-system 'helm)
-  (setq projectile-indexing-mode 'alien)
-  (setq projectile-enable-caching t)
-  (setq project-enable-caching t)
-  (set-additional-project-keys))
-
-;; Key binding functions
-
-(defun small-scroll-down ()
-  (interactive)
-  (scroll-down 4))
-
-(defun small-scroll-up ()
-  (interactive)
-  (scroll-up 4))
-
-(defun move-backwards (count &optional all-frames)
-  (interactive "p")
-  (other-window (* -1 count) all-frames))
-
-(defun prev-window (count &optional all-frames)
-  (interactive "p")
-  (other-window (- count) all-frames))
-
-(defun reload-emacs-config ()
-  "Reload ~/.emacs
-When a prefix argument is used, do not reload the files in ~/elisp"
-  (interactive)
-  (when current-prefix-arg (setq reload-elisp nil))
-  (load-file "~/.emacs")
-  (setq reload-elisp t))
-
-(defun highlight-all-current-region (&optional face)
-  (interactive
-   (list
-    (hi-lock-read-face-name)))
-  (or (facep face) (setq face 'hi-yellow))
-  (hi-lock-set-pattern 
-   (buffer-substring (mark) (point))
-   face)
-  (deactivate-mark))
-
-(defun determine-projectile-search-program ()
-  (cond
-   ((executable-find "ag") 'helm-projectile-ag)
-   ((executable-find "ack") 'helm-projectile-ack)
-   (t 'helm-projectile-grep)))
-
-(defun set-additional-project-keys ()
-  (global-set-key (kbd "C-c h") (determine-projectile-search-program))
-  (global-set-key (kbd "C-c p w") 'projectile-global-mode)
-  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-j") 'helm-select-action)
-  (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
-
 (add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
 
 (eval-after-load "python"
@@ -272,94 +362,40 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
   (python-check (concat "pylint -f text " buffer-file-name)))  
 
-(defun matches-any-regex (regex-list str)
-  (if (not regex-list) nil
-    (let ((next-regex (car regex-list)))
-      (if (string-match-p next-regex str) t
-	(matches-any-regex (cdr regex-list) str)))))
+;; ============================================================================
+;; Project management
+;; ============================================================================
 
-(setq buffer-regexs-to-hide
-      '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
-	"*Shell Command Output*" "*Process List*"))
-
-(defun delete-windows-with-names (open-windows buffer-names)
-  (if open-windows
-      (let ((curr-window (car open-windows)))
-	(progn
-	  (if (matches-any-regex
-	       buffer-names
-	       (buffer-name (window-buffer curr-window)))
-	      (delete-window curr-window))
-	  (delete-windows-with-names (cdr open-windows) buffer-names)))))
-
-(defun delete-specific-windows ()
+;; Loading helm/projectile can take a second or two, and it isn't really needed
+;; if we're just doing quick edits. Only load them when this function is
+;; called.
+(defun load-project-management ()
   (interactive)
-  (delete-windows-with-names (window-list) buffer-regexs-to-hide))
+  (require 'helm-config)
+  (helm-mode 1)
+  (helm-projectile-on)
+  (setq projectile-completion-system 'helm)
+  (setq projectile-indexing-mode 'alien)
+  (setq projectile-enable-caching t)
+  (setq project-enable-caching t)
+  (set-additional-project-keys))
 
-(defun create-new-buffer ()
-  (interactive)
-  (let ((new-buf (generate-new-buffer "new")))
-    (switch-to-buffer new-buf)
-    (set-buffer-major-mode new-buf)))
+(defun determine-projectile-search-program ()
+  (cond
+   ((executable-find "ag") 'helm-projectile-ag)
+   ((executable-find "ack") 'helm-projectile-ack)
+   (t 'helm-projectile-grep)))
 
-(defun tramp-cleanup-all ()
-  "Clean up all tramp connections/buffers. If the current directory of the
-eshell buffer is remote, change the directory to the user's home directory
-before doing the cleanup. This prevents tramp-cleanup-all-buffers from deleting
-the eshell buffer as part of its cleanup."
-  (interactive)
-  (when (get-buffer "*eshell*")
-    (with-current-buffer "*eshell*"
-      (when (string-match-p "ssh:" default-directory)
-        (eshell/cd "~")
-        (eshell-interrupt-process))))
-  (tramp-cleanup-all-buffers))
+(defun set-additional-project-keys ()
+  (global-set-key (kbd "C-c h") (determine-projectile-search-program))
+  (global-set-key (kbd "C-c p w") 'projectile-global-mode)
+  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-j") 'helm-select-action)
+  (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level))
 
-(defun window-browser ()
-  "Enter an interactive browsing mode, where the following keys are mapped to
-specific window navigation functions:
- [ (91) - display the 'previous buffer' in the current window
- ] (93) - display the 'next buffer' in the current window
- ; (59) - move focus to the previous window
- ' (39) - move focus to the next window
- , (44) - scroll down in the current buffer (emacs' definition of scroll down)
- . (46) - scroll up in the current buffer
- 0 (48) - delete current window
- 1 (49) - delete all other windows
- 2 (50) - split window below
- 3 (51) - split window right
- < (60) - beginning of buffer
- > (62) - end of buffer
-Entering any other key or key chord exits the browsing mode."
-  (interactive)
-  (let ((input-done nil))
-    (while (not input-done)
-      ; Catch any errors. Whenever the user tries to scroll off the edges of a
-      ; buffer, Emacs treats this as an error and will exit window browsing.
-      ; This behavior is undesired; instead, the window browsing session should
-      ; continue.
-      (condition-case ex
-	  (let ((char-input (read-char "Browsing")))
-	    (cond
-	     ((= char-input 91) (previous-buffer))
-	     ((= char-input 93) (next-buffer))
-	     ((= char-input 59) (prev-window 1))
-	     ((= char-input 39) (other-window 1))
-	     ((= char-input 44) (small-scroll-down))
-	     ((= char-input 46) (small-scroll-up))
-	     ((= char-input 48) (delete-window))
-	     ((= char-input 49) (delete-other-windows))
-	     ((= char-input 50) (split-window-below))
-	     ((= char-input 51) (split-window-right))
-	     ((= char-input 60) (beginning-of-buffer))
-	     ((= char-input 62) (end-of-buffer))
-	     (t (setq input-done t))))
-	('error t)))))
-
-(defun search-all-buffers (regex)
-  "Search all open buffers for lines matching regex."
-  (interactive "sList lines match regex: ")
-  (multi-occur-in-matching-buffers ".*" regex))
+;; ============================================================================
+;; Global key bindings
+;; ============================================================================
 
 (global-set-key [f1] 'search-all-buffers)
 (global-set-key [f2] 'revert-buffer)
@@ -395,34 +431,9 @@ Entering any other key or key chord exits the browsing mode."
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "M-W") 'copy-line)
 
-;; Style settings
-
-(global-visual-line-mode t)
-(set-face-attribute 'default nil :height 100)
-
-; eshell custom prompt
-(setq eshell-prompt-function
-      (lambda ()
-	(concat
-	 (propertize
-	  (concat
-	   "\n["
-	   (format-time-string "%a %Y-%m-%d %H:%M:%S")
-	   "]\n"
-	   (car (reverse (split-string (eshell/pwd) "/")))
-	   (if (= (user-uid) 0) " #" " $"))
-	  'face `(:foreground "#00CC00"))
-	 (propertize " " 'face `(:foreground "#FFFFFF")))))
-(setq eshell-highlight-prompt nil)
-
-(defun eshell-cd-to-current-directory ()
-  (interactive)
-  (let ((current-directory default-directory))
-    (eshell)
-    (eshell/cd current-directory)
-    (eshell-interrupt-process)))
-
+;; ============================================================================
 ;; Backup file behavior
+;; ============================================================================
 
 (setq vc-make-backup-files t)
 (setq version-control t
@@ -447,7 +458,9 @@ Entering any other key or key chord exits the browsing mode."
   (let ((buffer-backed-up nil))
     (backup-buffer)))
 
-;; Package management. This only works with emacs 24 or greater.
+;; ============================================================================
+;; Package management
+;; ============================================================================
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
