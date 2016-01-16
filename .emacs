@@ -341,8 +341,11 @@ be applied to each major mode in a smarter way."
         ("php"   . "\\.phtml\\'")
         ("blade" . "\\.blade\\.")))
 
+;; Use conf-mode for rc files
 (add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
 
+;; Define key bindings for python-mode when it is loaded. This is usually done
+;; when the first python file of the emacs session is opened.
 (eval-after-load "python"
   '(progn (define-key python-mode-map (kbd "C-c v f") 'pyflakes-current-file)
           (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)))
