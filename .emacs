@@ -281,22 +281,21 @@ be applied to each major mode in a smarter way."
 (mapc (lambda (mode-name) (add-hook mode-name 'linum-and-hl-line-hook))
       modes-for-linum-and-hl-line)
 
-(defun c++-hook ()
+(defun c-common-hook ()
+  "A hook used for C/C++."
+  (setq c-default--style "linux")
   (setq c-basic-offset 4)
-  (setq indent-tabs-mode nil)
   (setq tab-width 4)
-  (c-set-offset 'innamespace 0)
-  (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file)
+  (setq indent-tabs-mode nil)
+  (c-set-offset 'innamespace 0) ; Don't indent for namespaces
   (if (package-installed-p 'ggtags)
       (ggtags-mode)))
 
+(defun c++-hook ()
+  (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file))
+
 (defun c-hook ()
-  (setq c-basic-offset 4)
-  (setq indent-tabs-mode nil)
-  (setq tab-width 4)
-  (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file)
-  (if (package-installed-p 'ggtags)
-      (ggtags-mode)))
+  (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file))
 
 (defun eshell-hook ()
   (setq pcomplete-cycle-completions nil))
@@ -313,6 +312,7 @@ be applied to each major mode in a smarter way."
   (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
   (set-face-attribute 'term-color-red nil :foreground "Orchid"))
 
+(add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
