@@ -322,7 +322,8 @@ be applied to each major mode in a smarter way."
   (set-face-attribute 'term-color-red nil :foreground "Orchid")
   (setq starting-directory default-directory)
   (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
-  (define-key term-raw-map (kbd "C-c g") 'term-cd-to-starting-directory))
+  (define-key term-raw-map (kbd "C-c g") 'term-cd-to-starting-directory)
+  (define-key term-raw-map (kbd "C-c s") nil))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
