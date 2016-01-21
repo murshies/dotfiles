@@ -218,6 +218,15 @@ Entering any other key or key chord exits the browsing mode."
     (eshell/cd current-directory)
     (eshell-interrupt-process)))
 
+(defun term-cd-to-starting-directory ()
+  "Change the current directory in the current term-mode buffer to its starting
+buffer. This relies on the current term-mode buffer having a variable defined
+called starting-directory."
+  (interactive)
+  (interrupt-process)
+  (insert (concat "cd " starting-directory))
+  (term-send-input))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
@@ -310,7 +319,10 @@ be applied to each major mode in a smarter way."
 (defun term-hook ()
   ; The default blue is incredibly difficult to read
   (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
-  (set-face-attribute 'term-color-red nil :foreground "Orchid"))
+  (set-face-attribute 'term-color-red nil :foreground "Orchid")
+  (setq starting-directory default-directory)
+  (define-key term-mode-map (kbd "C-c C-g") 'term-cd-to-starting-directory)
+  (define-key term-raw-map (kbd "C-c C-g") 'term-cd-to-starting-directory))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
