@@ -227,6 +227,24 @@ called starting-directory."
   (insert (concat "cd " starting-directory))
   (term-send-input))
 
+(defun generate-etags-in-directory (directory file-pattern)
+  "Generate an etags file in a directory specified by the user. The user also
+specifies a pattern (passed to find) that will match against files in the
+specified directory and subdirectories."
+  (interactive
+   (list
+    (read-file-name "Enter the etags root: ")
+    (read-regexp "Enter a regex to match file names against: ")))
+  (let* ((tag-file (concat
+                    (file-name-as-directory directory)
+                    "TAGS"))
+         (etags-command
+          (format "find \"%s\" -type f -name \"%s\" | xargs etags -f %s"
+                  directory file-pattern tag-file)))
+    (compilation-start
+     etags-command nil (lambda (_)
+                         (format "*etags [%s %s]*" directory file-pattern)))))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
