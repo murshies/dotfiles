@@ -239,7 +239,7 @@ specified directory and subdirectories."
                     (file-name-as-directory directory)
                     "TAGS"))
          (etags-command
-          (format "find \"%s\" -type f -name \"%s\" | xargs etags -f %s"
+          (format "find \"%s\" -type f -name \"%s\" | etags -f %s -"
                   directory file-pattern tag-file)))
     (compilation-start
      etags-command nil (lambda (_)
