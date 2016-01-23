@@ -412,6 +412,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (setq projectile-indexing-mode 'alien)
   (setq projectile-enable-caching t)
   (setq project-enable-caching t)
+  (set-face-foreground 'helm-etags-file "SkyBlue")
   (set-additional-project-keys))
 
 (defun determine-projectile-search-program ()
