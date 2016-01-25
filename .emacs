@@ -318,8 +318,6 @@ be applied to each major mode in a smarter way."
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
   (c-set-offset 'innamespace 0)) ; Don't indent for namespaces
-  ;; (if (package-installed-p 'ggtags)
-  ;;     (ggtags-mode)))
 
 (defun c++-hook ()
   (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file))
