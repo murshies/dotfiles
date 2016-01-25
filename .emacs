@@ -227,23 +227,26 @@ called starting-directory."
   (insert (concat "cd " starting-directory))
   (term-send-input))
 
-(defun generate-etags-in-directory (directory file-pattern)
+(defun generate-etags-in-directory (directory file-patterns)
   "Generate an etags file in a directory specified by the user. The user also
 specifies a pattern (passed to find) that will match against files in the
 specified directory and subdirectories."
   (interactive
    (list
     (read-file-name "Enter the etags root: ")
-    (read-regexp "Enter a regex to match file names against: ")))
-  (let* ((tag-file (concat
-                    (file-name-as-directory directory)
-                    "TAGS"))
+    (read-regexp "Enter any number of file name patterns, separated by spaces: ")))
+  (let* ((tag-file (concat (file-name-as-directory directory) "TAGS"))
+         (file-pattern-list
+          (cl-remove-if (lambda (s) (= (length s) 0))
+                        (split-string file-patterns)))
+         (find-file-string
+          (mapconcat 'identity file-pattern-list "\" -or -name \""))
          (etags-command
           (format "find \"%s\" -type f -name \"%s\" | etags -f %s -"
-                  directory file-pattern tag-file)))
-    (compilation-start
-     etags-command nil (lambda (_)
-                         (format "*etags [%s %s]*" directory file-pattern)))))
+                  directory find-file-string tag-file)))
+    (compilation-start etags-command nil
+                       (lambda (_) (format "*etags [%s %s]*"
+                                           directory file-patterns)))))
 
 ;; ============================================================================
 ;; Hooks and mode-specific setup
@@ -314,9 +317,9 @@ be applied to each major mode in a smarter way."
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
-  (c-set-offset 'innamespace 0) ; Don't indent for namespaces
-  (if (package-installed-p 'ggtags)
-      (ggtags-mode)))
+  (c-set-offset 'innamespace 0)) ; Don't indent for namespaces
+  ;; (if (package-installed-p 'ggtags)
+  ;;     (ggtags-mode)))
 
 (defun c++-hook ()
   (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file))
