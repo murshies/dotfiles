@@ -344,7 +344,7 @@ be applied to each major mode in a smarter way."
   (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
   (define-key term-raw-map (kbd "C-c g") 'term-cd-to-starting-directory)
   (define-key term-raw-map (kbd "C-c s") nil)
-  (define-key term-raw-map (kbd "C-x M-x") 'helm-M-x))
+  (define-key term-raw-map (kbd "M-x") 'helm-M-x))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
@@ -428,7 +428,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (global-set-key (kbd "C-c h") (determine-projectile-search-program))
   (global-set-key (kbd "C-c p w") 'projectile-global-mode)
   (global-set-key (kbd "M-.") 'helm-etags-select)
-  (global-set-key (kbd "C-x M-x") 'helm-M-x)
+  (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
