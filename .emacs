@@ -227,6 +227,14 @@ called starting-directory."
   (insert (concat "cd " starting-directory))
   (term-send-input))
 
+(defun ansi-term-in-directory (directory)
+  "Creates an ansi term in the directory that is interactively entered.
+ansi-term is called interactively to allow the user to enter the program that
+will be run."
+  (interactive (list (read-file-name "Enter the shell starting directory: ")))
+  (let ((default-directory (file-name-as-directory directory)))
+    (call-interactively 'ansi-term)))
+
 (defun generate-etags-in-directory (directory file-patterns)
   "Generate an etags file in a directory specified by the user. The user also
 specifies a pattern (passed to find) that will match against files in the
@@ -460,6 +468,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-c s d") 'eshell-cd-to-current-directory)
 (global-set-key (kbd "C-c s a") 'ansi-term)
 (global-set-key (kbd "C-c s s") 'ssh-ansi)
+(global-set-key (kbd "C-c s w") 'ansi-term-in-directory)
 (global-set-key (kbd "M-I") 'windmove-up)
 (global-set-key (kbd "M-K") 'windmove-down)
 (global-set-key (kbd "M-J") 'windmove-left)
