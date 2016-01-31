@@ -287,7 +287,10 @@ specified directory and subdirectories."
   "A hook that runs before a buffer is saved.
 Currently this just deletes trailing whitespace if the buffer is using
 python-mode."
-  (let ((delete-whitespace-major-modes '(python-mode)))
+  (let ((delete-whitespace-major-modes
+         '(python-mode
+           c++-mode
+           c-mode)))
     (when (member major-mode delete-whitespace-major-modes)
       (delete-trailing-whitespace))))
 
