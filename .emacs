@@ -506,7 +506,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
         markdown-mode
         redo+
         smooth-scrolling
-        ssh
         web-mode
         yaml-mode))
 
