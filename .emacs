@@ -1,4 +1,3 @@
-
 ;; ============================================================================
 ;; Miscellaneous settings
 ;; ============================================================================
@@ -23,23 +22,23 @@
 (setq-default indent-tabs-mode nil)
 (setq buffer-regexs-to-hide
       '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
-	"*Shell Command Output*" "*Process List*"))
+        "*Shell Command Output*" "*Process List*"))
 (global-visual-line-mode t)
 (set-face-attribute 'default nil :height 100)
 
 ; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
-	(concat
-	 (propertize
-	  (concat
-	   "\n["
-	   (format-time-string "%a %Y-%m-%d %H:%M:%S")
-	   "]\n"
-	   (car (reverse (split-string (eshell/pwd) "/")))
-	   (if (= (user-uid) 0) " #" " $"))
-	  'face `(:foreground "#00CC00"))
-	 (propertize " " 'face `(:foreground "#FFFFFF")))))
+(concat
+ (propertize
+  (concat
+   "\n["
+   (format-time-string "%a %Y-%m-%d %H:%M:%S")
+   "]\n"
+   (car (reverse (split-string (eshell/pwd) "/")))
+   (if (= (user-uid) 0) " #" " $"))
+  'face `(:foreground "#00CC00"))
+ (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
 
 ;; ============================================================================
@@ -68,8 +67,8 @@ This function assumes that there is an ssh command on the user's PATH."
 (defun highlight-line-mode ()
   (if (display-graphic-p)
       (progn
-	(hl-line-mode t)
-	(set-face-background 'hl-line hl-line-color))))
+        (hl-line-mode t)
+        (set-face-background 'hl-line hl-line-color))))
 
 (defun copy-line ()
   "Copies the entire current line to the kill ring."
@@ -130,17 +129,17 @@ When a prefix argument is used, do not reload the files in ~/elisp"
   (if (not regex-list) nil
     (let ((next-regex (car regex-list)))
       (if (string-match-p next-regex str) t
-	(matches-any-regex (cdr regex-list) str)))))
+        (matches-any-regex (cdr regex-list) str)))))
 
 (defun delete-windows-with-names (open-windows buffer-names)
   (if open-windows
       (let ((curr-window (car open-windows)))
-	(progn
-	  (if (matches-any-regex
-	       buffer-names
-	       (buffer-name (window-buffer curr-window)))
-	      (delete-window curr-window))
-	  (delete-windows-with-names (cdr open-windows) buffer-names)))))
+        (progn
+          (if (matches-any-regex
+               buffer-names
+               (buffer-name (window-buffer curr-window)))
+              (delete-window curr-window))
+          (delete-windows-with-names (cdr open-windows) buffer-names)))))
 
 (defun delete-specific-windows ()
   (interactive)
@@ -189,22 +188,22 @@ Entering any other key or key chord exits the browsing mode."
       ; This behavior is undesired; instead, the window browsing session should
       ; continue.
       (condition-case ex
-	  (let ((char-input (read-char "Browsing")))
-	    (cond
-	     ((= char-input 91) (previous-buffer))
-	     ((= char-input 93) (next-buffer))
-	     ((= char-input 59) (prev-window 1))
-	     ((= char-input 39) (other-window 1))
-	     ((= char-input 44) (small-scroll-down))
-	     ((= char-input 46) (small-scroll-up))
-	     ((= char-input 48) (delete-window))
-	     ((= char-input 49) (delete-other-windows))
-	     ((= char-input 50) (split-window-below))
-	     ((= char-input 51) (split-window-right))
-	     ((= char-input 60) (beginning-of-buffer))
-	     ((= char-input 62) (end-of-buffer))
-	     (t (setq input-done t))))
-	('error t)))))
+          (let ((char-input (read-char "Browsing")))
+            (cond
+             ((= char-input 91) (previous-buffer))
+             ((= char-input 93) (next-buffer))
+             ((= char-input 59) (prev-window 1))
+             ((= char-input 39) (other-window 1))
+             ((= char-input 44) (small-scroll-down))
+             ((= char-input 46) (small-scroll-up))
+             ((= char-input 48) (delete-window))
+             ((= char-input 49) (delete-other-windows))
+             ((= char-input 50) (split-window-below))
+             ((= char-input 51) (split-window-right))
+             ((= char-input 60) (beginning-of-buffer))
+             ((= char-input 62) (end-of-buffer))
+             (t (setq input-done t))))
+        ('error t)))))
 
 (defun search-all-buffers (regex)
   "Search all open buffers for lines matching regex."
@@ -507,7 +506,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (when (not buffer-backed-up)
     ;; Override the default parameters for per-session backups.
     (let ((backup-directory-alist '(("" . "~/.emacs.d/backup/per-session")))
-	  (kept-new-versions 4))
+          (kept-new-versions 4))
       (backup-buffer)))
   ;; Make a "per save" backup on each save.  The first save results in
   ;; both a per-session and a per-save backup, to keep the numbering
@@ -522,23 +521,24 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
       '(erc-hl-nicks
-	helm-ag
+        helm-ag
         helm-projectile
-	redo+
-	smooth-scrolling
+        magit
+        redo+
+        smooth-scrolling
         ssh
         web-mode
         yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
-	
+
 (defun install-packages-if-not-installed (package-list)
   (if package-list
       (let ((curr-package (car package-list)))
-	(progn
-	  (if (not (package-installed-p curr-package))
-	      (package-install curr-package))
-	  (install-packages-if-not-installed (cdr package-list))))))
+        (progn
+          (if (not (package-installed-p curr-package))
+              (package-install curr-package))
+          (install-packages-if-not-installed (cdr package-list))))))
 
 ;; Interactive function to ensure that all packages in the list
 ;; "packages-to-install" are installed.
@@ -550,8 +550,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (defun load-redo+ ()
   (if (package-installed-p 'redo+)
       (progn
-	(require 'redo+)
-	(global-set-key (kbd "M-_") 'redo))))
+        (require 'redo+)
+        (global-set-key (kbd "M-_") 'redo))))
 
 (cond
  ((>= emacs-major-version 24)
