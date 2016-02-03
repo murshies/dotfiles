@@ -503,6 +503,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
         helm-ag
         helm-projectile
         magit
+        markdown-mode
         redo+
         smooth-scrolling
         ssh
