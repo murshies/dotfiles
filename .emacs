@@ -25,6 +25,7 @@
         "*Shell Command Output*" "*Process List*"))
 (global-visual-line-mode t)
 (set-face-attribute 'default nil :height 100)
+(setq tags-add-tables nil)
 
 ; eshell custom prompt
 (setq eshell-prompt-function
