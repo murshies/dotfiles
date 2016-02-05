@@ -424,6 +424,10 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
   (require 'helm-config)
   (helm-mode 1)
+  ;; Turn on projectile-mode briefly to have emacs do project cache
+  ;; initialization. Then, turn projectile mode off.
+  (projectile-mode)
+  (projectile-mode -1)
   (helm-projectile-on)
   (setq projectile-completion-system 'helm)
   (setq projectile-indexing-mode 'alien)
