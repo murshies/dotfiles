@@ -496,7 +496,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-:") 'move-backwards)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "M-W") 'copy-line)
-(global-set-key (kbd "M-g g") 'magit-status)
+(global-set-key (kbd "M-g v") 'magit-status)
 
 ;; ============================================================================
 ;; Backup file behavior
