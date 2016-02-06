@@ -232,10 +232,11 @@ called starting-directory."
 is *ansi-<current directory>*."
   (interactive
    (list
-    (read-string "Run program: " explicit-shell-file-name nil
-                 explicit-shell-file-name)))
-  (let* ((cd-name (car (last (split-string
-                              (directory-file-name default-directory) "/"))))
+    (read-string "Run program: " (or explicit-shell-file-name "/bin/bash") nil
+                 (or explicit-shell-file-name "/bin/bash"))))
+  (let* ((absolute-directory
+          (directory-file-name (expand-file-name default-directory)))
+         (cd-name (car (last (split-string absolute-directory "/"))))
          (buffer-name (concat "ansi-" cd-name)))
     (ansi-term program buffer-name)))
 
