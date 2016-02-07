@@ -42,6 +42,10 @@
  (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
 
+;; (setq-default left-fringe-width 10)
+;; (setq-default right-fringe-width 0)
+;; (set-face-attribute 'fringe nil :background "black")
+
 ;; ============================================================================
 ;; Utility functions
 ;; ============================================================================
@@ -315,6 +319,10 @@ be applied to each major mode in a smarter way."
   (linum-mode)
   (highlight-line-mode))
 
+;; (setq linum-format
+;;       (lambda (num) (if (display-graphic-p) (format "%d" num)
+;;                       (format "%d " num))))
+
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
@@ -515,6 +523,12 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; Backup file behavior
 ;; ============================================================================
 
+(setq vc-make-backup-files t)
+(setq version-control t
+      kept-new-versions 4
+      kept-old-versions 0
+      delete-old-versions t
+      backup-by-copying t)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
 ;; ============================================================================
