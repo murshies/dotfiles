@@ -319,10 +319,6 @@ be applied to each major mode in a smarter way."
   (linum-mode)
   (highlight-line-mode))
 
-;; (setq linum-format
-;;       (lambda (num) (if (display-graphic-p) (format "%d" num)
-;;                       (format "%d " num))))
-
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
@@ -333,6 +329,7 @@ be applied to each major mode in a smarter way."
         lisp-mode-hook
         makefile-mode-hook
         org-mode-hook
+        perl-mode-hook
         python-mode-hook
         racket-mode-hook
         sh-mode-hook
