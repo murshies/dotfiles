@@ -407,8 +407,9 @@ be applied to each major mode in a smarter way."
         ("php"   . "\\.phtml\\'")
         ("blade" . "\\.blade\\.")))
 
-;; Use conf-mode for rc files
+;; Use conf-mode for rc and yang files
 (add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
+(add-to-list 'auto-mode-alist '("yang\\'" . conf-mode))
 
 ;; Define key bindings for python-mode when it is loaded. This is usually done
 ;; when the first python file of the emacs session is opened.
