@@ -354,6 +354,10 @@ be applied to each major mode in a smarter way."
 (defun c-hook ()
   (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file))
 
+(defun diff-hook ()
+  (linum-mode)
+  (diff-auto-refine-mode -1))
+
 (defun eshell-hook ()
   (setq pcomplete-cycle-completions nil))
 
@@ -381,6 +385,7 @@ be applied to each major mode in a smarter way."
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
+(add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
