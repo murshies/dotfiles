@@ -540,7 +540,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(erc-hl-nicks
+      '(auctex
+        erc-hl-nicks
         helm-ag
         helm-projectile
         magit
