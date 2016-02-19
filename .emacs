@@ -41,10 +41,7 @@
   'face `(:foreground "#00CC00"))
  (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
-
-;; (setq-default left-fringe-width 10)
-;; (setq-default right-fringe-width 0)
-;; (set-face-attribute 'fringe nil :background "black")
+(setq search-whitespace-regexp ".+")
 
 ;; ============================================================================
 ;; Utility functions
