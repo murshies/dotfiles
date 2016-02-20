@@ -270,6 +270,11 @@ specified directory and subdirectories."
                        (lambda (_) (format "*etags [%s %s]*"
                                            directory file-patterns)))))
 
+(defun run-background-command (command)
+  (interactive (list (read-string "Command: ")))
+  (compilation-start command nil
+                     (lambda (_) (format "*run %s*" command))))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
@@ -487,7 +492,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key [f6] 'compile)
 (global-set-key [f7] 'recompile)
 (global-set-key [f8] 'load-project-management)
-(global-set-key [f9] 'delete-specific-windows)
+(global-set-key [f9] 'run-background-command)
 (global-set-key [f12] 'tramp-cleanup-all)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
