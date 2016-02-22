@@ -418,6 +418,9 @@ be applied to each major mode in a smarter way."
 (add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("yang\\'" . conf-mode))
 
+;; Open C/C++ header files in c++-mode instead of c-mode.
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 ;; Define key bindings for python-mode when it is loaded. This is usually done
 ;; when the first python file of the emacs session is opened.
 (eval-after-load "python"
