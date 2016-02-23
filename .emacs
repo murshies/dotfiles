@@ -272,7 +272,7 @@ specified directory and subdirectories."
 
 (defun run-background-command (command)
   (interactive (list (read-string "Command: ")))
-  (compilation-start command nil
+  (compilation-start command t
                      (lambda (_) (format "*run %s*" command))))
 
 ;; ============================================================================
