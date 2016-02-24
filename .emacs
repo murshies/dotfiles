@@ -41,7 +41,6 @@
   'face `(:foreground "#00CC00"))
  (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
-(setq search-whitespace-regexp ".+")
 
 ;; ============================================================================
 ;; Utility functions
@@ -274,6 +273,20 @@ specified directory and subdirectories."
   (interactive (list (read-file-name "Command: ")))
   (compilation-start command t
                      (lambda (_) (format "*run %s*" command))))
+
+(defun loose-isearch-forward ()
+  "Call isearch-forward, but with spaces in the search string matching one or
+more of any character."
+  (interactive)
+  (let ((search-whitespace-regexp ".+"))
+    (isearch-forward)))
+
+(defun loose-isearch-backward ()
+  "Call isearch-backward, but with spaces in the search string matching one or
+more of any character."
+  (interactive)
+  (let ((search-whitespace-regexp ".+"))
+    (isearch-backward)))
 
 ;; ============================================================================
 ;; Hooks and mode-specific setup
@@ -526,6 +539,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "M-W") 'copy-line)
 (global-set-key (kbd "M-g v") 'magit-status)
+(global-set-key (kbd "M-S") 'loose-isearch-forward)
+(global-set-key (kbd "M-R") 'loose-isearch-backward)
 
 ;; ============================================================================
 ;; Backup file behavior
