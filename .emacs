@@ -270,7 +270,7 @@ specified directory and subdirectories."
                                            directory file-patterns)))))
 
 (defun run-background-command (command)
-  (interactive (list (read-file-name "Command: ")))
+  (interactive (list (read-string "Command: ")))
   (compilation-start command t
                      (lambda (_) (format "*run %s*" command))))
 
