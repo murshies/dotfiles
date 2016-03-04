@@ -223,7 +223,6 @@ Entering any other key or key chord exits the browsing mode."
 buffer. This relies on the current term-mode buffer having a variable defined
 called starting-directory."
   (interactive)
-  (interrupt-process)
   (insert (concat "cd " starting-directory))
   (term-send-input))
 
