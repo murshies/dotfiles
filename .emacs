@@ -262,7 +262,7 @@ specified directory and subdirectories."
          (find-file-string
           (mapconcat 'identity file-pattern-list "\" -or -name \""))
          (etags-command
-          (format "find \"%s\" -type f -name \"%s\" | etags -f %s -"
+          (format "find \"%s\" -type f -and \\( -name \"%s\" \\) | etags -f %s -"
                   directory find-file-string tag-file)))
     (compilation-start etags-command nil
                        (lambda (_) (format "*etags [%s %s]*"
