@@ -268,10 +268,14 @@ specified directory and subdirectories."
                        (lambda (_) (format "*etags [%s %s]*"
                                            directory file-patterns)))))
 
-(defun run-background-command (command)
-  (interactive (list (read-shell-command "Command: " nil nil)))
-  (compilation-start command t
-                     (lambda (_) (format "*run %s*" command))))
+(defun run-background-command (prefix-arg command)
+  (interactive (list current-prefix-arg (read-shell-command "Command: " nil nil)))
+  (let ((default-directory
+          (if prefix-arg
+              (read-directory-name "Working directory: ")
+            default-directory)))
+    (compilation-start command t
+                       (lambda (_) (format "*run %s*" command)))))
 
 (defun loose-isearch-forward ()
   "Call isearch-forward, but with spaces in the search string matching one or
