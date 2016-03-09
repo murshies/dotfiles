@@ -458,14 +458,14 @@ Even though the documentation for python-check says that the default file is
 supposed to be the current buffer's default, this isn't true after the first
 time that pyflakes it run. This function fixes this issue."
   (interactive)
-  (python-check (concat "pyflakes " buffer-file-name)))
+  (python-check (concat "pyflakes \"" buffer-file-name "\"")))
 
 (defun pylint-current-file ()
   "Run pylint on the current file.
 This runs in the same way as pyflakes-current-file (inside a compilation-mode
 buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
-  (python-check (concat "pylint -f text " buffer-file-name)))  
+  (python-check (concat "pylint -f text \"" buffer-file-name "\"")))  
 
 ;; ============================================================================
 ;; Project management
