@@ -226,13 +226,22 @@ called starting-directory."
   (insert (concat "cd " starting-directory))
   (term-send-input))
 
+(defun get-ansi-shell-command ()
+  "A helper function for handling the logic of determining which shell should
+be used for ansi-term buffers."
+  (let ((default-shell "/bin/bash"))
+    (if (boundp 'explicit-shell-file-name)
+        (or explicit-shell-file-name default-shell)
+      default-shell)))
+
 (defun named-ansi-term (program)
   "Creates an ansi-term buffer with a customized name. The format of the name
 is *ansi-<current directory>*."
   (interactive
    (list
-    (read-string "Run program: " (or explicit-shell-file-name "/bin/bash") nil
-                 (or explicit-shell-file-name "/bin/bash"))))
+    (let ((shell-to-use (get-ansi-shell-command)))
+      (read-string "Run program: " shell-to-use nil
+                   shell-to-use))))
   (let* ((absolute-directory
           (directory-file-name (expand-file-name default-directory)))
          (cd-name (car (last (split-string absolute-directory "/"))))
