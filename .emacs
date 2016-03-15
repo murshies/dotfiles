@@ -373,7 +373,8 @@ be applied to each major mode in a smarter way."
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
-  (c-set-offset 'innamespace 0)) ; Don't indent for namespaces
+  (c-set-offset 'innamespace 0)
+  (c-set-offset 'arglist-intro '+)) ; Don't indent for namespaces
 
 (defun c++-hook ()
   (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file))
