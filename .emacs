@@ -300,6 +300,14 @@ more of any character."
   (let ((search-whitespace-regexp ".+"))
     (isearch-backward)))
 
+(defun toggle-pin-buffer-to-window ()
+  "If the current window is not dedicated to its buffer, dedicate it and vice
+versa."
+  (interactive)
+  (set-window-dedicated-p (get-buffer-window) (not (window-dedicated-p)))
+  (message (format "Window is%s dedicated to its buffer"
+                   (if (window-dedicated-p) "" " not"))))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
@@ -554,6 +562,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "M-g v") 'magit-status)
 (global-set-key (kbd "M-S") 'loose-isearch-forward)
 (global-set-key (kbd "M-R") 'loose-isearch-backward)
+(global-set-key (kbd "C-x p") 'toggle-pin-buffer-to-window)
 
 ;; ============================================================================
 ;; Backup file behavior
