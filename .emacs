@@ -405,9 +405,15 @@ be applied to each major mode in a smarter way."
   (setq lua-indent-level 4))
 
 (defun term-hook ()
-  ; The default blue is incredibly difficult to read
-  (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
-  (set-face-attribute 'term-color-red nil :foreground "Orchid")
+  ;; The default blue is incredibly difficult to read
+  ;; If we're running with an emacs without X support, attempting to set these
+  ;; faces will fail, since they won't exist. Ignore errors when setting these
+  ;; fails.
+  (condition-case ex
+      (progn
+        (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
+        (set-face-attribute 'term-color-red nil :foreground "Orchid"))
+    ('error t))
   (make-local-variable 'starting-directory)
   (setq starting-directory default-directory)
   (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
