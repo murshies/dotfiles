@@ -42,6 +42,8 @@
  (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
 
+(remove-hook 'find-file-hooks 'vc-find-file-hook)
+
 ;; ============================================================================
 ;; Utility functions
 ;; ============================================================================
@@ -399,21 +401,17 @@ be applied to each major mode in a smarter way."
 
 (defun org-hook ()
   (org-indent-mode)
-  (setq org-log-done "time"))
+  (setq org-log-done "time")
+  ; two spaces in addition to the default two
+  (setq org-list-indent-offset 2))
 
 (defun lua-hook ()
   (setq lua-indent-level 4))
 
 (defun term-hook ()
-  ;; The default blue is incredibly difficult to read
-  ;; If we're running with an emacs without X support, attempting to set these
-  ;; faces will fail, since they won't exist. Ignore errors when setting these
-  ;; fails.
-  (condition-case ex
-      (progn
-        (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
-        (set-face-attribute 'term-color-red nil :foreground "Orchid"))
-    ('error t))
+  ; The default blue is incredibly difficult to read
+  (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
+  (set-face-attribute 'term-color-red nil :foreground "Orchid")
   (make-local-variable 'starting-directory)
   (setq starting-directory default-directory)
   (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
