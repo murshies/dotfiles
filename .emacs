@@ -534,7 +534,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
 (global-set-key [(control shift delete)] 'delete-region)
-(global-set-key (kbd "C-x r") 'rename-buffer)
+(global-set-key (kbd "C-x R") 'rename-buffer)
 (global-set-key (kbd "C-x ,") 'kill-matching-buffers)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
