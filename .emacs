@@ -310,6 +310,13 @@ versa."
   (message (format "Window is%s dedicated to its buffer"
                    (if (window-dedicated-p) "" " not"))))
 
+(defun confirm-emacs-close ()
+  (interactive)
+  (if (daemonp)
+      (save-buffers-kill-terminal)
+    (when (yes-or-no-p "Really quit? ")
+      (save-buffers-kill-emacs))))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
@@ -565,6 +572,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "M-S") 'loose-isearch-forward)
 (global-set-key (kbd "M-R") 'loose-isearch-backward)
 (global-set-key (kbd "C-x p") 'toggle-pin-buffer-to-window)
+(global-set-key (kbd "C-x C-c") 'confirm-emacs-close)
 
 ;; ============================================================================
 ;; Backup file behavior
