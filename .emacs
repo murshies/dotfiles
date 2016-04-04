@@ -311,11 +311,25 @@ versa."
                    (if (window-dedicated-p) "" " not"))))
 
 (defun confirm-emacs-close ()
+  "Display a confirmation prompt before closing the current emacs
+instance/client."
   (interactive)
   (if (daemonp)
       (save-buffers-kill-terminal)
     (when (yes-or-no-p "Really quit? ")
       (save-buffers-kill-emacs))))
+
+(defun save-filename-full-path ()
+  "Save the file name of the current buffer, with the full path, to the kill
+ring. Nothing is saved to the kill ring if the current buffer has no file
+associated with it."
+  (interactive)
+  (let ((fname (buffer-file-name)))
+    (if fname
+        (progn
+          (message fname)
+          (kill-new fname))
+      (message "No file associated with this buffer."))))
 
 ;; ============================================================================
 ;; Hooks and mode-specific setup
@@ -573,6 +587,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "M-R") 'loose-isearch-backward)
 (global-set-key (kbd "C-x p") 'toggle-pin-buffer-to-window)
 (global-set-key (kbd "C-x C-c") 'confirm-emacs-close)
+(global-set-key (kbd "C-x P") 'save-filename-full-path)
 
 ;; ============================================================================
 ;; Backup file behavior
