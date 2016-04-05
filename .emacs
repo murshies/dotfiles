@@ -497,7 +497,21 @@ time that pyflakes it run. This function fixes this issue."
 This runs in the same way as pyflakes-current-file (inside a compilation-mode
 buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
-  (python-check (concat "pylint -f text \"" buffer-file-name "\"")))  
+  (python-check (concat "pylint -f text \"" buffer-file-name "\"")))
+
+;; Similar to the python-mode checks, only define keybindings that are specific
+;; to yaml-mode after it has been loaded.
+(eval-after-load "yaml"
+  '(define-key yaml-mode-map (kbd "C-c v l") 'ansible-lint-current-file))
+
+(defun ansible-lint-current-file ()
+  "Runs an ansible syntax-check on the current file."
+  (interactive)
+  (let* ((command (concat "ansible-playbook --syntax-check \""
+                          buffer-file-name
+                          "\""))
+         (buffer-name (concat "*" command "*")))
+    (compilation-start command nil (lambda (_modename) buffer-name))))
 
 ;; ============================================================================
 ;; Project management
@@ -588,6 +602,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-x p") 'toggle-pin-buffer-to-window)
 (global-set-key (kbd "C-x C-c") 'confirm-emacs-close)
 (global-set-key (kbd "C-x P") 'save-filename-full-path)
+(global-set-key (kbd "C-c d") 'kill-whole-line)
 
 ;; ============================================================================
 ;; Backup file behavior
