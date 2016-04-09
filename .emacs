@@ -600,7 +600,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "M-S") 'loose-isearch-forward)
 (global-set-key (kbd "M-R") 'loose-isearch-backward)
 (global-set-key (kbd "C-x p") 'toggle-pin-buffer-to-window)
-(global-set-key (kbd "C-x C-c") 'confirm-emacs-close)
 (global-set-key (kbd "C-x P") 'save-filename-full-path)
 (global-set-key (kbd "C-c d") 'kill-whole-line)
 
