@@ -26,6 +26,7 @@
 (global-visual-line-mode t)
 (set-face-attribute 'default nil :height 100)
 (setq tags-add-tables nil)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ; eshell custom prompt
 (setq eshell-prompt-function
