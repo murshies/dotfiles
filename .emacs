@@ -423,9 +423,7 @@ be applied to each major mode in a smarter way."
 
 (defun org-hook ()
   (org-indent-mode)
-  (setq org-log-done "time")
-  ; two spaces in addition to the default two
-  (setq org-list-indent-offset 2))
+  (setq org-log-done "time"))
 
 (defun lua-hook ()
   (setq lua-indent-level 4))
