@@ -31,16 +31,16 @@
 ; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
-(concat
- (propertize
-  (concat
-   "\n["
-   (format-time-string "%a %Y-%m-%d %H:%M:%S")
-   "]\n"
-   (car (reverse (split-string (eshell/pwd) "/")))
-   (if (= (user-uid) 0) " #" " $"))
-  'face `(:foreground "#00CC00"))
- (propertize " " 'face `(:foreground "#FFFFFF")))))
+        (concat
+         (propertize
+          (concat
+           "\n["
+           (format-time-string "%a %Y-%m-%d %H:%M:%S")
+           "]\n"
+           (car (reverse (split-string (eshell/pwd) "/")))
+           (if (= (user-uid) 0) " #" " $"))
+          'face `(:foreground "#00CC00"))
+         (propertize " " 'face `(:foreground "#FFFFFF")))))
 (setq eshell-highlight-prompt nil)
 
 (remove-hook 'find-file-hooks 'vc-find-file-hook)
