@@ -625,6 +625,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
       '(erc-hl-nicks
         helm-ag
         helm-projectile
+        jinja2-mode
         magit
         markdown-mode
         redo+
