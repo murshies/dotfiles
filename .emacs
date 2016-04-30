@@ -381,7 +381,7 @@ be applied to each major mode in a smarter way."
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
-        clojure-hook
+        clojure-mode-hook
         conf-mode-hook
         emacs-lisp-mode-hook
         js-mode-hook
