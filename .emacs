@@ -381,6 +381,7 @@ be applied to each major mode in a smarter way."
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
+        clojure-hook
         conf-mode-hook
         emacs-lisp-mode-hook
         js-mode-hook
@@ -622,7 +623,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(erc-hl-nicks
+      '(clojure-mode
+        erc-hl-nicks
         helm-ag
         helm-projectile
         jinja2-mode
