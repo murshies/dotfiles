@@ -430,7 +430,7 @@ be applied to each major mode in a smarter way."
   (setq lua-indent-level 4))
 
 (defun term-hook ()
-  ; The default blue is incredibly difficult to read
+  ;; The default blue is incredibly difficult to read
   (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
   (set-face-attribute 'term-color-red nil :foreground "Orchid")
   (make-local-variable 'starting-directory)
@@ -441,6 +441,10 @@ be applied to each major mode in a smarter way."
   (define-key term-raw-map (kbd "M-x") 'helm-M-x)
   (define-key term-raw-map (kbd "M-:") 'eval-expression))
 
+(defun clojure-hook ()
+  (define-key clojure-mode-map (kbd "C-'") 'clojure-toggle-keyword-string)
+  (define-key clojure-mode-map (kbd "C-:") 'move-backwards))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -449,6 +453,7 @@ be applied to each major mode in a smarter way."
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'term-mode-hook 'term-hook)
+(add-hook 'clojure-mode-hook 'clojure-hook)
 (add-hook 'before-save-hook 'before-save)
 
 ;; Set up web-mode
