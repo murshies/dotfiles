@@ -450,7 +450,7 @@ be applied to each major mode in a smarter way."
   (when (> (buffer-size) (* 1024 1024))
     (buffer-disable-undo)
     (fundamental-mode)
-    (linum-mode 1)))
+    (linum-mode -1)))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
