@@ -445,6 +445,12 @@ be applied to each major mode in a smarter way."
   (define-key clojure-mode-map (kbd "C-'") 'clojure-toggle-keyword-string)
   (define-key clojure-mode-map (kbd "C-:") 'move-backwards))
 
+(defun large-file-hook ()
+  "Settings for large files."
+  (when (> (buffer-size) (* 1024 1024))
+    (buffer-disable-undo)
+    (fundamental-mode)))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -455,6 +461,7 @@ be applied to each major mode in a smarter way."
 (add-hook 'term-mode-hook 'term-hook)
 (add-hook 'clojure-mode-hook 'clojure-hook)
 (add-hook 'before-save-hook 'before-save)
+(add-hook 'find-file-hook 'large-file-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
