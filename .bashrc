@@ -17,7 +17,7 @@ fi
 alias e="$emacsclient_base -t"
 alias en="$emacs_base -nw"
 alias ec="$emacsclient_base -c"
-alias start_emacs="$emacs_base --daemon --eval \"(load-project-management)\""
+alias startemacs="$emacs_base --daemon --eval \"(load-project-management)\""
 
 alias ls='ls --color=auto'
 
