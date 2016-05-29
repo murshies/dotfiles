@@ -381,7 +381,6 @@ be applied to each major mode in a smarter way."
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
-        clojure-mode-hook
         conf-mode-hook
         emacs-lisp-mode-hook
         js-mode-hook
@@ -441,10 +440,6 @@ be applied to each major mode in a smarter way."
   (define-key term-raw-map (kbd "M-x") 'helm-M-x)
   (define-key term-raw-map (kbd "M-:") 'eval-expression))
 
-(defun clojure-hook ()
-  (define-key clojure-mode-map (kbd "C-'") 'clojure-toggle-keyword-string)
-  (define-key clojure-mode-map (kbd "C-:") 'move-backwards))
-
 (defun large-file-hook ()
   "Settings for large files."
   (when (> (buffer-size) (* 1024 1024))
@@ -460,7 +455,6 @@ be applied to each major mode in a smarter way."
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'term-mode-hook 'term-hook)
-(add-hook 'clojure-mode-hook 'clojure-hook)
 (add-hook 'before-save-hook 'before-save)
 (add-hook 'find-file-hook 'large-file-hook)
 
@@ -636,9 +630,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(cider
-        clojure-mode
-        erc-hl-nicks
+      '(erc-hl-nicks
         helm-ag
         helm-projectile
         jinja2-mode
