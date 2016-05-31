@@ -19,6 +19,7 @@ alias en="$emacs_base -nw"
 alias ec="$emacsclient_base -c"
 alias startemacs="$emacs_base --daemon --eval \"(load-project-management)\""
 
+alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
 export PATH=~/bin:$PATH
