@@ -24,4 +24,7 @@ alias ls='ls --color=auto'
 
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
-export EDITOR="$emacs_base -nw"
+
+if [ `which $emacs_base 2> /dev/null` ]; then
+    export EDITOR="$emacs_base -nw"
+fi
