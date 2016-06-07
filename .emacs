@@ -438,7 +438,8 @@ be applied to each major mode in a smarter way."
   (define-key term-raw-map (kbd "C-c g") 'term-cd-to-starting-directory)
   (define-key term-raw-map (kbd "C-c s") nil)
   (define-key term-raw-map (kbd "M-x") 'helm-M-x)
-  (define-key term-raw-map (kbd "M-:") 'eval-expression))
+  (define-key term-raw-map (kbd "M-:") 'eval-expression)
+  (define-key term-raw-map (kbd "M-P") 'window-browser))
 
 (defun large-file-hook ()
   "Settings for large files."
