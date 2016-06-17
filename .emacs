@@ -401,7 +401,8 @@ be applied to each major mode in a smarter way."
 
 (defun c-common-hook ()
   "A hook used for C/C++."
-  (setq c-default--style "linux")
+  (setq c-default-style "linux")
+  (c-set-style "linux")
   (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
