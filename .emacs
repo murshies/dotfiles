@@ -8,15 +8,15 @@
 (show-paren-mode t)
 (column-number-mode t)
 (global-hi-lock-mode t)
-; Scroll when we're 2 row away from the edge of the window.
+;; Scroll when we're 2 row away from the edge of the window.
 (setq smooth-scroll-margin 2)
-; Tell Emacs to automatically place the point at the end of the compilation
-; buffer.
+;; Tell Emacs to automatically place the point at the end of the compilation
+;; buffer.
 (setq compilation-scroll-output t)
 (setq org-replace-disputed-keys t)
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
-; New buffers have org-mode as the default
+;; New buffers have org-mode as the default
 (setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
@@ -28,7 +28,7 @@
 (setq tags-add-tables nil)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-; eshell custom prompt
+;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
         (concat
@@ -187,10 +187,10 @@ Entering any other key or key chord exits the browsing mode."
   (interactive)
   (let ((input-done nil))
     (while (not input-done)
-      ; Catch any errors. Whenever the user tries to scroll off the edges of a
-      ; buffer, Emacs treats this as an error and will exit window browsing.
-      ; This behavior is undesired; instead, the window browsing session should
-      ; continue.
+      ;; Catch any errors. Whenever the user tries to scroll off the edges of a
+      ;; buffer, Emacs treats this as an error and will exit window browsing.
+      ;; This behavior is undesired; instead, the window browsing session should
+      ;; continue.
       (condition-case ex
           (let ((char-input (read-char "Browsing")))
             (cond
@@ -345,10 +345,12 @@ associated with it."
       (tool-bar-mode -1)
       (mouse-wheel-mode t)
       (setq hl-line-color "#3E3D32")
+      ;;(setq hl-line-color "#696969")
       (set-scroll-bar-mode 'right)
-      ; Colors from Monokai theme.
+      ;; Colors from Monokai theme.
       (set-foreground-color "#F8F8F2")
       (set-background-color "#272822")
+      ;;(set-background-color "#000000")
       (set-cursor-color "#FFFFFF")
       (condition-case ex
           (set-frame-font "DejaVu Sans Mono")
