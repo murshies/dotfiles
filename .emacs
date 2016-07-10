@@ -383,6 +383,7 @@ be applied to each major mode in a smarter way."
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
+        clojure-mode-hook
         conf-mode-hook
         emacs-lisp-mode-hook
         js-mode-hook
@@ -445,6 +446,10 @@ be applied to each major mode in a smarter way."
   (define-key term-raw-map (kbd "M-:") 'eval-expression)
   (define-key term-raw-map (kbd "M-P") 'window-browser))
 
+(defun clojure-hook ()
+  (define-key clojure-mode-map (kbd "C-'") 'clojure-toggle-keyword-string)
+  (define-key clojure-mode-map (kbd "C-:") 'move-backwards))
+
 (defun large-file-hook ()
   "Settings for large files."
   (when (> (buffer-size) (* 1024 1024))
@@ -455,6 +460,7 @@ be applied to each major mode in a smarter way."
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
+(add-hook 'clojure-mode-hook 'clojure-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
@@ -635,7 +641,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(erc-hl-nicks
+      '(clojure-mode
+        erc-hl-nicks
         helm-ag
         helm-projectile
         jinja2-mode
