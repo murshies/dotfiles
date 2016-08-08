@@ -29,6 +29,7 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq blink-cursor-blinks 0)
 (blink-cursor-mode)
+(setq create-lockfiles nil)
 
 ;; eshell custom prompt
 (setq eshell-prompt-function
