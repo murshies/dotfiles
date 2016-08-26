@@ -30,6 +30,7 @@
 (setq blink-cursor-blinks 0)
 (blink-cursor-mode)
 (setq create-lockfiles nil)
+(electric-pair-mode)
 
 ;; eshell custom prompt
 (setq eshell-prompt-function
