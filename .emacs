@@ -686,7 +686,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
     (require 'package)
     (package-initialize)
     (add-to-list 'package-archives
-                 '("melpa" . "http://melpa.milkbox.net/packages/") t)
+                 '("melpa" . "https://melpa.milkbox.net/packages/") t)
     (load-redo+)
     (add-to-list 'display-buffer-alist
                  '("." nil (reusable-frames . t)))))
