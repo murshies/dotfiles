@@ -652,6 +652,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
         jinja2-mode
         magit
         markdown-mode
+        racket-mode
         redo+
         smooth-scrolling
         web-mode
