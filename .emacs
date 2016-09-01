@@ -431,7 +431,8 @@ be applied to each major mode in a smarter way."
 (defun org-hook ()
   (org-indent-mode)
   (setq org-log-done "time")
-  (local-set-key (kbd "C-c o") 'show-all))
+  (local-set-key (kbd "C-c o") 'show-all)
+  (local-set-key (kbd "C-c C-k") 'kill-this-buffer))
 
 (defun lua-hook ()
   (setq lua-indent-level 4))
