@@ -22,7 +22,7 @@ alias startemacs="$emacs_base --daemon --eval \"(load-project-management)\""
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias pf='ps -ef'
-alias pfg='ps -ef | grep'
+alias pfg='ps -ef | grep -v grep | grep'
 
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
