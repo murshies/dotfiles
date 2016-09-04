@@ -461,6 +461,10 @@ be applied to each major mode in a smarter way."
     (fundamental-mode)
     (linum-mode -1)))
 
+(defun eww-hook ()
+  "Settings for the eww browser."
+  (setq shr-inhibit-images t))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -472,6 +476,7 @@ be applied to each major mode in a smarter way."
 (add-hook 'term-mode-hook 'term-hook)
 (add-hook 'before-save-hook 'before-save)
 (add-hook 'find-file-hook 'large-file-hook)
+(add-hook 'eww-mode-hook 'eww-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
