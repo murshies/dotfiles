@@ -21,6 +21,9 @@ alias startemacs="$emacs_base --daemon --eval \"(load-project-management)\""
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
+alias ll='ls --color=auto -l'
+alias lh='ls --color=auto -lh'
+alias lah='ls --color=auto -lah'
 alias pf='ps -ef'
 alias pfg='ps -ef | grep -v grep | grep'
 
