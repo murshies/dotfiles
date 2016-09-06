@@ -25,6 +25,7 @@ alias la='ls --color=auto -a'
 alias ll='ls --color=auto -l'
 alias lh='ls --color=auto -lh'
 alias lah='ls --color=auto -lah'
+alias lg='ls --color=auto -lah | grep'
 alias pf='ps -ef'
 alias pfg='ps -ef | grep -v grep | grep'
 
