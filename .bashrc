@@ -28,6 +28,7 @@ alias lah='ls --color=auto -lah'
 alias lg='ls --color=auto -lah | grep'
 alias pf='ps -ef'
 alias pfg='ps -ef | grep -v grep | grep'
+alias sudo='sudo '
 
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
