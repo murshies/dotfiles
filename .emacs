@@ -561,6 +561,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (setq projectile-enable-caching t)
   (setq project-enable-caching t)
   (set-face-foreground 'helm-etags-file "SkyBlue")
+  (setq helm-mini-default-sources '(helm-source-buffers-list))
   (set-additional-project-keys))
 
 (defun determine-projectile-search-program ()
