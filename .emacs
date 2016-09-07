@@ -561,7 +561,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (setq projectile-enable-caching t)
   (setq project-enable-caching t)
   (set-face-foreground 'helm-etags-file "SkyBlue")
-  (setq helm-mini-default-sources '(helm-source-buffers-list))
   (set-additional-project-keys))
 
 (defun determine-projectile-search-program ()
@@ -582,8 +581,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   ;; The rest of these are normally a part of projectile-global-mode.
   (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
   (global-set-key (kbd "C-c p i") 'projectile-invalidate-cache)
-  (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
-  (global-set-key (kbd "C-x b") 'helm-mini))
+  (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project))
 
 ;; ============================================================================
 ;; Global key bindings
