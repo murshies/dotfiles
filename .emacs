@@ -581,7 +581,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   ;; The rest of these are normally a part of projectile-global-mode.
   (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
   (global-set-key (kbd "C-c p i") 'projectile-invalidate-cache)
-  (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project))
+  (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
+  (global-set-key (kbd "C-x b") 'helm-mini))
 
 ;; ============================================================================
 ;; Global key bindings
