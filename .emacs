@@ -347,17 +347,25 @@ associated with it."
     (when (not (eq (framep frame) t))
       (tool-bar-mode -1)
       (mouse-wheel-mode t)
-      (setq hl-line-color "#3E3D32")
-      ;;(setq hl-line-color "#696969")
       (set-scroll-bar-mode 'right)
-      ;; Colors from Monokai theme.
-      (set-foreground-color "#F8F8F2")
-      (set-background-color "#272822")
-      ;;(set-background-color "#000000")
-      (set-cursor-color "#FFFFFF")
+      (use-dark-theme)
       (condition-case ex
           (set-frame-font "DejaVu Sans Mono")
         ('error t)))))
+
+(defun use-dark-theme ()
+  (interactive)
+  (setq hl-line-color "#3E3D32")
+  (set-foreground-color "#F8F8F2")
+  (set-background-color "#272822")
+  (set-cursor-color "#FFFFFF"))
+
+(defun use-light-theme ()
+  (interactive)
+  (setq hl-line-color "darkseagreen2")
+  (set-foreground-color "black")
+  (set-background-color "white")
+  (set-cursor-color "black"))
 
 ;; We need to do this check + call, since apparently starting emacs in
 ;; non-daemon mode doesn't count as creating a frame.
