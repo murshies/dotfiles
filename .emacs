@@ -362,7 +362,7 @@ associated with it."
 
 (defun use-light-theme ()
   (interactive)
-  (setq hl-line-color "darkseagreen2")
+  (setq hl-line-color "cyan")
   (set-foreground-color "black")
   (set-background-color "white")
   (set-cursor-color "black"))
