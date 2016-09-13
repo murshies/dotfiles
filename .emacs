@@ -30,6 +30,7 @@
 (setq blink-cursor-blinks 0)
 (blink-cursor-mode)
 (setq create-lockfiles nil)
+(eval-after-load "linum" '(set-face-attribute 'linum nil :height 100))
 
 ;; eshell custom prompt
 (setq eshell-prompt-function
