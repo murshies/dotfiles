@@ -5,20 +5,10 @@ then
     source /etc/bash.bashrc
 fi
 
-emacs_base=emacs
-emacsclient_base=emacsclient
-
-if [[ "$(uname -s)" == *"CYGWIN"* ]]
-then
-    emacs_base=emacs-w32
-    emacsclient_base=emacsclient-w32
-fi
-
-alias e="$emacsclient_base -t"
-alias ec="$emacsclient_base -c"
-alias ecl="$emacsclient_base"
-alias en="$emacs_base -nw"
-alias startemacs="$emacs_base --daemon --eval \"(load-project-management)\""
+alias e="emacsclient -t"
+alias en="emacs -nw"
+alias ec="emacsclient -c"
+alias startemacs="emacs --daemon --eval \"(load-project-management)\""
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
@@ -35,6 +25,6 @@ alias sudo='sudo '
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
 
-if [ `which $emacs_base 2> /dev/null` ]; then
-    export EDITOR="$emacs_base -nw"
+if [ `which emacs 2> /dev/null` ]; then
+    export EDITOR="emacs -nw"
 fi
