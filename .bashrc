@@ -5,6 +5,11 @@ then
     source /etc/bash.bashrc
 fi
 
+if [ -f ~/local.sh ]
+then
+    source ~/local.sh
+fi
+
 alias e="emacsclient -t"
 alias en="emacs -nw"
 alias ec="emacsclient -c"
