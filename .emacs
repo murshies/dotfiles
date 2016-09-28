@@ -479,6 +479,10 @@ be applied to each major mode in a smarter way."
   "Settings for the eww browser."
   (setq shr-inhibit-images t))
 
+(defun python-hook ()
+  "Settings for python mode."
+  (setq python-indent-offset 4))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -491,6 +495,7 @@ be applied to each major mode in a smarter way."
 (add-hook 'before-save-hook 'before-save)
 (add-hook 'find-file-hook 'large-file-hook)
 (add-hook 'eww-mode-hook 'eww-hook)
+(add-hook 'python-mode-hook 'python-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
