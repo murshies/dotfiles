@@ -559,6 +559,11 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
          (buffer-name (concat "*" command "*")))
     (compilation-start command nil (lambda (_modename) buffer-name))))
 
+(defadvice shr-color-check (before shr-color-inhibit)
+  "This advice tells eww to use the default foreground and background colors."
+  (setq bg (face-background 'default))
+  (setq fg (face-foreground 'default)))
+
 ;; ============================================================================
 ;; Project management
 ;; ============================================================================
