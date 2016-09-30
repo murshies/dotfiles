@@ -315,14 +315,18 @@ versa."
   (message (format "Window is%s dedicated to its buffer"
                    (if (window-dedicated-p) "" " not"))))
 
-(defun confirm-emacs-close ()
-  "Display a confirmation prompt before closing the current emacs
-instance/client."
+(defun toggle-close-confirm ()
+  "Toggle emacs close confirmation behavior. Enable a yes or no prompt when
+calling save-buffers-kill-terminal if it would exit immediately and vice
+versa."
   (interactive)
-  (if (daemonp)
-      (save-buffers-kill-terminal)
-    (when (yes-or-no-p "Really quit? ")
-      (save-buffers-kill-emacs))))
+  (if confirm-kill-emacs
+      (progn
+        (setq confirm-kill-emacs nil)
+        (message "Close confirmation disabled."))
+    (progn
+      (setq confirm-kill-emacs 'yes-or-no-p)
+      (message "Close confirmation enabled."))))
 
 (defun save-filename-full-path ()
   "Save the file name of the current buffer, with the full path, to the kill
