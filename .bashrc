@@ -11,8 +11,9 @@ then
 fi
 
 alias e="emacsclient -t"
-alias en="emacs -nw"
 alias ec="emacsclient -c"
+alias ecl="emacsclient"
+alias en="emacs -nw"
 alias startemacs="emacs --daemon --eval \"(load-project-management)\""
 
 alias grep='grep --color=auto'
