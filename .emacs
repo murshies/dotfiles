@@ -660,6 +660,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-a") 'beginning-of-line)
 (global-set-key (kbd "C-e") 'end-of-line)
 (global-set-key (kbd "C-c C-k") 'kill-this-buffer)
+(global-set-key (kbd "M-*") 'xref-pop-marker-stack)
 
 ;; ============================================================================
 ;; Backup file behavior
