@@ -364,7 +364,7 @@ associated with it."
 (defun use-dark-theme ()
   (interactive)
   (setq hl-line-color "#3E3D32")
-  (set-foreground-color "#F8F8F2")
+  (set-foreground-color "#DFDFD9")
   (set-background-color "#272822")
   (set-cursor-color "#FFFFFF")
   (setq using-dark-theme t))
