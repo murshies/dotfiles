@@ -599,14 +599,14 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") (determine-projectile-search-program))
-  (global-set-key (kbd "C-c p w") 'projectile-global-mode)
+  (global-set-key (kbd "C-c p w") 'projectile-mode)
   (global-set-key (kbd "M-.") 'helm-etags-select)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level)
-  ;; The rest of these are normally a part of projectile-global-mode.
+  ;; The rest of these are normally a part of projectile-mode.
   (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
   (global-set-key (kbd "C-c p i") 'projectile-invalidate-cache)
   (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project))
