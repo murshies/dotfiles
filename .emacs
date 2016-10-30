@@ -340,6 +340,18 @@ associated with it."
           (kill-new fname))
       (message "No file associated with this buffer."))))
 
+(defun cleanup-deleted-files ()
+  "Clean up buffers whose associated files have been deleted."
+  (interactive)
+  (mapc
+   (lambda (buffer)
+     (let ((buffer-file (buffer-file-name buffer)))
+       (when (and buffer-file
+                  (not (file-exists-p buffer-file)))
+         (message "Cleaned up %s (file %s)" (buffer-name buffer) buffer-file)
+         (kill-buffer buffer))))
+   (buffer-list)))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
