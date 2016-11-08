@@ -11,20 +11,15 @@ then
 fi
 
 alias e="emacsclient -t"
-alias ec="emacsclient -c"
-alias ecl="emacsclient"
+alias ec="emacsclient"
 alias en="emacs -nw"
 alias startemacs="emacs --daemon --eval \"(load-project-management)\""
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
-alias la='ls --color=auto -a'
 alias ll='ls --color=auto -l'
-alias lh='ls --color=auto -lh'
 alias lah='ls --color=auto -lah'
-alias lg='ls --color=auto -lah | grep'
 alias nohist='unset HISTFILE'
-alias pf='ps -ef'
 alias pfg='ps -ef | grep -v grep | grep'
 alias sctl='systemctl'
 alias sudo='sudo '
