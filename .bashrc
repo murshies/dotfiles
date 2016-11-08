@@ -28,6 +28,6 @@ export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
 export HISTCONTROL=ignorespace:ignoredups
 
-if [ `which emacs 2> /dev/null` ]; then
+if [ $(which emacs 2> /dev/null) ]; then
     export EDITOR="emacs -nw"
 fi
