@@ -31,6 +31,8 @@
 (blink-cursor-mode)
 (setq create-lockfiles nil)
 (eval-after-load "linum" '(set-face-attribute 'linum nil :height 100))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 ;; eshell custom prompt
 (setq eshell-prompt-function
