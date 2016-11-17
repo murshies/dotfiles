@@ -33,6 +33,14 @@
 (eval-after-load "linum" '(set-face-attribute 'linum nil :height 100))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(when (require 'package nil 'noerror)
+  (package-initialize)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/")))
+;; Note: loading features that were downloaded from the package manager must be
+;; done after calling package-initialize.
+(when (require 'undo-tree nil 'noerror)
+  (global-undo-tree-mode))
 
 ;; eshell custom prompt
 (setq eshell-prompt-function
@@ -701,8 +709,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
         magit
         markdown-mode
         racket-mode
-        redo+
         smooth-scrolling
+        undo-tree
         web-mode
         yaml-mode))
 
@@ -716,32 +724,13 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
               (package-install curr-package))
           (install-packages-if-not-installed (cdr package-list))))))
 
-;; Interactive function to ensure that all packages in the list
-;; "packages-to-install" are installed.
 (defun install-selected-packages ()
+  "Ensure that all packages in the list \"packages-to-install\" are installed."
   (interactive)
   (package-refresh-contents)
   (install-packages-if-not-installed packages-to-install))
 
-(defun load-redo+ ()
-  (if (package-installed-p 'redo+)
-      (progn
-        (require 'redo+)
-        (global-set-key (kbd "M-_") 'redo))))
-
-(cond
- ((>= emacs-major-version 24)
-  (progn
-    (require 'package)
-    (package-initialize)
-    (add-to-list 'package-archives
-                 '("melpa" . "https://melpa.org/packages/"))
-    (load-redo+)
-    (add-to-list 'display-buffer-alist
-                 '("." nil (reusable-frames . t)))))
- (t
-  (progn
-    (setq-default display-buffer-reuse-frames t))))
-
+;; Load local lisp files last. This allows local settings to override settings
+;; made in .emacs.
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
