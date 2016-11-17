@@ -745,17 +745,3 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (elpy scroll-restore yaml-mode web-mode smooth-scrolling seq redo+ racket-mode neotree markdown-mode magit jinja2-mode hide-lines helm-projectile helm-ag ggtags erc-hl-nicks ein counsel-projectile clojure-mode apropospriate-theme abyss-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
