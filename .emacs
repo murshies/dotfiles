@@ -2,34 +2,33 @@
 ;; Miscellaneous settings
 ;; ============================================================================
 
-(setq ring-bell-function 'ignore)
+(blink-cursor-mode -1)
+(column-number-mode)
+(delete-selection-mode)
+(show-paren-mode)
+(eval-after-load "linum" '(set-face-attribute 'linum nil :height 100))
 (fset 'yes-or-no-p 'y-or-n-p)
-(setq inhibit-startup-screen t)
-(show-paren-mode t)
-(column-number-mode t)
-(global-hi-lock-mode t)
-;; Scroll when we're 2 row away from the edge of the window.
-(setq smooth-scroll-margin 2)
+(global-hi-lock-mode)
+(global-visual-line-mode)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(set-face-attribute 'default nil :height 100)
 ;; Tell Emacs to automatically place the point at the end of the compilation
 ;; buffer.
 (setq compilation-scroll-output t)
-(setq org-replace-disputed-keys t)
+(setq create-lockfiles nil)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
-;; New buffers have org-mode as the default
-(setq-default major-mode 'text-mode)
+(setq inhibit-startup-screen t)
+(setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
-(setq-default indent-tabs-mode nil)
-(global-visual-line-mode t)
-(set-face-attribute 'default nil :height 100)
+(setq ring-bell-function 'ignore)
+;; Scroll when we're 2 row away from the edge of the window.
+(setq smooth-scroll-margin 2)
 (setq tags-add-tables nil)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(blink-cursor-mode -1)
-(delete-selection-mode)
-(setq create-lockfiles nil)
-(eval-after-load "linum" '(set-face-attribute 'linum nil :height 100))
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+(setq-default indent-tabs-mode nil)
+(setq-default major-mode 'text-mode)
 (when (require 'package nil 'noerror)
   (package-initialize)
   (add-to-list 'package-archives
@@ -135,7 +134,7 @@ When a prefix argument is used, do not reload the files in ~/elisp"
    (list
     (hi-lock-read-face-name)))
   (or (facep face) (setq face 'hi-yellow))
-  (hi-lock-set-pattern 
+  (hi-lock-set-pattern
    (buffer-substring (mark) (point))
    face)
   (deactivate-mark))
@@ -257,9 +256,9 @@ that will be run."
     (call-interactively 'named-ansi-term)))
 
 (defun generate-etags-in-directory (directory file-patterns)
-  "Generate an etags file in a directory specified by the user. The user also
-specifies a pattern (passed to find) that will match against files in the
-specified directory and subdirectories."
+  "Generate an etags file in a directory specified by the user.
+The user also specifies a pattern (passed to find) that will match against
+files in the specified directory and subdirectories."
   (interactive
    (list
     (read-file-name "Enter the etags root: ")
@@ -509,15 +508,15 @@ be applied to each major mode in a smarter way."
 ;; Set up web-mode
 ;; Most of the following code was taken from:
 ;; http://emacs.stackexchange.com/questions/17010/in-web-mode-php-block-in-html-file-doesnt-syntax-highlight
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)) 
-(add-to-list 'auto-mode-alist '("\\.html$" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . web-mode))
@@ -684,14 +683,12 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(clojure-mode
-        erc-hl-nicks
+      '(erc-hl-nicks
         helm-ag
         helm-projectile
         jinja2-mode
         magit
         markdown-mode
-        racket-mode
         smooth-scrolling
         undo-tree
         web-mode
@@ -717,17 +714,3 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; made in .emacs.
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (undo-tree yaml-mode web-mode smooth-scrolling racket-mode nlinum markdown-mode magit jinja2-mode ivy helm-projectile helm-ag erc-hl-nicks clojure-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
