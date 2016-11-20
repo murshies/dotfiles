@@ -20,9 +20,6 @@
 (setq-default major-mode 'text-mode)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq-default indent-tabs-mode nil)
-(setq buffer-regexs-to-hide
-      '("*grep*" "*Help*" "*Messages*" "^*Python check" "*Backtrace*"
-        "*Shell Command Output*" "*Process List*"))
 (global-visual-line-mode t)
 (set-face-attribute 'default nil :height 100)
 (setq tags-add-tables nil)
@@ -148,20 +145,6 @@ When a prefix argument is used, do not reload the files in ~/elisp"
     (let ((next-regex (car regex-list)))
       (if (string-match-p next-regex str) t
         (matches-any-regex (cdr regex-list) str)))))
-
-(defun delete-windows-with-names (open-windows buffer-names)
-  (if open-windows
-      (let ((curr-window (car open-windows)))
-        (progn
-          (if (matches-any-regex
-               buffer-names
-               (buffer-name (window-buffer curr-window)))
-              (delete-window curr-window))
-          (delete-windows-with-names (cdr open-windows) buffer-names)))))
-
-(defun delete-specific-windows ()
-  (interactive)
-  (delete-windows-with-names (window-list) buffer-regexs-to-hide))
 
 (defun create-new-buffer ()
   (interactive)
@@ -734,3 +717,17 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; made in .emacs.
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (undo-tree yaml-mode web-mode smooth-scrolling racket-mode nlinum markdown-mode magit jinja2-mode ivy helm-projectile helm-ag erc-hl-nicks clojure-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
