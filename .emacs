@@ -84,11 +84,12 @@ This function assumes that there is an ssh command on the user's PATH."
         (hl-line-mode t)
         (set-face-background 'hl-line hl-line-color))))
 
-(defun copy-line ()
-  "Copies the entire current line to the kill ring."
+(defun copy-line-at-indentation ()
+  "Copies the current line to the kill ring, excluding indentation."
   (interactive)
-  (kill-ring-save (line-beginning-position)
-                  (line-end-position)))
+  (kill-ring-save (+ (line-beginning-position) (current-indentation))
+                  (line-end-position))
+  (message "Copied current line."))
 
 (defun try-to-load-elisp (elisp-file)
   "Try to call load-file on elisp-file.
@@ -654,7 +655,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-\"") 'other-window)
 (global-set-key (kbd "C-:") 'move-backwards)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
-(global-set-key (kbd "M-W") 'copy-line)
+(global-set-key (kbd "M-W") 'copy-line-at-indentation)
 (global-set-key (kbd "M-g v") 'magit-status)
 (global-set-key (kbd "M-S") 'loose-isearch-forward)
 (global-set-key (kbd "M-R") 'loose-isearch-backward)
