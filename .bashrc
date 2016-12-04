@@ -5,10 +5,10 @@ then
     source /etc/bash.bashrc
 fi
 
-alias e="emacsclient -t"
-alias ec="emacsclient"
-alias en="emacs -nw"
-alias startemacs="emacs --daemon --eval \"(load-project-management)\""
+alias e='emacsclient -a "" -t'
+alias ec='emacsclient'
+alias en='emacs -nw'
+alias startemacs='emacs --daemon --eval "(load-project-management)"'
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
@@ -24,7 +24,7 @@ export PS1='[\u@\h \W]\$ '
 export HISTCONTROL=ignorespace:ignoredups
 
 if [ $(which emacs 2> /dev/null) ]; then
-    export EDITOR="emacs -nw"
+    export EDITOR='emacs -nw'
 fi
 
 if [ -f ~/local.sh ]
