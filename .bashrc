@@ -5,11 +5,6 @@ then
     source /etc/bash.bashrc
 fi
 
-if [ -f ~/local.sh ]
-then
-    source ~/local.sh
-fi
-
 alias e="emacsclient -t"
 alias ec="emacsclient"
 alias en="emacs -nw"
@@ -30,4 +25,9 @@ export HISTCONTROL=ignorespace:ignoredups
 
 if [ $(which emacs 2> /dev/null) ]; then
     export EDITOR="emacs -nw"
+fi
+
+if [ -f ~/local.sh ]
+then
+    source ~/local.sh
 fi
