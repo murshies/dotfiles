@@ -262,7 +262,7 @@ The user also specifies a pattern (passed to find) that will match against
 files in the specified directory and subdirectories."
   (interactive
    (list
-    (read-file-name "Enter the etags root: ")
+    (read-directory-name "Enter the etags root: ")
     (read-regexp "Enter any number of file name patterns, separated by spaces: ")))
   (let* ((tag-file (concat (file-name-as-directory directory) "TAGS"))
          (file-pattern-list
