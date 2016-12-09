@@ -23,9 +23,10 @@ export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
 export HISTCONTROL=ignorespace:ignoredups
 
-case "${TERM}" in
+case "$TERM" in
     *"xterm"*|*"screen"*)
         export PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+        ;;
 esac
 
 if [ $(which emacs 2> /dev/null) ]; then
