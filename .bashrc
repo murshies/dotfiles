@@ -18,7 +18,6 @@ alias nohist='unset HISTFILE'
 alias pfg='ps -ef | grep -v grep | grep'
 alias sctl='systemctl'
 alias sudo='sudo '
-alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
 
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
