@@ -429,14 +429,15 @@ be applied to each major mode in a smarter way."
       modes-for-linum-and-hl-line)
 
 (defun c-common-hook ()
-  "A hook used for C/C++."
-  (setq c-default-style "linux")
+  "A hook used for C/C++.
+Start with the built-in linux mode and change things from there."
   (c-set-style "linux")
+  (c-set-offset 'innamespace 0)
+  (c-set-offset 'arglist-intro '+)
+  (c-set-offset 'inline-open 0)
   (setq c-basic-offset 4)
   (setq tab-width 4)
-  (setq indent-tabs-mode nil)
-  (c-set-offset 'innamespace 0)
-  (c-set-offset 'arglist-intro '+)) ; Don't indent for namespaces
+  (setq indent-tabs-mode nil))
 
 (defun c++-hook ()
   (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file))
@@ -715,3 +716,17 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; made in .emacs.
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (rust-mode yaml-mode web-mode undo-tree smooth-scrolling seq scroll-restore racket-mode neotree markdown-mode magit jinja2-mode hide-lines helm-projectile helm-ag ggtags erc-hl-nicks elpy ein counsel-projectile clojure-mode apropospriate-theme abyss-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
