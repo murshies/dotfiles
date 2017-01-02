@@ -27,6 +27,9 @@ case "$TERM" in
     *"xterm"*|*"screen"*)
         export PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
         ;;
+    *)
+        unset PROMPT_COMMAND
+        ;;
 esac
 
 if [ $(which emacs 2> /dev/null) ]; then
