@@ -406,6 +406,16 @@ be applied to each major mode in a smarter way."
   (linum-mode)
   (highlight-line-mode))
 
+(defun linum-spacing-on-terminal ()
+  "A hook for determining linum-format.
+In terminal buffers, there is no fringe between the line numbers and the buffer
+content. To compensate for this, whenever a file is opened in a non-graphical
+display, set the format string so that there is a space after each number."
+  (when (not (display-graphic-p))
+    (set (make-local-variable 'linum-format) "%d ")))
+
+(add-hook 'find-file-hook 'linum-spacing-on-terminal)
+
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
