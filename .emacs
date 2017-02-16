@@ -6,13 +6,13 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(eval-after-load "linum" '(set-face-attribute 'linum nil :height 100))
+(eval-after-load "linum" '(set-face-attribute 'linum nil :height 105))
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
 (global-visual-line-mode)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
-(set-face-attribute 'default nil :height 100)
+(set-face-attribute 'default nil :height 105)
 ;; Tell Emacs to automatically place the point at the end of the compilation
 ;; buffer.
 (setq compilation-scroll-output t)
@@ -616,7 +616,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") (determine-projectile-search-program))
   (global-set-key (kbd "C-c p w") 'projectile-mode)
-  (global-set-key (kbd "M-.") 'helm-etags-select)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
@@ -676,6 +675,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-a") 'beginning-of-line)
 (global-set-key (kbd "C-e") 'end-of-line)
 (global-set-key (kbd "C-c C-k") 'kill-this-buffer)
+(global-set-key (kbd "C-x C-j") 'dired-jump)
 
 ;; ============================================================================
 ;; Backup file behavior
@@ -697,6 +697,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (setq packages-to-install
       '(erc-hl-nicks
         helm-ag
+        helm-gtags
         helm-projectile
         jinja2-mode
         magit
