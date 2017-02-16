@@ -549,7 +549,7 @@ Start with the built-in linux mode and change things from there."
 (eval-after-load "python"
   '(progn (define-key python-mode-map (kbd "C-c v f") 'pyflakes-current-file)
           (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)
-          (define-key python-mode-map (kbd "C-c C-b") 'python-run-current-module)))
+          (define-key python-mode-map (kbd "C-c C-b") 'python-run-current-buffer)))
 
 (defun pyflakes-current-file ()
   "Run pyflakes on the current file.
@@ -566,7 +566,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
   (python-check (concat "pylint -f text \"" buffer-file-name "\"")))
 
-(defun python-run-current-module ()
+(defun python-run-current-buffer ()
   (interactive)
   (save-selected-window
     (python-shell-send-buffer)
