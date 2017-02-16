@@ -548,7 +548,8 @@ Start with the built-in linux mode and change things from there."
 ;; when the first python file of the emacs session is opened.
 (eval-after-load "python"
   '(progn (define-key python-mode-map (kbd "C-c v f") 'pyflakes-current-file)
-          (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)))
+          (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)
+          (define-key python-mode-map (kbd "C-c C-b") 'python-run-current-module)))
 
 (defun pyflakes-current-file ()
   "Run pyflakes on the current file.
@@ -564,6 +565,15 @@ This runs in the same way as pyflakes-current-file (inside a compilation-mode
 buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
   (python-check (concat "pylint -f text \"" buffer-file-name "\"")))
+
+(defun python-run-current-module ()
+  (interactive)
+  (save-selected-window
+    (python-shell-send-buffer)
+    (python-shell-switch-to-shell)
+    (end-of-buffer)
+    (insert "main()")
+    (comint-send-input)))
 
 ;; Similar to the python-mode checks, only define keybindings that are specific
 ;; to yaml-mode after it has been loaded.
