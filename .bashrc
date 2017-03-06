@@ -12,6 +12,7 @@ alias startemacs='emacs --daemon --eval "(load-project-management)"'
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
+alias lh='ls --color=auto -lh'
 alias ll='ls --color=auto -l'
 alias lah='ls --color=auto -lah'
 alias nohist='unset HISTFILE'
