@@ -277,15 +277,6 @@ files in the specified directory and subdirectories."
                        (lambda (_) (format "*etags [%s %s]*"
                                            directory file-patterns)))))
 
-(defun run-background-command (prefix-arg command)
-  (interactive (list current-prefix-arg (read-shell-command "Command: " nil nil)))
-  (let ((default-directory
-          (if prefix-arg
-              (read-directory-name "Working directory: ")
-            default-directory)))
-    (compilation-start command t
-                       (lambda (_) (format "*run %s*" command)))))
-
 (defun loose-isearch-forward ()
   "Call isearch-forward, but with spaces in the search string matching one or
 more of any character."
@@ -646,7 +637,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key [f6] 'compile)
 (global-set-key [f7] 'recompile)
 (global-set-key [f8] 'load-project-management)
-(global-set-key [f9] 'run-background-command)
 (global-set-key [f12] 'tramp-cleanup-all)
 (global-set-key [(meta left)] 'backward-sexp)
 (global-set-key [(meta right)] 'forward-sexp)
@@ -738,3 +728,17 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; made in .emacs.
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (smartparens yaml-mode web-mode undo-tree smooth-scrolling rust-playground markdown-mode magit jinja2-mode hlinum hl-spotlight helm-projectile helm-gtags helm-ag erc-hl-nicks))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
