@@ -471,7 +471,8 @@ Start with the built-in linux mode and change things from there."
   (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
   (define-key term-raw-map (kbd "C-c g") 'term-cd-to-starting-directory)
   (define-key term-raw-map (kbd "C-c s") nil)
-  (define-key term-raw-map (kbd "M-x") 'helm-M-x)
+  (define-key term-raw-map (kbd "M-x")
+    (lookup-key (current-global-map) (kbd "M-x")))
   (define-key term-raw-map (kbd "M-:") 'eval-expression)
   (define-key term-raw-map (kbd "M-P") 'window-browser))
 
@@ -589,13 +590,39 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; Project management
 ;; ============================================================================
 
+(defun enable-helm (&optional echo)
+  "Enable helm completion framework."
+  (helm-mode 1)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (with-eval-after-load 'term
+    (define-key term-raw-map (kbd "M-x") 'helm-M-x))
+  (when echo (message "helm enabled")))
+
+(defun disable-helm (&optional echo)
+  "Disable helm completion framework."
+  (helm-mode -1)
+  (global-set-key (kbd "M-x") 'execute-extended-command)
+  (global-set-key (kbd "C-x C-f") 'find-file)
+  (with-eval-after-load 'term
+    (define-key term-raw-map (kbd "M-x") 'execute-extended-command))
+  (when echo (message "helm disabled")))
+
+(defun toggle-helm ()
+  "Toggle helm completion framework."
+  (interactive)
+  (if (eq (lookup-key (current-global-map) (kbd "M-x"))
+          'execute-extended-command)
+      (enable-helm t)
+    (disable-helm t)))
+
 ;; Loading helm/projectile can take a second or two, and it isn't really needed
 ;; if we're just doing quick edits. Only load them when this function is
 ;; called.
 (defun load-project-management ()
   (interactive)
   (require 'helm-config)
-  (helm-mode 1)
+  (enable-helm)
   ;; Turn on projectile-mode briefly to have emacs do project cache
   ;; initialization. Then, turn projectile mode off.
   (projectile-mode)
@@ -617,8 +644,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (defun set-additional-project-keys ()
   (global-set-key (kbd "C-c h") (determine-projectile-search-program))
   (global-set-key (kbd "C-c p w") 'projectile-mode)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level)
