@@ -421,6 +421,7 @@ display, set the format string so that there is a space after each number."
         perl-mode-hook
         python-mode-hook
         racket-mode-hook
+        rust-mode-hook
         sh-mode-hook
         text-mode-hook
         web-mode-hook
@@ -728,6 +729,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
         jinja2-mode
         magit
         markdown-mode
+        rust-mode
+        rust-playground
         smooth-scrolling
         undo-tree
         web-mode
@@ -753,17 +756,3 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; made in .emacs.
 (when (or (not (boundp 'reload-elisp)) reload-elisp)
   (load-lisp-in-dir "~/elisp"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (smartparens yaml-mode web-mode undo-tree smooth-scrolling rust-playground markdown-mode magit jinja2-mode hlinum hl-spotlight helm-projectile helm-gtags helm-ag erc-hl-nicks))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
