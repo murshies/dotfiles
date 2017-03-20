@@ -5,6 +5,14 @@ then
     source /etc/bash.bashrc
 fi
 
+function ssh-retry()
+{
+    while [ 1 ]; do
+        ssh "$@"
+        sleep 1
+    done
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias en='emacs -nw'
