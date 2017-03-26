@@ -496,6 +496,10 @@ Start with the built-in linux mode and change things from there."
   "Settings for python mode."
   (setq python-indent-offset 4))
 
+(defun dired-hook ()
+  "Settings for dired mode"
+  (setq dired-actual-switches "-lah"))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -509,6 +513,7 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'find-file-hook 'large-file-hook)
 (add-hook 'eww-mode-hook 'eww-hook)
 (add-hook 'python-mode-hook 'python-hook)
+(add-hook 'dired-mode-hook 'dired-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
