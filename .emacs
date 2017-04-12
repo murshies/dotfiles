@@ -490,7 +490,9 @@ Start with the built-in linux mode and change things from there."
 
 (defun eww-hook ()
   "Settings for the eww browser."
-  (setq shr-inhibit-images t))
+  (setq shr-inhibit-images t)
+  (define-key eww-mode-map (kbd "<prior>") 'small-scroll-down)
+  (define-key eww-mode-map (kbd "<next>") 'small-scroll-up))
 
 (defun python-hook ()
   "Settings for python mode."
