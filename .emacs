@@ -99,11 +99,11 @@ If the file cannot be loaded, display an error message."
     ('error (message "%s" ex))))
 
 (defun load-lisp-in-dir (dir)
-  "Load all elisp files (ending in .el extension) in dir.
+  "Load all elisp files (ending in .el extension) in dir and all subdirectories.
 If there is an issue reading dir, display an error message."
   (if (file-exists-p dir)
       (condition-case ex
-          (mapc 'try-to-load-elisp (directory-files dir t "\\.el$"))
+          (mapc 'try-to-load-elisp (directory-files-recursively dir "\\.el$"))
         ('error (message "%s" ex)))))
 
 (defun small-scroll-down ()
