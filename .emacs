@@ -710,6 +710,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-c C-k") 'kill-this-buffer)
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 (global-set-key (kbd "C-x ;") 'comment-line)
+(global-set-key (kbd "C-x F") 'find-file)
 
 ;; ============================================================================
 ;; Backup file behavior
