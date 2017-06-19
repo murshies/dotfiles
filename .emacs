@@ -6,13 +6,13 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(eval-after-load "linum" '(set-face-attribute 'linum nil :height 105))
+(eval-after-load "linum" '(set-face-attribute 'linum nil :height 110))
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
 (global-visual-line-mode)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
-(set-face-attribute 'default nil :height 105)
+(set-face-attribute 'default nil :height 110)
 ;; Tell Emacs to automatically place the point at the end of the compilation
 ;; buffer.
 (setq compilation-scroll-output t)
