@@ -420,6 +420,7 @@ display, set the format string so that there is a space after each number."
         c-mode-hook
         clojure-mode-hook
         conf-mode-hook
+        css-mode-hook
         emacs-lisp-mode-hook
         js-mode-hook
         lua-mode-hook
