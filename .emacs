@@ -277,6 +277,14 @@ files in the specified directory and subdirectories."
                        (lambda (_) (format "*etags [%s %s]*"
                                            directory file-patterns)))))
 
+(defun run-background-command (prefix-arg command)
+  (interactive (list current-prefix-arg (read-shell-command "Command: " nil nil)))
+  (let ((default-directory
+          (if prefix-arg
+              (read-directory-name "Working directory: ")
+            default-directory)))
+    (async-shell-command command (format "*%s async" command))))
+
 (defun loose-isearch-forward ()
   "Call isearch-forward, but with spaces in the search string matching one or
 more of any character."
@@ -712,6 +720,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 (global-set-key (kbd "C-x ;") 'comment-line)
 (global-set-key (kbd "C-x F") 'find-file)
+(global-set-key (kbd "M-&") 'run-background-command)
 
 ;; ============================================================================
 ;; Backup file behavior
