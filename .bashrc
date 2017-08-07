@@ -31,6 +31,7 @@ alias sudo='sudo '
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
 export HISTCONTROL=ignorespace:ignoredups
+export HISTTIMEFORMAT="%y/%m/%d %T "
 
 case "$TERM" in
     *"xterm"*|*"screen"*)
