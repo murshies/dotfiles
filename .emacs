@@ -41,16 +41,17 @@
 ;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
-        (concat
-         (propertize
-          (concat
-           "\n["
-           (format-time-string "%a %Y-%m-%d %H:%M:%S")
-           "]\n"
-           (car (reverse (split-string (eshell/pwd) "/")))
-           (if (= (user-uid) 0) " #" " $"))
-          'face `(:foreground "#00CC00"))
-         (propertize " " 'face `(:foreground "#FFFFFF")))))
+        (colorize-eshell-prompt
+         (concat
+          "\n["
+          user-login-name
+          "@"
+          system-name
+          " "
+          (eshell/pwd)
+          "]\n"
+          (if (= (user-uid) 0) "#" "$")))))
+(setq eshell-prompt-regexp "[#$] ")
 (setq eshell-highlight-prompt nil)
 
 (remove-hook 'find-file-hooks 'vc-find-file-hook)
