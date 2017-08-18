@@ -39,6 +39,13 @@
   (global-undo-tree-mode))
 
 ;; eshell settings
+(defun eshell/e (file &rest files)
+  (let* ((unflattened (append (list file) files))
+         (flattened (eshell-flatten-list unflattened))
+         (full-paths (mapcar (lambda (f)
+                               (concat default-directory f)) flattened)))
+    (mapc #'find-file full-paths)))
+
 (defun colorize-eshell-prompt (prompt)
   "Apply colors to the eshell prompt."
   (concat
