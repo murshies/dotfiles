@@ -38,6 +38,13 @@
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode))
 
+;; eshell settings
+(defun colorize-eshell-prompt (prompt)
+  "Apply colors to the eshell prompt."
+  (concat
+   (propertize prompt 'face '(:foreground "#00CC00"))
+   (propertize " " 'face '(:foreground "#FFFFFF"))))
+
 ;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
