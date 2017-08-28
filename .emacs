@@ -302,7 +302,7 @@ files in the specified directory and subdirectories."
           (if prefix-arg
               (read-directory-name "Working directory: ")
             default-directory)))
-    (async-shell-command command (format "*%s async" command))))
+    (async-shell-command command (format "*%s async*" command))))
 
 (defun loose-isearch-forward ()
   "Call isearch-forward, but with spaces in the search string matching one or
