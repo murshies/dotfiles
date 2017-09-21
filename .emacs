@@ -296,13 +296,32 @@ files in the specified directory and subdirectories."
                        (lambda (_) (format "*etags [%s %s]*"
                                            directory file-patterns)))))
 
+(defun directory-for-background-command (prefix-arg command-buffer)
+  "A helper function to determine the running directory for the
+run-background-command command."
+  (if (and prefix-arg (listp prefix-arg))
+      (if (= (car prefix-arg) 4) ; C-u pressed once
+          (read-directory-name "Working directory: ")
+        ; C-u pressed multiple times
+        (if (get-buffer command-buffer) ; command buffer already exists
+            (with-current-buffer command-buffer default-directory)
+          default-directory))
+    default-directory))
+
 (defun run-background-command (prefix-arg command)
-  (interactive (list current-prefix-arg (read-shell-command "Command: " nil nil)))
-  (let ((default-directory
-          (if prefix-arg
-              (read-directory-name "Working directory: ")
-            default-directory)))
-    (async-shell-command command (format "*%s async*" command))))
+  "Run an asynchronous command.
+
+The prefix argument controls the working directory for the command:
+- No prefix: Use the current buffer's directory.
+- C-u: Prompt for a directory.
+- C-u two or more times: Use the last working directory of the command if its
+  buffer still exists; otherwise, use the current buffer's directory."
+  (interactive (list current-prefix-arg
+                     (read-shell-command "Command: " nil nil)))
+  (let* ((command-buffer (format "*%s async*" command))
+         (default-directory
+           (directory-for-background-command prefix-arg command-buffer)))
+    (async-shell-command command command-buffer)))
 
 (defun loose-isearch-forward ()
   "Call isearch-forward, but with spaces in the search string matching one or
