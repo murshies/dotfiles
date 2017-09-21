@@ -318,7 +318,7 @@ The prefix argument controls the working directory for the command:
   buffer still exists; otherwise, use the current buffer's directory."
   (interactive (list current-prefix-arg
                      (read-shell-command "Command: " nil nil)))
-  (let* ((command-buffer (format "*%s async*" command))
+  (let* ((command-buffer (format "*async %s*" command))
          (default-directory
            (directory-for-background-command prefix-arg command-buffer)))
     (async-shell-command command command-buffer)))
