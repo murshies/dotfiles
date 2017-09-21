@@ -42,7 +42,8 @@ case "$TERM" in
         ;;
 esac
 
-if [ $(which emacs 2> /dev/null) ]; then
+if [ $(which emacs 2> /dev/null) ]
+then
     export EDITOR='emacs -nw'
 fi
 
