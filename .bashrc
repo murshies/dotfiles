@@ -27,6 +27,7 @@ alias nohist='unset HISTFILE'
 alias pfg='ps -ef | grep -v grep | grep'
 alias sctl='systemctl'
 alias sudo='sudo '
+alias tmux='tmux -2'
 
 export PATH=~/bin:$PATH
 export PS1='[\u@\h \W]\$ '
