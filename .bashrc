@@ -8,7 +8,7 @@ fi
 function ssh-retry()
 {
     while [ 1 ]; do
-        ssh "$@"
+        ssh ServerAliveInterval=5 -o ServerAliveCountMax=2 "$@"
         sleep 1
     done
 }
