@@ -91,10 +91,14 @@ This function assumes that there is an ssh command on the user's PATH."
   (let* ((buffer-name (concat "ssh " (car (split-string ssh-args))))
          (full-buffer-name
           (generate-new-buffer-name (concat "*" buffer-name "*")))
-         (ssh-command (concat "ssh " ssh-args)))
+         (extra-ssh-args "-o ServerAliveInterval=5 -o ServerAliveCountMax=2 ")
+         (ssh-command (concat "ssh " extra-ssh-args ssh-args))
+         (full-command (concat "while [ 1 ]; do "
+                               ssh-command
+                               " ; sleep 1 ; done")))
     (ansi-term "/bin/bash" buffer-name)
     (switch-to-buffer full-buffer-name)
-    (insert ssh-command)
+    (insert full-command)
     (term-send-input)))
 
 (defun highlight-line-mode ()
