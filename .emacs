@@ -18,6 +18,7 @@
 (setq compilation-scroll-output t)
 (setq create-lockfiles nil)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq erc-join-buffer 'bury)
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
 (setq inhibit-startup-screen t)
