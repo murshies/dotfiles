@@ -304,23 +304,20 @@ files in the specified directory and subdirectories."
 (defun directory-for-background-command (prefix-arg command-buffer)
   "A helper function to determine the running directory for the
 run-background-command command."
-  (if (and prefix-arg (listp prefix-arg))
-      (if (= (car prefix-arg) 4) ; C-u pressed once
-          (read-directory-name "Working directory: ")
-        ; C-u pressed multiple times
-        (if (get-buffer command-buffer) ; command buffer already exists
-            (with-current-buffer command-buffer default-directory)
-          default-directory))
-    default-directory))
+  (cond
+   ((and prefix-arg (listp prefix-arg))
+    (read-directory-name "Working directory: "))
+   ((get-buffer command-buffer)
+    (with-current-buffer command-buffer default-directory))
+   (t default-directory)))
 
 (defun run-background-command (prefix-arg command)
   "Run an asynchronous command.
 
 The prefix argument controls the working directory for the command:
-- No prefix: Use the current buffer's directory.
-- C-u: Prompt for a directory.
-- C-u two or more times: Use the last working directory of the command if its
-  buffer still exists; otherwise, use the current buffer's directory."
+- No prefix: Use the last working directory of the command if its
+  buffer still exists; otherwise, use the current buffer's directory.
+- C-u one or more times: Prompt for a directory."
   (interactive (list current-prefix-arg
                      (read-shell-command "Command: " nil nil)))
   (let* ((command-buffer (format "*async %s*" command))
