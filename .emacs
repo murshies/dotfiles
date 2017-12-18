@@ -51,6 +51,16 @@ supported."
                              flattened)))
     (mapc #'find-file full-paths)))
 
+(defun eshell/a (cmd &rest args)
+  "Runs an asynchronous command.
+This is the same as running run-async-shell-command with no prefix argument and
+the default directory as the eshell buffer's default directory."
+  (let ((full-cmd (string-join (cons cmd args) " ")))
+    (run-background-command
+     full-cmd
+     default-directory
+     (background-command-buffer full-cmd))))
+
 (defun colorize-eshell-prompt (prompt)
   "Apply colors to the eshell prompt."
   (concat
@@ -303,7 +313,7 @@ files in the specified directory and subdirectories."
 
 (defun directory-for-background-command (prefix-arg command-buffer)
   "A helper function to determine the running directory for the
-run-background-command command."
+run-async-shell-command command."
   (cond
    ((and prefix-arg (listp prefix-arg))
     (read-directory-name "Working directory: "))
@@ -311,7 +321,17 @@ run-background-command command."
     (with-current-buffer command-buffer default-directory))
    (t default-directory)))
 
-(defun run-background-command (prefix-arg command)
+(defun background-command-buffer (command)
+  "Helper function to determine the command buffer for run-background-command."
+  (format "*async %s*" command))
+
+(defun run-background-command (command directory command-buffer)
+  "Helper function for run-async-shell-command.
+This defines the actual command logic."
+  (let ((default-directory directory))
+    (async-shell-command command command-buffer)))
+
+(defun run-async-shell-command (prefix-arg command)
   "Run an asynchronous command.
 
 The prefix argument controls the working directory for the command:
@@ -320,10 +340,11 @@ The prefix argument controls the working directory for the command:
 - C-u one or more times: Prompt for a directory."
   (interactive (list current-prefix-arg
                      (read-shell-command "Command: " nil nil)))
-  (let* ((command-buffer (format "*async %s*" command))
-         (default-directory
-           (directory-for-background-command prefix-arg command-buffer)))
-    (async-shell-command command command-buffer)))
+  (let ((command-buffer (background-command-buffer command)))
+    (run-background-command
+     command
+     (directory-for-background-command prefix-arg command-buffer)
+     command-buffer)))
 
 (defun loose-isearch-forward ()
   "Call isearch-forward, but with spaces in the search string matching one or
@@ -761,7 +782,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 (global-set-key (kbd "C-x ;") 'comment-line)
 (global-set-key (kbd "C-x F") 'find-file)
-(global-set-key (kbd "M-&") 'run-background-command)
+(global-set-key (kbd "M-&") 'run-async-shell-command)
 
 ;; ============================================================================
 ;; Backup file behavior
