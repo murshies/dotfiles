@@ -750,7 +750,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-a") 'back-to-indentation)
 (global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
-(global-set-key (kbd "C-S-n") 'create-new-buffer)
+(global-set-key (kbd "M-N") 'create-new-buffer)
 (global-set-key (kbd "M-P") 'window-browser)
 (global-set-key (kbd "C-c s e") 'eshell)
 (global-set-key (kbd "C-c s d") 'eshell-cd-to-current-directory)
