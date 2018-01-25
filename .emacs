@@ -409,6 +409,19 @@ associated with it."
 ;; Hooks and mode-specific setup
 ;; ============================================================================
 
+(defvar my-minor-mode-map (make-keymap))
+
+(define-minor-mode my-minor-mode
+  "A minor mode to hold all of my global custom keybindings."
+  :keymap my-minor-mode-map)
+
+(define-global-minor-mode
+  my-global-minor-mode
+  my-minor-mode
+  (lambda () (my-minor-mode)))
+
+(my-global-minor-mode)
+
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
 ;; emacs is not started as a daemon.
@@ -671,8 +684,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (defun enable-helm (&optional echo)
   "Enable helm completion framework."
   (helm-mode 1)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (define-key my-minor-mode-map (kbd "M-x") 'helm-M-x)
+  (define-key my-minor-mode-map (kbd "C-x C-f") 'helm-find-files)
   (with-eval-after-load 'term
     (define-key term-raw-map (kbd "M-x") 'helm-M-x))
   (when echo (message "helm enabled")))
@@ -680,8 +693,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (defun disable-helm (&optional echo)
   "Disable helm completion framework."
   (helm-mode -1)
-  (global-set-key (kbd "M-x") 'execute-extended-command)
-  (global-set-key (kbd "C-x C-f") 'find-file)
+  (define-key my-minor-mode-map (kbd "M-x") 'execute-extended-command)
+  (define-key my-minor-mode-map (kbd "C-x C-f") 'find-file)
   (with-eval-after-load 'term
     (define-key term-raw-map (kbd "M-x") 'execute-extended-command))
   (when echo (message "helm disabled")))
@@ -720,69 +733,69 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
    (t 'helm-projectile-grep)))
 
 (defun set-additional-project-keys ()
-  (global-set-key (kbd "C-c h") (determine-projectile-search-program))
-  (global-set-key (kbd "C-c p w") 'projectile-mode)
+  (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
+  (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode)
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-j") 'helm-select-action)
   (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level)
   ;; The rest of these are normally a part of projectile-mode.
-  (global-set-key (kbd "C-c p f") 'helm-projectile-find-file)
-  (global-set-key (kbd "C-c p i") 'projectile-invalidate-cache)
-  (global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
-  (global-set-key (kbd "M-.") 'helm-etags-select))
+  (define-key my-minor-mode-map (kbd "C-c p f") 'helm-projectile-find-file)
+  (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
+  (define-key my-minor-mode-map (kbd "C-c p p") 'helm-projectile-switch-project)
+  (define-key my-minor-mode-map (kbd "M-.") 'helm-etags-select))
 
 ;; ============================================================================
 ;; Global key bindings
 ;; ============================================================================
 
-(global-set-key [f1] 'search-all-buffers)
-(global-set-key [f2] 'revert-buffer)
-(global-set-key [f5] 'reload-emacs-config)
-(global-set-key [f6] 'compile)
-(global-set-key [f7] 'recompile)
-(global-set-key [f8] 'load-project-management)
-(global-set-key [f12] 'tramp-cleanup-all)
-(global-set-key [(meta left)] 'backward-sexp)
-(global-set-key [(meta right)] 'forward-sexp)
-(global-set-key [(control shift delete)] 'delete-region)
-(global-set-key (kbd "C-x R") 'rename-buffer)
-(global-set-key (kbd "C-x ,") 'kill-matching-buffers)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-S-a") 'back-to-indentation)
-(global-set-key (kbd "C-c C-h") 'highlight-all-current-region)
-(global-set-key (kbd "M-N") 'create-new-buffer)
-(global-set-key (kbd "M-P") 'window-browser)
-(global-set-key (kbd "C-c s e") 'eshell)
-(global-set-key (kbd "C-c s d") 'eshell-cd-to-current-directory)
-(global-set-key (kbd "C-c s a") 'named-ansi-term)
-(global-set-key (kbd "C-c s s") 'ssh-ansi)
-(global-set-key (kbd "C-c s w") 'ansi-term-in-directory)
-(global-set-key (kbd "M-I") 'windmove-up)
-(global-set-key (kbd "M-K") 'windmove-down)
-(global-set-key (kbd "M-J") 'windmove-left)
-(global-set-key (kbd "M-L") 'windmove-right)
-(global-set-key (kbd "C-x j") 'join-line)
-(global-set-key (kbd "C-{") 'previous-buffer)
-(global-set-key (kbd "C-}") 'next-buffer)
-(global-set-key (kbd "C-<") 'small-scroll-down)
-(global-set-key (kbd "C->") 'small-scroll-up)
-(global-set-key (kbd "C-\"") 'other-window)
-(global-set-key (kbd "C-:") 'move-backwards)
-(global-set-key (kbd "C-c w") 'whitespace-mode)
-(global-set-key (kbd "M-W") 'copy-line-at-indentation)
-(global-set-key (kbd "M-g v") 'magit-status)
-(global-set-key (kbd "M-S") 'loose-isearch-forward)
-(global-set-key (kbd "M-R") 'loose-isearch-backward)
-(global-set-key (kbd "C-x p") 'toggle-pin-buffer-to-window)
-(global-set-key (kbd "C-x S") 'save-filename-full-path)
-(global-set-key (kbd "C-c d") 'kill-whole-line)
-(global-set-key (kbd "C-a") 'beginning-of-line)
-(global-set-key (kbd "C-e") 'end-of-line)
-(global-set-key (kbd "C-c C-k") 'kill-this-buffer)
-(global-set-key (kbd "C-x C-j") 'dired-jump)
-(global-set-key (kbd "C-x ;") 'comment-line)
-(global-set-key (kbd "C-x F") 'find-file)
-(global-set-key (kbd "M-&") 'run-async-shell-command)
+(define-key my-minor-mode-map [f1] 'search-all-buffers)
+(define-key my-minor-mode-map [f2] 'revert-buffer)
+(define-key my-minor-mode-map [f5] 'reload-emacs-config)
+(define-key my-minor-mode-map [f6] 'compile)
+(define-key my-minor-mode-map [f7] 'recompile)
+(define-key my-minor-mode-map [f8] 'load-project-management)
+(define-key my-minor-mode-map [f12] 'tramp-cleanup-all)
+(define-key my-minor-mode-map [(meta left)] 'backward-sexp)
+(define-key my-minor-mode-map [(meta right)] 'forward-sexp)
+(define-key my-minor-mode-map [(control shift delete)] 'delete-region)
+(define-key my-minor-mode-map (kbd "C-x R") 'rename-buffer)
+(define-key my-minor-mode-map (kbd "C-x ,") 'kill-matching-buffers)
+(define-key my-minor-mode-map (kbd "C-x C-b") 'ibuffer)
+(define-key my-minor-mode-map (kbd "C-S-a") 'back-to-indentation)
+(define-key my-minor-mode-map (kbd "C-c C-h") 'highlight-all-current-region)
+(define-key my-minor-mode-map (kbd "M-N") 'create-new-buffer)
+(define-key my-minor-mode-map (kbd "M-P") 'window-browser)
+(define-key my-minor-mode-map (kbd "C-c s e") 'eshell)
+(define-key my-minor-mode-map (kbd "C-c s d") 'eshell-cd-to-current-directory)
+(define-key my-minor-mode-map (kbd "C-c s a") 'named-ansi-term)
+(define-key my-minor-mode-map (kbd "C-c s s") 'ssh-ansi)
+(define-key my-minor-mode-map (kbd "C-c s w") 'ansi-term-in-directory)
+(define-key my-minor-mode-map (kbd "M-I") 'windmove-up)
+(define-key my-minor-mode-map (kbd "M-K") 'windmove-down)
+(define-key my-minor-mode-map (kbd "M-J") 'windmove-left)
+(define-key my-minor-mode-map (kbd "M-L") 'windmove-right)
+(define-key my-minor-mode-map (kbd "C-x j") 'join-line)
+(define-key my-minor-mode-map (kbd "C-{") 'previous-buffer)
+(define-key my-minor-mode-map (kbd "C-}") 'next-buffer)
+(define-key my-minor-mode-map (kbd "C-<") 'small-scroll-down)
+(define-key my-minor-mode-map (kbd "C->") 'small-scroll-up)
+(define-key my-minor-mode-map (kbd "C-\"") 'other-window)
+(define-key my-minor-mode-map (kbd "C-:") 'move-backwards)
+(define-key my-minor-mode-map (kbd "C-c w") 'whitespace-mode)
+(define-key my-minor-mode-map (kbd "M-W") 'copy-line-at-indentation)
+(define-key my-minor-mode-map (kbd "M-g v") 'magit-status)
+(define-key my-minor-mode-map (kbd "M-S") 'loose-isearch-forward)
+(define-key my-minor-mode-map (kbd "M-R") 'loose-isearch-backward)
+(define-key my-minor-mode-map (kbd "C-x p") 'toggle-pin-buffer-to-window)
+(define-key my-minor-mode-map (kbd "C-x S") 'save-filename-full-path)
+(define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
+(define-key my-minor-mode-map (kbd "C-a") 'beginning-of-line)
+(define-key my-minor-mode-map (kbd "C-e") 'end-of-line)
+(define-key my-minor-mode-map (kbd "C-c C-k") 'kill-this-buffer)
+(define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
+(define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
+(define-key my-minor-mode-map (kbd "C-x F") 'find-file)
+(define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 
 ;; ============================================================================
 ;; Backup file behavior
