@@ -409,7 +409,7 @@ associated with it."
 ;; Hooks and mode-specific setup
 ;; ============================================================================
 
-(defvar my-minor-mode-map (make-keymap))
+(defvar my-minor-mode-map (make-sparse-keymap))
 
 (define-minor-mode my-minor-mode
   "A minor mode to hold all of my global custom keybindings."
@@ -755,8 +755,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (define-key my-minor-mode-map [f7] 'recompile)
 (define-key my-minor-mode-map [f8] 'load-project-management)
 (define-key my-minor-mode-map [f12] 'tramp-cleanup-all)
-(define-key my-minor-mode-map [(meta left)] 'backward-sexp)
-(define-key my-minor-mode-map [(meta right)] 'forward-sexp)
 (define-key my-minor-mode-map [(control shift delete)] 'delete-region)
 (define-key my-minor-mode-map (kbd "C-x R") 'rename-buffer)
 (define-key my-minor-mode-map (kbd "C-x ,") 'kill-matching-buffers)
