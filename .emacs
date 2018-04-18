@@ -540,8 +540,7 @@ Start with the built-in linux mode and change things from there."
 (defun org-hook ()
   (org-indent-mode)
   (setq org-log-done "time")
-  (local-set-key (kbd "C-c o") 'show-all)
-  (local-set-key (kbd "C-c C-k") 'kill-this-buffer))
+  (local-set-key (kbd "C-c o") 'show-all))
 
 (defun lua-hook ()
   (setq lua-indent-level 4))
@@ -789,7 +788,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
 (define-key my-minor-mode-map (kbd "C-a") 'beginning-of-line)
 (define-key my-minor-mode-map (kbd "C-e") 'end-of-line)
-(define-key my-minor-mode-map (kbd "C-c C-k") 'kill-this-buffer)
 (define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file)
