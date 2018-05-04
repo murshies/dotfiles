@@ -22,6 +22,7 @@
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
 (setq inhibit-startup-screen t)
+(setq ivy-height 15)
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq ring-bell-function 'ignore)
@@ -540,8 +541,7 @@ Start with the built-in linux mode and change things from there."
 (defun org-hook ()
   (org-indent-mode)
   (setq org-log-done "time")
-  (local-set-key (kbd "C-c o") 'show-all)
-  (local-set-key (kbd "C-c C-k") 'kill-this-buffer))
+  (local-set-key (kbd "C-c o") 'show-all))
 
 (defun lua-hook ()
   (setq lua-indent-level 4))
@@ -681,68 +681,24 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 ;; Project management
 ;; ============================================================================
 
-(defun enable-helm (&optional echo)
-  "Enable helm completion framework."
-  (helm-mode 1)
-  (define-key my-minor-mode-map (kbd "M-x") 'helm-M-x)
-  (define-key my-minor-mode-map (kbd "C-x C-f") 'helm-find-files)
-  (with-eval-after-load 'term
-    (define-key term-raw-map (kbd "M-x") 'helm-M-x))
-  (when echo (message "helm enabled")))
-
-(defun disable-helm (&optional echo)
-  "Disable helm completion framework."
-  (helm-mode -1)
-  (define-key my-minor-mode-map (kbd "M-x") 'execute-extended-command)
-  (define-key my-minor-mode-map (kbd "C-x C-f") 'find-file)
-  (with-eval-after-load 'term
-    (define-key term-raw-map (kbd "M-x") 'execute-extended-command))
-  (when echo (message "helm disabled")))
-
-(defun toggle-helm ()
-  "Toggle helm completion framework."
-  (interactive)
-  (if (eq (lookup-key (current-global-map) (kbd "M-x"))
-          'execute-extended-command)
-      (enable-helm t)
-    (disable-helm t)))
-
-;; Loading helm/projectile can take a second or two, and it isn't really needed
-;; if we're just doing quick edits. Only load them when this function is
-;; called.
 (defun load-project-management ()
   (interactive)
-  (require 'helm-config)
-  (enable-helm)
-  ;; Turn on projectile-mode briefly to have emacs do project cache
-  ;; initialization. Then, turn projectile mode off.
-  (projectile-mode)
-  (projectile-mode -1)
-  (helm-projectile-on)
-  (setq projectile-completion-system 'helm)
-  (setq projectile-indexing-mode 'alien)
-  (setq projectile-enable-caching t)
-  (setq project-enable-caching t)
-  (set-face-foreground 'helm-etags-file "SkyBlue")
+  (ivy-mode)
   (set-additional-project-keys))
 
 (defun determine-projectile-search-program ()
   (cond
-   ((executable-find "ag") 'helm-projectile-ag)
-   ((executable-find "ack") 'helm-projectile-ack)
-   (t 'helm-projectile-grep)))
+   ((executable-find "ag") 'counsel-projectile-ag)
+   (t 'counsel-projectile-grep)))
 
 (defun set-additional-project-keys ()
   (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
-  (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode)
-  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-j") 'helm-select-action)
-  (define-key helm-map (kbd "<backtab>") 'helm-find-files-up-one-level)
-  ;; The rest of these are normally a part of projectile-mode.
-  (define-key my-minor-mode-map (kbd "C-c p f") 'helm-projectile-find-file)
+  (define-key my-minor-mode-map (kbd "C-c p p") 'counsel-projectile)
+  (define-key my-minor-mode-map (kbd "C-c p f") 'counsel-projectile-find-file)
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
-  (define-key my-minor-mode-map (kbd "C-c p p") 'helm-projectile-switch-project)
-  (define-key my-minor-mode-map (kbd "M-.") 'helm-etags-select))
+  (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
+  (define-key my-minor-mode-map (kbd "M-.") 'counsel-etags-find-tag-at-point)
+  (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char))
 
 ;; ============================================================================
 ;; Global key bindings
@@ -789,7 +745,6 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
 (define-key my-minor-mode-map (kbd "C-a") 'beginning-of-line)
 (define-key my-minor-mode-map (kbd "C-e") 'end-of-line)
-(define-key my-minor-mode-map (kbd "C-c C-k") 'kill-this-buffer)
 (define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file)
@@ -813,10 +768,10 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(erc-hl-nicks
-        helm-ag
-        helm-gtags
-        helm-projectile
+      '(counsel-etags
+        counsel-projectile
+        erc-hl-nicks
+        ivy
         jinja2-mode
         magit
         markdown-mode
