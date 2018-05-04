@@ -693,7 +693,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 (defun set-additional-project-keys ()
   (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
-  (define-key my-minor-mode-map (kbd "C-c p p") 'counsel-projectile)
+  (define-key my-minor-mode-map (kbd "C-c p p") 'counsel-projectile-switch-project)
   (define-key my-minor-mode-map (kbd "C-c p f") 'counsel-projectile-find-file)
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
   (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
