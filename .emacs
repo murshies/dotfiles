@@ -23,6 +23,7 @@
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
 (setq inhibit-startup-screen t)
 (setq ivy-height 15)
+(setq ivy-initial-inputs-alist nil)
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq ring-bell-function 'ignore)
@@ -698,7 +699,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
   (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
   (define-key my-minor-mode-map (kbd "M-.") 'counsel-etags-find-tag-at-point)
-  (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char))
+  (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
+  (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x))
 
 ;; ============================================================================
 ;; Global key bindings
