@@ -689,6 +689,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 (defun determine-projectile-search-program ()
   (cond
+   ((executable-find "rg") 'counsel-projectile-rg)
    ((executable-find "ag") 'counsel-projectile-ag)
    (t 'counsel-projectile-grep)))
 
