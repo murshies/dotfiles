@@ -701,7 +701,8 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
   (define-key my-minor-mode-map (kbd "M-.") 'counsel-etags-find-tag-at-point)
   (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
-  (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x))
+  (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x)
+  (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode))
 
 ;; ============================================================================
 ;; Global key bindings
