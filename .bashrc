@@ -13,6 +13,14 @@ function ssh-retry()
     done
 }
 
+function datetime()
+{
+    local start=$(date)
+    $@
+    local end=$(date)
+    printf 'Started: %s\nEnded:   %s\n' "$start" "$end"
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias en='emacs -nw'
