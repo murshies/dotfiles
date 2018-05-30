@@ -478,7 +478,9 @@ python-mode."
 There are many modes on which these should be enabled, so instead of defining a
 function for each and then adding the mode hook separately, this function can
 be applied to each major mode in a smarter way."
-  (linum-mode)
+  (if (fboundp 'display-line-numbers-mode)
+      (display-line-numbers-mode)
+    (linum-mode))
   (highlight-line-mode))
 
 (defun linum-spacing-on-terminal ()
