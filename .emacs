@@ -24,6 +24,7 @@
 (setq inhibit-startup-screen t)
 (setq ivy-height 15)
 (setq ivy-initial-inputs-alist nil)
+(setq ivy-on-del-error-function nil)
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq ring-bell-function 'ignore)
