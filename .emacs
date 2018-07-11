@@ -697,6 +697,14 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
    ((executable-find "ag") 'counsel-projectile-ag)
    (t 'counsel-projectile-grep)))
 
+(defun find-file-default-completion ()
+  "Use default completion for find-file.
+For example, if ivy is enabled, this function will call find-file with ivy
+temporarily disabled."
+  (interactive)
+  (let ((completing-read-function 'completing-read-default))
+    (call-interactively 'find-file)))
+
 (defun set-additional-project-keys ()
   (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
   (define-key my-minor-mode-map (kbd "C-c p p") 'counsel-projectile-switch-project)
@@ -757,7 +765,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (define-key my-minor-mode-map (kbd "C-e") 'end-of-line)
 (define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
-(define-key my-minor-mode-map (kbd "C-x F") 'find-file)
+(define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 
 ;; ============================================================================
