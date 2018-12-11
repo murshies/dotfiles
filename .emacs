@@ -33,6 +33,7 @@
 (setq tags-add-tables nil)
 (setq-default indent-tabs-mode nil)
 (setq-default major-mode 'text-mode)
+(setq-default fill-column 79)
 (when (require 'package nil 'noerror)
   (package-initialize)
   (add-to-list 'package-archives
@@ -756,6 +757,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-c w") 'whitespace-mode)
 (define-key my-minor-mode-map (kbd "M-W") 'copy-line-at-indentation)
 (define-key my-minor-mode-map (kbd "M-g v") 'magit-status)
+(define-key my-minor-mode-map (kbd "M-g d") 'magit-diff-range)
 (define-key my-minor-mode-map (kbd "M-S") 'loose-isearch-forward)
 (define-key my-minor-mode-map (kbd "M-R") 'loose-isearch-backward)
 (define-key my-minor-mode-map (kbd "C-x p") 'toggle-pin-buffer-to-window)
