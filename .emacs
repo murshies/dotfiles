@@ -503,6 +503,7 @@ display, set the format string so that there is a space after each number."
         conf-mode-hook
         css-mode-hook
         emacs-lisp-mode-hook
+        go-mode-hook
         js-mode-hook
         lua-mode-hook
         lisp-mode-hook
@@ -791,6 +792,7 @@ temporarily disabled."
       '(counsel-etags
         counsel-projectile
         erc-hl-nicks
+        go-mode
         ivy
         jinja2-mode
         magit
