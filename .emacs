@@ -547,7 +547,10 @@ Start with the built-in linux mode and change things from there."
 (defun org-hook ()
   (org-indent-mode)
   (setq org-log-done "time")
-  (local-set-key (kbd "C-c o") 'show-all))
+  (local-set-key
+   (kbd "C-c o")
+   (if (version< emacs-version "25.1")
+       'show-all 'outline-show-all)))
 
 (defun lua-hook ()
   (setq lua-indent-level 4))
@@ -758,6 +761,8 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-W") 'copy-line-at-indentation)
 (define-key my-minor-mode-map (kbd "M-g v") 'magit-status)
 (define-key my-minor-mode-map (kbd "M-g d") 'magit-diff-range)
+(define-key my-minor-mode-map (kbd "M-g b") 'magit-blame-addition)
+(define-key my-minor-mode-map (kbd "M-g l") 'magit-log-buffer-file)
 (define-key my-minor-mode-map (kbd "M-S") 'loose-isearch-forward)
 (define-key my-minor-mode-map (kbd "M-R") 'loose-isearch-backward)
 (define-key my-minor-mode-map (kbd "C-x p") 'toggle-pin-buffer-to-window)
