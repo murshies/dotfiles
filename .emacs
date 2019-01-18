@@ -503,6 +503,7 @@ display, set the format string so that there is a space after each number."
         conf-mode-hook
         css-mode-hook
         emacs-lisp-mode-hook
+        go-mode-hook
         js-mode-hook
         lua-mode-hook
         lisp-mode-hook
@@ -594,6 +595,10 @@ Start with the built-in linux mode and change things from there."
   "Settings for dired mode"
   (setq dired-actual-switches "-lah"))
 
+(defun go-hook ()
+  "Settings for Go mode"
+  (setq tab-width 4))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -608,6 +613,7 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'eww-mode-hook 'eww-hook)
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'dired-mode-hook 'dired-hook)
+(add-hook 'go-mode-hook 'go-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
@@ -796,6 +802,7 @@ temporarily disabled."
       '(counsel-etags
         counsel-projectile
         erc-hl-nicks
+        go-mode
         ivy
         jinja2-mode
         magit
