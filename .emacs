@@ -512,6 +512,7 @@ display, set the format string so that there is a space after each number."
         perl-mode-hook
         python-mode-hook
         racket-mode-hook
+        ruby-mode-hook
         rust-mode-hook
         sh-mode-hook
         text-mode-hook
