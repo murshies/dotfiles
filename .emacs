@@ -802,6 +802,7 @@ temporarily disabled."
 (setq packages-to-install
       '(counsel-etags
         counsel-projectile
+        dockerfile-mode
         erc-hl-nicks
         go-mode
         ivy
