@@ -21,6 +21,16 @@ function datetime()
     printf 'Started: %s\nEnded:   %s\n' "$start" "$end"
 }
 
+function emacsval()
+{
+    emacs --batch -l ~/.emacs --eval "$@"
+}
+
+function eclival()
+{
+    emacsclient --eval "$@"
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias en='emacs -nw'
