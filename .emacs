@@ -700,6 +700,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 (defun load-project-management ()
   (interactive)
   (ivy-mode)
+  (counsel-projectile-mode)
   (set-additional-project-keys))
 
 (defun determine-projectile-search-program ()
