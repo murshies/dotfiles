@@ -728,7 +728,7 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x)
   (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode)
   (define-key my-minor-mode-map (kbd "C-.") 'counsel-etags-list-tag)
-  (define-key my-minor-mode-map [f9] 'counsel-etags-update-tags-force))
+  (define-key my-minor-mode-map [f9] 'counsel-etags-scan-code))
 
 ;; ============================================================================
 ;; Global key bindings
