@@ -17,6 +17,12 @@ function ssh-tmux()
 {
     local hostname="$1"
     shift
+
+    if [ "$hostname" == "" ]; then
+        >&2 echo 'Usage: ssh-tmux hostname [tmux options...]'
+        return
+    fi
+
     ssh-retry -t "$hostname" tmux attach "$@"
 }
 
