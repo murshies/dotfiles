@@ -13,6 +13,13 @@ function ssh-retry()
     done
 }
 
+function ssh-tmux()
+{
+    local hostname="$1"
+    shift
+    ssh-retry -t "$hostname" tmux attach "$@"
+}
+
 function datetime()
 {
     local start=$(date)
@@ -70,3 +77,7 @@ if [ -f ~/local.sh ]
 then
     source ~/local.sh
 fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/dbouffard/.sdkman"
+[[ -s "/home/dbouffard/.sdkman/bin/sdkman-init.sh" ]] && source "/home/dbouffard/.sdkman/bin/sdkman-init.sh"
