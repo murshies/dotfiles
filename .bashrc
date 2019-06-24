@@ -77,7 +77,3 @@ if [ -f ~/local.sh ]
 then
     source ~/local.sh
 fi
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/dbouffard/.sdkman"
-[[ -s "/home/dbouffard/.sdkman/bin/sdkman-init.sh" ]] && source "/home/dbouffard/.sdkman/bin/sdkman-init.sh"
