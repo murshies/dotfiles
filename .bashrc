@@ -46,6 +46,7 @@ function eclival()
 
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
+alias ecn='emacsclient -n'
 alias en='emacs -nw'
 alias startemacs='emacs --daemon --eval "(load-project-management)"'
 
