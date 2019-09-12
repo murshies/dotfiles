@@ -783,7 +783,8 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 
-;; Global key bindings for dumb-jump, when it's installed
+;; Enable dumb-jump mode when it's installed. This will also set global key
+;; bindings for a few of the dumb-jump commands
 (when (require 'dumb-jump nil 'noerror)
   (dumb-jump-mode))
 
