@@ -783,6 +783,10 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 
+;; Global key bindings for dumb-jump, when it's installed
+(when (require 'dumb-jump nil 'noerror)
+  (dumb-jump-mode))
+
 ;; ============================================================================
 ;; Backup file behavior
 ;; ============================================================================
@@ -804,6 +808,7 @@ temporarily disabled."
       '(counsel-etags
         counsel-projectile
         dockerfile-mode
+        dumb-jump
         erc-hl-nicks
         go-mode
         ivy
