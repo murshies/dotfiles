@@ -505,6 +505,7 @@ display, set the format string so that there is a space after each number."
         emacs-lisp-mode-hook
         go-mode-hook
         groovy-mode-hook
+        java-mode-hook
         js-mode-hook
         lua-mode-hook
         lisp-mode-hook
