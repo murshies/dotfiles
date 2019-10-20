@@ -814,6 +814,7 @@ temporarily disabled."
         dumb-jump
         erc-hl-nicks
         go-mode
+        groovy-mode
         ivy
         jinja2-mode
         magit
