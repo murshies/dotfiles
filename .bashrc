@@ -44,7 +44,7 @@ function eclival()
     emacsclient --eval "$@"
 }
 
-function link_dotfiles()
+function link-dotfiles()
 {
     for f in $(ls -a); do
         if [ -f "$f" ]; then
