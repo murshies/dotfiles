@@ -53,6 +53,34 @@ function link_dotfiles()
     done
 }
 
+function refresh-git-repos()
+{
+    local search_root="$1"
+
+    if [ "$search_root" == "" ]; then
+        >&2 echo 'Usage: refresh-git-repos search_root'
+        return
+    fi
+
+    for dir in $(find "$search_root" -type d -not -path "*/.git*"); do
+        cd "$dir"
+        local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+        if [ "$branch" != "" ]; then
+            # This is a git repo.
+            if [ -d ".git" ]; then
+                # This is the top level of a repo.
+                if [ "$branch" == 'master' ]; then
+                    # Repo is on the master branch.
+                    echo "Updating $dir"
+                    git pull
+                else
+                    echo "$dir is on branch $branch"
+                fi
+            fi
+        fi
+    done
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
