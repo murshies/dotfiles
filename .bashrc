@@ -55,30 +55,29 @@ function link-dotfiles()
 
 function refresh-git-repos()
 {
-    local search_root=$(realpath -s "$1")
+    local search_root="$1"
 
     if [ "$search_root" == "" ]; then
-        >&2 echo 'Usage: refresh-git-repos search_root'
-        return
+        search_root='.'
     fi
 
+    search_root=$(realpath -s "$search_root")
+
     for dir in $(find "$search_root" -type d -not -path "*/.git*"); do
-        pushd "$dir" >/dev/null
-        local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+        local branch=$(cd "$dir" && git rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [ "$branch" != "" ]; then
             # This is a git repo.
-            if [ -d ".git" ]; then
+            if [ -d "$dir/.git" ]; then
                 # This is the top level of a repo.
                 if [ "$branch" == 'master' ]; then
                     # Repo is on the master branch.
                     echo "Updating $dir"
-                    git pull
+                    (cd "$dir" && git pull)
                 else
                     echo "$dir is on branch $branch"
                 fi
             fi
         fi
-        popd >/dev/null
     done
 }
 
