@@ -788,7 +788,9 @@ temporarily disabled."
 ;; Enable dumb-jump mode when it's installed. This will also set global key
 ;; bindings for a few of the dumb-jump commands
 (when (require 'dumb-jump nil 'noerror)
-  (dumb-jump-mode))
+  (define-key my-minor-mode-map (kbd "C-M-g") 'dumb-jump-go)
+  (define-key my-minor-mode-map (kbd "C-M-y") 'dumb-jump-back)
+  (define-key my-minor-mode-map (kbd "C-M-q") 'dumb-jump-quick-look))
 
 ;; ============================================================================
 ;; Backup file behavior
