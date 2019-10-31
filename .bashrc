@@ -44,6 +44,15 @@ function eclival()
     emacsclient --eval "$@"
 }
 
+function link_dotfiles()
+{
+    for f in $(ls -a); do
+        if [ -f "$f" ]; then
+            ln -s "$(pwd -P)/$f" "$HOME/$f"
+        fi
+    done
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
