@@ -55,7 +55,7 @@ function link-dotfiles()
 
 function refresh-git-repos()
 {
-    local search_root="$1"
+    local search_root=$(realpath -s "$1")
 
     if [ "$search_root" == "" ]; then
         >&2 echo 'Usage: refresh-git-repos search_root'
@@ -63,7 +63,7 @@ function refresh-git-repos()
     fi
 
     for dir in $(find "$search_root" -type d -not -path "*/.git*"); do
-        cd "$dir"
+        pushd "$dir" >/dev/null
         local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [ "$branch" != "" ]; then
             # This is a git repo.
@@ -78,6 +78,7 @@ function refresh-git-repos()
                 fi
             fi
         fi
+        popd >/dev/null
     done
 }
 
