@@ -22,9 +22,6 @@
 (setq frame-title-format
       '(:eval (if buffer-file-name "%b (%f)" "%b")))
 (setq inhibit-startup-screen t)
-(setq ivy-height 15)
-(setq ivy-initial-inputs-alist nil)
-(setq ivy-on-del-error-function nil)
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq ring-bell-function 'ignore)
@@ -703,6 +700,7 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
   (interactive)
   (ivy-mode)
   (counsel-projectile-mode)
+  (set-additional-project-settings)
   (set-additional-project-keys))
 
 (defun determine-projectile-search-program ()
@@ -731,6 +729,15 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode)
   (define-key my-minor-mode-map (kbd "C-.") 'counsel-etags-list-tag)
   (define-key my-minor-mode-map [f9] 'counsel-etags-scan-code))
+
+(defun set-additional-project-settings ()
+  "Additional settings related to project management."
+  ;; The following setcdr avoids adding a carat in front of the input of every
+  ;; M-x command.
+  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "")
+  (setq ivy-height 15)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-on-del-error-function nil))
 
 ;; ============================================================================
 ;; Global key bindings
