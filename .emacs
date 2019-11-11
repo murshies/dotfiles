@@ -728,13 +728,11 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x)
   (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode)
   (define-key my-minor-mode-map (kbd "C-.") 'counsel-etags-list-tag)
-  (define-key my-minor-mode-map [f9] 'counsel-etags-scan-code))
+  (define-key my-minor-mode-map [f9] 'counsel-etags-scan-code)
+  (define-key my-minor-mode-map [f1] 'swiper-all))
 
 (defun set-additional-project-settings ()
   "Additional settings related to project management."
-  ;; The following setcdr avoids adding a carat in front of the input of every
-  ;; M-x command.
-  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "")
   (setq ivy-height 15)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-on-del-error-function nil))
