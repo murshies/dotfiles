@@ -68,13 +68,19 @@ function refresh-git-repos()
         if [ "$branch" != "" ]; then
             # This is a git repo.
             if [ -d "$dir/.git" ]; then
-                # This is the top level of a repo.
-                if [ "$branch" == 'master' ]; then
+                # This is the top level of a repo. Determine what the default
+                # branch is, and if the repo is on it run a git pull.
+                default_branch=$(cd "$dir" && git symbolic-ref --short HEAD)
+                if [ "$default_branch" == "" ]; then
+                    default_branch='master'
+                    echo "Could not determine default branch for $dir, defaulting to master"
+                fi
+                if [ "$branch" == "$default_branch" ]; then
                     # Repo is on the master branch.
                     echo "Updating $dir"
                     (cd "$dir" && git pull)
                 else
-                    echo "$dir is on branch $branch"
+                    echo "$dir is on branch $branch (default is $default_branch)"
                 fi
             fi
         fi
