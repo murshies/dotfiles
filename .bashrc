@@ -114,7 +114,6 @@ alias ll='ls --color=auto -l'
 alias lah='ls --color=auto -lah'
 alias nohist='unset HISTFILE'
 alias pfg='ps -ef | grep -v grep | grep'
-alias sctl='systemctl'
 alias sudo='sudo '
 alias tmux='tmux -2'
 
