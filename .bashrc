@@ -87,6 +87,20 @@ function refresh-git-repos()
     done
 }
 
+function goto-realdir()
+{
+    local target="$1"
+    local real_path=$(readlink "$target")
+
+    if [ "$real_path" == "" ]; then
+        echo "$target is not a link"
+        return
+    fi
+
+    local realdir=$(dirname "$real_path")
+    cd "$realdir"
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
