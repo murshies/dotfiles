@@ -780,7 +780,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-g l") 'magit-log-buffer-file)
 (define-key my-minor-mode-map (kbd "M-S") 'loose-isearch-forward)
 (define-key my-minor-mode-map (kbd "M-R") 'loose-isearch-backward)
-(define-key my-minor-mode-map (kbd "C-x p") 'toggle-pin-buffer-to-window)
+(define-key my-minor-mode-map (kbd "C-x p") 'electric-pair-local-mode)
 (define-key my-minor-mode-map (kbd "C-x S") 'save-filename-full-path)
 (define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
 (define-key my-minor-mode-map (kbd "C-a") 'beginning-of-line)
