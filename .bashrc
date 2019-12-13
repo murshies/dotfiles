@@ -53,6 +53,11 @@ function link-dotfiles()
     done
 }
 
+function basic-prompt()
+{
+    export PS1='[\u@\h \W]\$ '
+}
+
 function refresh-git-repos()
 {
     local search_root="$1"
