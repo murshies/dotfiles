@@ -118,7 +118,7 @@ alias sudo='sudo '
 alias tmux='tmux -2'
 
 export PATH=~/bin:$PATH
-export PS1='[\u@\h \W]\$ '
+export PS1='\n\[\033[01;32m\][\w]\[\033[00m\]\n\[\033[01;34m\]\u@\h\[\033[00m\] $ '
 export HISTCONTROL=ignorespace:ignoredups
 export HISTTIMEFORMAT="%Y/%m/%d %T "
 
