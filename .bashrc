@@ -47,7 +47,7 @@ function eclival()
 function link-dotfiles()
 {
     local curr_dir=$(pwd -P)
-    grep 'url.*dotfiles.git' .git/config > /dev/null 2>&1
+    grep 'url.*dotfiles' .git/config > /dev/null 2>&1
     if [ $? -ne 0 ]; then
         echo 'Not in the dotfiles repo, exiting'
         return
