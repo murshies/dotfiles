@@ -46,12 +46,19 @@ function eclival()
 
 function link-dotfiles()
 {
+    local curr_dir=$(pwd -P)
+    grep 'url.*dotfiles.git' .git/config > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo 'Not in the dotfiles repo, exiting'
+        return
+    fi
     for f in $(find -maxdepth 1 -type f -name '.*'); do
         local base_f=$(basename "$f")
-        if [ -f "$HOME/$base_f" ]; then
-            echo "Warning: $HOME/$base_f exists already, overwriting"
+        local target="$HOME/$base_f"
+        if [ -f "$target" ]; then
+            echo "Warning: $target exists already, overwriting"
         fi
-        ln -sf "$(pwd -P)/$base_f" "$HOME/$base_f"
+        ln -sf "$curr_dir/$base_f" "$target"
     done
 }
 
