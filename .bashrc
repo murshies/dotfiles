@@ -46,10 +46,12 @@ function eclival()
 
 function link-dotfiles()
 {
-    for f in $(ls -a); do
-        if [ -f "$f" ]; then
-            ln -s "$(pwd -P)/$f" "$HOME/$f"
+    for f in $(find -maxdepth 1 -type f -name '.*'); do
+        local base_f=$(basename "$f")
+        if [ -f "$HOME/$base_f" ]; then
+            echo "Warning: $HOME/$base_f exists already, overwriting"
         fi
+        ln -sf "$(pwd -P)/$base_f" "$HOME/$base_f"
     done
 }
 
