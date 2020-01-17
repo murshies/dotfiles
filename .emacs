@@ -723,6 +723,7 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "C-c p f") 'counsel-projectile-find-file)
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
   (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
+  (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
   (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
   (define-key my-minor-mode-map (kbd "M-.") 'counsel-etags-find-tag-at-point)
   (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
@@ -744,6 +745,13 @@ temporarily disabled."
   (let ((default-directory
           (completing-read "Select a project: " projectile-known-projects)))
     (magit-status)))
+
+(defun projectile-open-top-level-directory ()
+  "Open the top level directory of a known projectile project using dired."
+  (interactive)
+  (let ((selected-project
+         (completing-read "Select a project: " projectile-known-projects)))
+    (find-file selected-project)))
 
 ;; ============================================================================
 ;; Global key bindings
