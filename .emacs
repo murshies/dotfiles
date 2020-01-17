@@ -722,6 +722,7 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "C-c p p") 'counsel-projectile-switch-project)
   (define-key my-minor-mode-map (kbd "C-c p f") 'counsel-projectile-find-file)
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
+  (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
   (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
   (define-key my-minor-mode-map (kbd "M-.") 'counsel-etags-find-tag-at-point)
   (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
@@ -736,6 +737,13 @@ temporarily disabled."
   (setq ivy-height 15)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-on-del-error-function nil))
+
+(defun projectile-open-magit-status ()
+  "Run magit-status on a known projectile project."
+  (interactive)
+  (let ((default-directory
+          (completing-read "Select a project: " projectile-known-projects)))
+    (magit-status)))
 
 ;; ============================================================================
 ;; Global key bindings
