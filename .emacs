@@ -751,7 +751,7 @@ temporarily disabled."
   (interactive)
   (let ((selected-project
          (completing-read "Select a project: " projectile-known-projects)))
-    (find-file selected-project)))
+    (dired selected-project)))
 
 ;; ============================================================================
 ;; Global key bindings
