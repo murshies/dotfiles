@@ -40,6 +40,7 @@
 ;; done after calling package-initialize.
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode))
+(require 'dired-x nil 'noerror) ;; for dired-jump
 
 ;; eshell settings
 (defun eshell/e (file &rest files)
