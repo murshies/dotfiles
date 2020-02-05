@@ -843,6 +843,7 @@ temporarily disabled."
         jinja2-mode
         magit
         markdown-mode
+        neotree
         rust-mode
         rust-playground
         smooth-scrolling
