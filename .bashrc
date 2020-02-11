@@ -115,6 +115,18 @@ function goto-realdir()
     cd "$realdir"
 }
 
+function eww()
+{
+    if [ "$1" == "-nw" ]; then
+        local url="$2"
+        local flags="-nw"
+    else
+        local url="$1"
+        local flags=""
+    fi
+    emacs $flags --eval "(eww \"$url\")"
+}
+
 alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
