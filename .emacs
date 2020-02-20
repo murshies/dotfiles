@@ -167,6 +167,36 @@ When a prefix argument is used, do not reload the files in ~/elisp"
   (load-file "~/.emacs")
   (setq reload-elisp t))
 
+(defun file-or-dir-name (buffer)
+  (with-current-buffer buffer
+    (or (buffer-file-name)
+        dired-directory)))
+
+(defun dump-buffer-files-to-file (file-file)
+  (delete-file file-file)
+  (mapc (lambda (filename) (append-to-file (format "%s\n" filename)
+                                           nil file-file))
+        (cl-remove-if (lambda (elt) (eq elt nil))
+                      (mapcar #'file-or-dir-name (buffer-list)))))
+
+(defun load-buffer-files-from-file (file-file)
+  (let ((files (with-temp-buffer
+                 (insert-file-contents file-file)
+                 (split-string (buffer-string) "\n"))))
+    (mapc #'find-file files)))
+
+(defun save-or-load-file-list ()
+  "Save or load the current list of files and directories to disk.
+
+Without the prefix argument provided, save the list of
+files/directories to disk. With the prefix directory provided,
+load the list of files/directories from disk."
+  (interactive)
+  (let ((file-file "~/.emacs.d/files.txt"))
+    (if current-prefix-arg
+        (load-buffer-files-from-file file-file)
+      (dump-buffer-files-to-file file-file))))
+
 (defun highlight-all-current-region (&optional face)
   (interactive
    (list
@@ -731,7 +761,6 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x)
   (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode)
   (define-key my-minor-mode-map (kbd "C-.") 'counsel-etags-list-tag)
-  (define-key my-minor-mode-map [f9] 'counsel-etags-scan-code)
   (define-key my-minor-mode-map [f1] 'swiper-all))
 
 (defun set-additional-project-settings ()
@@ -764,6 +793,7 @@ temporarily disabled."
 (define-key my-minor-mode-map [f6] 'compile)
 (define-key my-minor-mode-map [f7] 'recompile)
 (define-key my-minor-mode-map [f8] 'load-project-management)
+(define-key my-minor-mode-map [f9] 'save-or-load-file-list)
 (define-key my-minor-mode-map [f12] 'tramp-cleanup-all)
 (define-key my-minor-mode-map [(control shift delete)] 'delete-region)
 (define-key my-minor-mode-map (kbd "C-x R") 'rename-buffer)
