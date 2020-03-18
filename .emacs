@@ -195,7 +195,8 @@ load the list of files/directories from disk."
   (let ((file-file "~/.emacs.d/files.txt"))
     (if current-prefix-arg
         (load-buffer-files-from-file file-file)
-      (dump-buffer-files-to-file file-file))))
+      (when (yes-or-no-p "Are you sure you want to save the file list?")
+        (dump-buffer-files-to-file file-file)))))
 
 (defun highlight-all-current-region (&optional face)
   (interactive
