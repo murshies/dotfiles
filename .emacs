@@ -28,6 +28,7 @@
 ;; Scroll when we're 2 row away from the edge of the window.
 (setq smooth-scroll-margin 2)
 (setq tags-add-tables nil)
+(setq smerge-command-prefix (kbd "C-c v"))
 (setq-default indent-tabs-mode nil)
 (setq-default major-mode 'text-mode)
 (setq-default fill-column 79)
