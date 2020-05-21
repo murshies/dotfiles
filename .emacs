@@ -19,8 +19,9 @@
 (setq create-lockfiles nil)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq erc-join-buffer 'bury)
+(setq frame-title-prefix "")
 (setq frame-title-format
-      '(:eval (if buffer-file-name "%b (%f)" "%b")))
+      '(:eval (concat frame-title-prefix " " (if buffer-file-name "%b (%f)" "%b"))))
 (setq inhibit-startup-screen t)
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
@@ -42,6 +43,15 @@
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode))
 (require 'dired-x nil 'noerror) ;; for dired-jump
+
+(defun dabbrev-completion-all ()
+  "dabbrev-completion, but with the prefix arg forced to search all buffers"
+  (interactive)
+  (dabbrev-completion 16))
+
+(defun set-title-prefix (title-prefix)
+  (interactive "sEnter prefix: ")
+  (setq frame-title-prefix title-prefix))
 
 ;; eshell settings
 (defun eshell/e (file &rest files)
@@ -838,6 +848,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
+(define-key my-minor-mode-map (kbd "C-M-/") 'dabbrev-completion-all)
 
 ;; Enable dumb-jump mode when it's installed. This will also set global key
 ;; bindings for a few of the dumb-jump commands
