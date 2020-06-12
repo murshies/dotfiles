@@ -6,13 +6,13 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(eval-after-load "linum" '(set-face-attribute 'linum nil :height 120))
+(eval-after-load "linum" '(set-face-attribute 'linum nil :height 110))
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
 (global-visual-line-mode)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 110)
 ;; Tell Emacs to automatically place the point at the end of the compilation
 ;; buffer.
 (setq compilation-scroll-output t)
@@ -512,7 +512,8 @@ python-mode."
   (let ((delete-whitespace-major-modes
          '(python-mode
            c++-mode
-           c-mode)))
+           c-mode
+           groovy-mode)))
     (when (member major-mode delete-whitespace-major-modes)
       (delete-trailing-whitespace))))
 
@@ -524,7 +525,8 @@ be applied to each major mode in a smarter way."
   (if (fboundp 'display-line-numbers-mode)
       (display-line-numbers-mode)
     (linum-mode))
-  (highlight-line-mode))
+  (highlight-line-mode)
+  (electric-pair-local-mode))
 
 (defun linum-spacing-on-terminal ()
   "A hook for determining linum-format.
