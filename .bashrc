@@ -44,6 +44,11 @@ function eclival()
     emacsclient --eval "$@"
 }
 
+function magit()
+{
+    emacs --eval "(progn (magit-status \"$@\") (delete-other-windows))"
+}
+
 function link-dotfiles()
 {
     local curr_dir=$(pwd -P)
