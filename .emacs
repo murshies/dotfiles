@@ -43,6 +43,7 @@
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode))
 (require 'dired-x nil 'noerror) ;; for dired-jump
+(setq dabbrev-case-fold-search nil)
 
 (defun dabbrev-completion-all ()
   "dabbrev-completion, but with the prefix arg forced to search all buffers"
