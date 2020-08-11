@@ -177,6 +177,3 @@ if [ -f ~/local.sh ]
 then
     source ~/local.sh
 fi
-export GOPATH="$HOME/go"
-source <(kubectl completion bash)
-source $HOME/.git-completion.bash
