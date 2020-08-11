@@ -17,13 +17,19 @@ function ssh-tmux()
 {
     local hostname="$1"
     shift
+    local session="$1"
+    shift
 
     if [ "$hostname" == "" ]; then
         >&2 echo 'Usage: ssh-tmux hostname [tmux options...]'
         return
     fi
 
-    ssh-retry -t "$hostname" tmux new-session -A "$@"
+    if [ "$session" != "" ]; then
+        ssh-retry -t "$hostname" tmux new-session -A -s "$session" $@
+    else
+        ssh-retry -t "$hostname" tmux attach $@
+    fi
 }
 
 function datetime()
@@ -171,3 +177,6 @@ if [ -f ~/local.sh ]
 then
     source ~/local.sh
 fi
+export GOPATH="$HOME/go"
+source <(kubectl completion bash)
+source $HOME/.git-completion.bash
