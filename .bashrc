@@ -23,7 +23,7 @@ function ssh-tmux()
         return
     fi
 
-    ssh-retry -t "$hostname" tmux attach "$@"
+    ssh-retry -t "$hostname" tmux new-session -A "$@"
 }
 
 function datetime()
