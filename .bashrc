@@ -26,9 +26,9 @@ function ssh-tmux()
     fi
 
     if [ "$session" != "" ]; then
-        ssh-retry -t "$hostname" tmux $@ new-session -A -s "$session"
+        ssh-retry -t "$hostname" tmux -2 $@ new-session -A -s "$session"
     else
-        ssh-retry -t "$hostname" tmux $@ attach
+        ssh-retry -t "$hostname" tmux -2 $@ attach
     fi
 }
 
