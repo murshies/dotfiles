@@ -7,7 +7,7 @@
 TOOLKIT=athena
 # For gtk use libgtk2.0-dev, for anthena use libxaw7-dev
 TOOLKIT_PACKAGE=libxaw7-dev
-VERSION=26.3
+VERSION=27.1
 SRC_ROOT=/src
 INSTALL_DEST=/opt/emacs-$VERSION
 
