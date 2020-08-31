@@ -76,25 +76,17 @@ the default directory as the eshell buffer's default directory."
      default-directory
      (background-command-buffer full-cmd))))
 
-(defun colorize-eshell-prompt (prompt)
-  "Apply colors to the eshell prompt."
-  (concat
-   (propertize prompt 'face '(:foreground "#00CC00"))
-   (propertize " " 'face '(:foreground "#FFFFFF"))))
-
 ;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
-        (colorize-eshell-prompt
-         (concat
-          "\n["
-          user-login-name
-          "@"
-          system-name
-          " "
-          (eshell/pwd)
-          "]\n"
-          (if (= (user-uid) 0) "#" "$")))))
+        (concat
+         "\n"
+         (propertize (concat "[" (eshell/pwd) "]")
+                     'face '(:foreground "#8AE234" :weight bold))
+         "\n"
+         (propertize (concat user-login-name "@" system-name)
+                     'face '(:foreground "Sky Blue" :weight bold))
+         (if (= (user-uid) 0) " # " " $ "))))
 (setq eshell-prompt-regexp "[#$] ")
 (setq eshell-highlight-prompt nil)
 
