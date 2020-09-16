@@ -763,7 +763,6 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
   (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
   (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
-  (define-key my-minor-mode-map (kbd "M-.") 'counsel-etags-find-tag-at-point)
   (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
   (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x)
   (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode)
@@ -837,8 +836,6 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-x p") 'electric-pair-local-mode)
 (define-key my-minor-mode-map (kbd "C-x S") 'save-filename-full-path)
 (define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
-(define-key my-minor-mode-map (kbd "C-a") 'beginning-of-line)
-(define-key my-minor-mode-map (kbd "C-e") 'end-of-line)
 (define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
@@ -849,7 +846,7 @@ temporarily disabled."
 ;; bindings for a few of the dumb-jump commands
 (when (require 'dumb-jump nil 'noerror)
   (define-key my-minor-mode-map (kbd "C-M-g") 'dumb-jump-go)
-  (define-key my-minor-mode-map (kbd "C-M-y") 'dumb-jump-back)
+  (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
   (define-key my-minor-mode-map (kbd "C-M-q") 'dumb-jump-quick-look))
 
 ;; ============================================================================
