@@ -21,7 +21,8 @@ tar -xvf /tmp/emacs-$VERSION.tar.gz -C $SRC_ROOT
 rm /tmp/emacs-$VERSION.tar.gz
 
 # Install dependencies
-apt-get install -y $TOOLKIT_PACKAGE build-essential libgnutls28-dev libncurses5-dev libxpm-dev libjpeg-dev libtiff5-dev libpng-dev libgif-dev libxml2-dev libxft-dev libfreetype6-dev libjansson-dev
+# cmake, libtool, and libvterm-dev are for install the vterm package
+apt-get install -y $TOOLKIT_PACKAGE build-essential libgnutls28-dev libncurses5-dev libxpm-dev libjpeg-dev libtiff5-dev libpng-dev libgif-dev libxml2-dev libxft-dev libfreetype6-dev libjansson-dev cmake libtool libvterm-dev
 
 # Build and install emacs
 cd $SRC_ROOT/emacs-$VERSION
