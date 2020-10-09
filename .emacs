@@ -38,6 +38,8 @@
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/"))
   (setq custom-file "~/.emacs.d/custom.el"))
+(when (daemonp)
+  (setenv "EDITOR" "emacsclient"))
 ;; Note: loading features that were downloaded from the package manager must be
 ;; done after calling package-initialize.
 (when (require 'undo-tree nil 'noerror)
@@ -885,6 +887,11 @@ temporarily disabled."
         undo-tree
         web-mode
         yaml-mode))
+
+;; If emacs was compiled with module support, include the following packages in
+;; the list of packages to install.
+(if module-file-suffix
+    (setq packages-to-install (append packages-to-install '(vterm))))
 
 ;; General function for ensuring that a list of packages is installed.
 
