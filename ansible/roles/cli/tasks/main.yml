@@ -1,0 +1,104 @@
+- name: Install base packages
+  become: yes
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - docker.io
+      - git
+      - gnupg2
+      - ripgrep
+      - tmux
+      - unzip
+      - wget
+      - zip
+    state: latest
+
+- name: Add user to docker group
+  when: ansible_user_id != 'root'
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    groups:
+      - docker
+    append: yes
+
+- name: Install kubectl
+  become: yes
+  block:
+    - name: Add apt key for kubectl
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add kubectl package source
+      copy:
+        content: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+        dest: /etc/apt/sources.list.d/kubernetes.list
+        mode: 0644
+
+    - name: Install kubectl from apt repo
+      apt:
+        update_cache: yes
+        name: kubectl
+        state: latest
+
+- name: Install Google Cloud SDK
+  become: yes
+  block:
+    - name: Add Cloud SDK package source
+      copy:
+        content: "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main"
+        dest: /etc/apt/sources.list.d/google-cloud-sdk.list
+
+    - name: Add apt key for Google Cloud
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        keyring: /usr/share/keyrings/cloud.google.gpg
+        state: present
+
+    - name: Install the google-cloud-sdk package
+      apt:
+        update_cache: yes
+        name: google-cloud-sdk
+        state: latest
+
+- name: Download minikube
+  when: ansible_architecture == 'x86_64'
+  become: yes
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    dest: /usr/bin/minikube
+    mode: 0755
+    
+- name: Clone dotfiles repo to the user home directory
+  git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ ansible_user_dir }}/dotfiles"
+
+- name: symlink dotfiles to the user home directory
+  file:
+    src: "{{ ansible_user_dir }}/dotfiles/{{ item }}"
+    dest: "{{ ansible_user_dir }}/{{ item }}"
+    state: link
+    force: yes
+  with_items: "{{ dotfiles }}"
+
+- name: Install dotfiles for root
+  become: yes
+  when: dotfiles_to_root and ansible_user_id != 'root'
+  block:
+    - name: Clone dotfiles for root
+      git:
+        repo: "{{ dotfiles_repo }}"
+        dest: /root/dotfiles
+        
+    - name: symlink dotfiles to the root home directory
+      file:
+        src: "/root/dotfiles/{{ item }}"
+        dest: "/root/{{ item }}"
+        state: link
+        force: yes
+      with_items: "{{ dotfiles }}"
+  

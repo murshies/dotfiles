@@ -1,0 +1,15 @@
+---
+# The top level playbook for provision a development environment. This assumes
+# that the target machine is running a apt-based system (like debian or
+# ubuntu).
+- hosts: local
+  pre_tasks:
+    - name: Do base upgrade of the system
+      become: yes
+      apt:
+        upgrade: 'yes'
+        update_cache: yes
+  roles:
+    - cli
+    - role: emacs
+      become: yes
