@@ -13,3 +13,5 @@
     - cli
     - role: emacs
       become: yes
+    - gui
+    - golang

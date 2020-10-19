@@ -1,0 +1,51 @@
+- name: Install tigervnc server
+  become: yes
+  apt:
+    name: tigervnc-standalone-server
+    state: present
+
+- name: Create .vnc config directory
+  file:
+    path: "{{ ansible_user_dir }}/.vnc"
+    mode: 0700
+    state: directory
+
+- name: Install openbox
+  become: yes
+  apt:
+    name: openbox
+    state: present
+
+- name: Install tint2
+  become: yes
+  apt:
+    name: tint2
+    state: present
+
+- name: Install xterm
+  become: yes
+  apt:
+    name: xterm
+    state: present
+
+- name: Create openbox config directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/openbox"
+    mode: 0700
+    state: directory
+    
+- name: Create autostart.sh script in openbox config directory
+  copy:
+    dest: "{{ ansible_user_dir }}/.config/openbox/autostart.sh"
+    mode: 0755
+    content: |
+      #!/bin/bash
+      tint2 &
+      if ! emacsclient -e 0 >&/dev/null; then
+          emacs --daemon --eval "
+            (progn
+              (load-project-management)
+              (setenv \"EDITOR\" \"emacsclient\"))"
+      fi
+      emacsclient -c --eval "(toggle-frame-maximized)" &
+  

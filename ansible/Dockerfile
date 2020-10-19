@@ -6,5 +6,7 @@ COPY requirements.txt /ansible/
 WORKDIR /ansible
 RUN pip3 install -r requirements.txt
 COPY . /ansible
-RUN ansible-playbook -i local site.yml --extra-vars 'emacs_package=emacs-nox'
+RUN ansible-playbook -i local site.yml
 WORKDIR /root
+
+ENTRYPOINT ["/bin/bash", "/ansible/entrypoint.sh"]

@@ -28,51 +28,57 @@
         - cmake
         - libtool
         - libvterm-dev
-    
+        - texinfo
+
     - name: Cleanup existing emacs source directory
       file:
         path: "{{ emacs_source_root }}"
         state: absent
-    
+
     - name: Cleanup existing emacs install directory
       file:
         path: "{{ emacs_install_root }}"
         state: absent
-        
+
     - name: Create emacs source directory
       file:
         path: "{{ emacs_source_root }}"
         mode: 0777
         state: directory
-    
+
     - name: Create emacs installation directory
       file:
         path: "{{ emacs_install_root }}"
         mode: 0777
         state: directory
-        
-    - name: Download and unpack emacs source files
-      unarchive:
-        src: "https://ftp.gnu.org/gnu/emacs/emacs-{{ emacs_version }}.tar.gz"
-        dest: "{{ emacs_source_root }}/.."
-        mode: 0755
-        remote_src: yes
-    
+
+    - name: Download emacs source files
+      git:
+        repo: "git://git.sv.gnu.org/emacs"
+        dest: "{{ emacs_source_root }}"
+        depth: '1'
+        version: "emacs-{{ emacs_version }}"
+
+    - name: Run autogen on emacs
+      shell:
+        cmd: ./autogen.sh
+        chdir: "{{ emacs_source_root }}"
+
     - name: Configure emacs
       shell:
         cmd: ./configure --prefix="{{ emacs_install_root }}" --with-x-toolkit="{{ emacs_toolkit }}"
         chdir: "{{ emacs_source_root }}"
-    
+
     - name: Build emacs
       shell:
         cmd: make -j $(nproc)
         chdir: "{{ emacs_source_root }}"
-    
+
     - name: Install emacs to installation root
       shell:
         cmd: make install
         chdir: "{{ emacs_source_root }}"
-    
+
     - name: Make emacs symlinks
       file:
         src: "{{ emacs_install_root }}/bin/{{ item }}"

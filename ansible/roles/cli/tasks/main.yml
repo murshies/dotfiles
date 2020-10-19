@@ -8,6 +8,8 @@
       - docker.io
       - git
       - gnupg2
+      - htop
+      - net-tools
       - ripgrep
       - tmux
       - unzip
