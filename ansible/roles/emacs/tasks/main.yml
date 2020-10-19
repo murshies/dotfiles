@@ -54,7 +54,7 @@
 
     - name: Download emacs source files
       git:
-        repo: "git://git.sv.gnu.org/emacs"
+        repo: "https://git.savannah.gnu.org/git/emacs"
         dest: "{{ emacs_source_root }}"
         depth: '1'
         version: "emacs-{{ emacs_version }}"
