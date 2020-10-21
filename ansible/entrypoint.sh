@@ -6,7 +6,7 @@ if [ -z "$VNCPASSWD" ]; then
 fi
 
 printf "$VNCPASSWD\n$VNCPASSWD\nn\n" | /usr/bin/vncpasswd
-/usr/bin/tigervncserver -localhost no
+/usr/bin/tigervncserver -localhost no -xstartup /usr/bin/openbox-session
 while true; do
     sleep 60
 done

@@ -36,16 +36,12 @@
     
 - name: Create autostart.sh script in openbox config directory
   copy:
-    dest: "{{ ansible_user_dir }}/.config/openbox/autostart.sh"
+    dest: "{{ ansible_user_dir }}/.config/openbox/autostart"
     mode: 0755
     content: |
-      #!/bin/bash
+      # -*- mode: sh -*-
       tint2 &
-      if ! emacsclient -e 0 >&/dev/null; then
-          emacs --daemon --eval "
-            (progn
-              (load-project-management)
-              (setenv \"EDITOR\" \"emacsclient\"))"
-      fi
+      vncconfig &
+      emacs --daemon --eval '(progn (load-project-management) (setenv "EDITOR" "emacsclient"))'
       emacsclient -c --eval "(toggle-frame-maximized)" &
   
