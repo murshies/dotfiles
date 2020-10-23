@@ -11,6 +11,7 @@
       - gnupg2
       - htop
       - jq
+      - ncdu
       - net-tools
       - ripgrep
       - tmux
