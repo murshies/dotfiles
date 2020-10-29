@@ -13,6 +13,7 @@
         state: latest
       loop:
         - "{{ emacs_toolkit_package }}"
+        - autoconf
         - build-essential
         - libgnutls28-dev
         - libncurses5-dev
