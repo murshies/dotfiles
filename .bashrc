@@ -168,8 +168,17 @@ case "$TERM" in
         ;;
 esac
 
-if [ $(which emacs 2> /dev/null) ]
-then
+if [ -n "$EMACS_DAEMON" ]; then
+    # If we're running emacs in a daemon, use emacsclient as the editor.
+    export EDITOR='emacsclient'
+elif [ -n "$INSIDE_EMACS" ]; then
+    # If we're inside emacs but not using a daemon, use vim as the editor. This
+    # is so we don't get emacs inside of emacs when running the editor inside
+    # of something like vterm.
+    export EDITOR='vim'
+elif [ $(which emacs 2> /dev/null) ]; then
+    # Otherwise, if we're on the command line and emacs is installed, use
+    # terminal emacs as the editor.
     export EDITOR='emacs -nw'
 fi
 

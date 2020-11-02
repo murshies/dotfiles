@@ -39,7 +39,8 @@
                '("melpa" . "https://melpa.org/packages/"))
   (setq custom-file "~/.emacs.d/custom.el"))
 (when (daemonp)
-  (setenv "EDITOR" "emacsclient"))
+  (setenv "EDITOR" "emacsclient")
+  (setenv "EMACS_DAEMON" "yes"))
 ;; Note: loading features that were downloaded from the package manager must be
 ;; done after calling package-initialize.
 (when (require 'undo-tree nil 'noerror)
