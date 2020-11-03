@@ -19,9 +19,16 @@
 (setq create-lockfiles nil)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq erc-join-buffer 'bury)
-(setq frame-title-prefix "")
-(setq frame-title-format
-      '(:eval (concat frame-title-prefix " " (if buffer-file-name "%b (%f)" "%b"))))
+(setq-default
+ header-line-format
+ '(:eval (let* ((full-header buffer-file-name)
+                (full-header-length (length full-header))
+                (window-width (window-body-width)))
+           (if full-header
+               (if (> full-header-length window-width)
+                   (concat "..." (substring full-header (- full-header-length (- window-width 3))))
+                 full-header)
+             "%b"))))
 (setq inhibit-startup-screen t)
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
