@@ -52,7 +52,13 @@ function eclival()
 
 function magit()
 {
-    emacs --eval "(progn (magit-status \"$@\") (delete-other-windows))"
+    emacs $EMACS_PARAMS --eval "(progn (magit-status \"$@\") (delete-other-windows))"
+}
+
+function tmagit()
+{
+    EMACS_PARAMS='-nw'
+    magit $@
 }
 
 function link-dotfiles()
