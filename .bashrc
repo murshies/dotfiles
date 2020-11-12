@@ -132,6 +132,22 @@ function goto-realdir()
     cd "$realdir"
 }
 
+function venv-shim()
+{
+    if (( $# < 2 )); then
+        echo "Usage: $0 venv_root cmd1 [cmd2...]"
+        return
+    fi
+    local venv_root="$1"
+    shift
+    for cmd in "$@"; do
+        local cmd_loc=~/bin/$cmd
+        printf "#!/bin/bash\n\nsource '$venv_root/bin/activate'\n$cmd\n" > "$cmd_loc"
+        chmod 755 "$cmd_loc"
+        echo "Created $cmd_loc"
+    done
+}
+
 function eww()
 {
     if [ "$1" == "-nw" ]; then
