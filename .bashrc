@@ -139,10 +139,11 @@ function venv-shim()
         return
     fi
     local venv_root="$1"
+    local arg_str='$@' # The literal string $@, not the parameter list
     shift
     for cmd in "$@"; do
         local cmd_loc=~/bin/$cmd
-        printf "#!/bin/bash\n\nsource '$venv_root/bin/activate'\n$cmd\n" > "$cmd_loc"
+        printf "#!/bin/bash\n\nsource '$venv_root/bin/activate'\n$cmd $arg_str\n" > "$cmd_loc"
         chmod 755 "$cmd_loc"
         echo "Created $cmd_loc"
     done
