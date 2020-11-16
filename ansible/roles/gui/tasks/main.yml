@@ -22,10 +22,10 @@
     name: tint2
     state: present
 
-- name: Install xterm
+- name: Install xfce4-terminal
   become: yes
   apt:
-    name: xterm
+    name: xfce4-terminal
     state: present
 
 - name: Create openbox config directory
@@ -49,5 +49,10 @@
   copy:
     src: rc.xml
     dest: "{{ ansible_user_dir }}/.config/openbox/rc.xml"
-    mode: 644
-  
+    mode: 0644
+
+- name: Copy xfce4-terminal terminalrc to user's configuration directory
+  copy:
+    src: terminalrc
+    dest: "{{ ansible_user_dir }}/.config/xfce4/terminal/terminalrc"
+    mode: 0644
