@@ -51,6 +51,12 @@
     dest: "{{ ansible_user_dir }}/.config/openbox/rc.xml"
     mode: 0644
 
+- name: Create xfce4 terminal config directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/xfce4/terminal"
+    mode: 0700
+    state: directory
+
 - name: Copy xfce4-terminal terminalrc to user's configuration directory
   copy:
     src: terminalrc
