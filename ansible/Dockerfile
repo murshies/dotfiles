@@ -10,9 +10,9 @@ COPY requirements.txt /ansible/
 WORKDIR /ansible
 RUN pip3 install -r requirements.txt
 COPY . /ansible
-RUN ansible-playbook -i local site.yml
 
 RUN chown -R ${username}:${username} /ansible
 USER ${username}
+RUN ansible-playbook -i local site.yml
 WORKDIR /home/${username}
 ENTRYPOINT ["/bin/bash", "/ansible/entrypoint.sh"]
