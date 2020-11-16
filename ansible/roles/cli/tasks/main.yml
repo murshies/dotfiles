@@ -16,6 +16,7 @@
       - net-tools
       - ripgrep
       - tmux
+      - traceroute
       - unzip
       - wget
       - zip
