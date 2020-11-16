@@ -44,4 +44,10 @@
       vncconfig &
       emacs --daemon --eval '(progn (load-project-management) (setenv "EDITOR" "emacsclient"))'
       emacsclient -c --eval "(toggle-frame-maximized)" &
+
+- name: Copy openbox rc.xml to user's configuration directory
+  copy:
+    src: rc.xml
+    dest: "{{ ansible_user_dir }}/.config/openbox/rc.xml"
+    mode: 644
   
