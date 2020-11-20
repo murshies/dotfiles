@@ -513,6 +513,7 @@ associated with it."
   (define-key vterm-mode-map (kbd "<C-left>") 'vterm-send-M-b)
   (define-key vterm-mode-map (kbd "<C-right>") 'vterm-send-M-f)
   (define-key vterm-mode-map (kbd "M-.") 'vterm-send-M-.)
+  (define-key vterm-mode-map (kbd "C-c C-x") 'vterm-send-C-x)
   (define-key my-minor-mode-map [f11] 'vterm))
 
 ;; We need to do this check + call, since apparently starting emacs in
