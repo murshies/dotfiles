@@ -505,6 +505,7 @@ associated with it."
 
 ;; vterm settings
 (when (require 'vterm nil 'noerror)
+  (setq-default vterm-buffer-name-string "vterm %s")
   (set-face-attribute 'vterm-color-blue nil :inherit 'term-color-cyan)
   (vterm-define-key "M-.")
   (define-key vterm-mode-map (kbd "C-v") 'vterm-send-C-v)
