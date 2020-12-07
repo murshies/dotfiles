@@ -22,7 +22,7 @@ rm /tmp/emacs-$VERSION.tar.gz
 
 # Install dependencies
 # cmake, libtool, and libvterm-dev are for install the vterm package
-apt-get install -y $TOOLKIT_PACKAGE build-essential libgnutls28-dev libncurses5-dev libxpm-dev libjpeg-dev libtiff5-dev libpng-dev libgif-dev libxml2-dev libxft-dev libfreetype6-dev libjansson-dev cmake libtool libvterm-dev
+apt-get install -y $TOOLKIT_PACKAGE build-essential libgnutls28-dev libncurses5-dev libxpm-dev libjpeg-dev libtiff5-dev libpng-dev libgif-dev libxml2-dev libxft-dev libfreetype6-dev libjansson-dev cmake libtool libtool-bin
 
 # Build and install emacs
 cd $SRC_ROOT/emacs-$VERSION

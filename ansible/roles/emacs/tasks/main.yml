@@ -28,7 +28,7 @@
         - libjansson-dev
         - cmake
         - libtool
-        - libvterm-dev
+        - libtool-bin
         - texinfo
 
     - name: Cleanup existing emacs source directory
