@@ -135,10 +135,10 @@ function goto-realdir()
 function venv-shim()
 {
     if (( $# < 2 )); then
-        echo "Usage: $0 venv_root cmd1 [cmd2...]"
+        echo "Usage: venv-shm venv_root cmd1 [cmd2...]"
         return
     fi
-    local venv_root="$1"
+    local venv_root=$(readlink -f "$1")
     local arg_str='$@' # The literal string $@, not the parameter list
     shift
     for cmd in "$@"; do
