@@ -559,13 +559,14 @@ display, set the format string so that there is a space after each number."
         clojure-mode-hook
         conf-mode-hook
         css-mode-hook
+        dockerfile-mode-hook
         emacs-lisp-mode-hook
         go-mode-hook
         groovy-mode-hook
         java-mode-hook
         js-mode-hook
-        lua-mode-hook
         lisp-mode-hook
+        lua-mode-hook
         makefile-mode-hook
         org-mode-hook
         perl-mode-hook
