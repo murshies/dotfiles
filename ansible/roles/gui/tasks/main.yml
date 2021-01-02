@@ -22,10 +22,10 @@
     name: tint2
     state: present
 
-- name: Install xterm
+- name: Install xfce4-terminal
   become: yes
   apt:
-    name: xterm
+    name: xfce4-terminal
     state: present
 
 - name: Create openbox config directory
@@ -44,4 +44,21 @@
       vncconfig &
       emacs --daemon --eval '(progn (load-project-management) (setenv "EDITOR" "emacsclient"))'
       emacsclient -c --eval "(toggle-frame-maximized)" &
-  
+
+- name: Copy openbox rc.xml to user's configuration directory
+  copy:
+    src: rc.xml
+    dest: "{{ ansible_user_dir }}/.config/openbox/rc.xml"
+    mode: 0644
+
+- name: Create xfce4 terminal config directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/xfce4/terminal"
+    mode: 0700
+    state: directory
+
+- name: Copy xfce4-terminal terminalrc to user's configuration directory
+  copy:
+    src: terminalrc
+    dest: "{{ ansible_user_dir }}/.config/xfce4/terminal/terminalrc"
+    mode: 0644

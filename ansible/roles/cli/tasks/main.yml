@@ -14,8 +14,10 @@
       - jq
       - ncdu
       - net-tools
+      - psmisc
       - ripgrep
       - tmux
+      - traceroute
       - unzip
       - wget
       - zip

@@ -505,6 +505,7 @@ associated with it."
 
 ;; vterm settings
 (when (require 'vterm nil 'noerror)
+  (setq-default vterm-buffer-name-string "vterm %s")
   (set-face-attribute 'vterm-color-blue nil :inherit 'term-color-cyan)
   (vterm-define-key "M-.")
   (define-key vterm-mode-map (kbd "C-v") 'vterm-send-C-v)
@@ -513,6 +514,9 @@ associated with it."
   (define-key vterm-mode-map (kbd "<C-left>") 'vterm-send-M-b)
   (define-key vterm-mode-map (kbd "<C-right>") 'vterm-send-M-f)
   (define-key vterm-mode-map (kbd "M-.") 'vterm-send-M-.)
+  (define-key vterm-mode-map (kbd "C-c C-x") 'vterm-send-C-x)
+  (define-key vterm-mode-map (kbd "C-c C-c") 'vterm-send-C-c)
+  (define-key vterm-mode-map (kbd "C-c M-x") 'vterm-send-M-x)
   (define-key my-minor-mode-map [f11] 'vterm))
 
 ;; We need to do this check + call, since apparently starting emacs in
