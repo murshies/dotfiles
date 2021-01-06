@@ -896,8 +896,7 @@ temporarily disabled."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(counsel-etags
-        counsel-projectile
+      '(counsel-projectile
         dockerfile-mode
         dumb-jump
         erc-hl-nicks
