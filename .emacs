@@ -2,8 +2,6 @@
 ;; Miscellaneous settings
 ;; ============================================================================
 
-(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
-
 (blink-cursor-mode -1)
 (column-number-mode)
 (delete-selection-mode)
@@ -506,6 +504,7 @@ associated with it."
   (setq using-dark-theme nil))
 
 ;; vterm settings
+(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
 (when (require 'vterm nil 'noerror)
   (setq-default vterm-buffer-name-string "vterm %s")
   (set-face-attribute 'vterm-color-blue nil :inherit 'term-color-cyan)
