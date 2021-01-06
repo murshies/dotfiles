@@ -2,6 +2,8 @@
 ;; Miscellaneous settings
 ;; ============================================================================
 
+(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
+
 (blink-cursor-mode -1)
 (column-number-mode)
 (delete-selection-mode)
