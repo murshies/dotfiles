@@ -15,4 +15,3 @@ RUN chown -R ${username}:${username} /ansible
 USER ${username}
 RUN ansible-playbook -i local site.yml
 WORKDIR /home/${username}
-ENTRYPOINT ["/bin/bash", "/ansible/entrypoint.sh"]

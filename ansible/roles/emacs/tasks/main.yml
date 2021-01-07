@@ -1,10 +1,12 @@
 - name: Install emacs from package
+  become: yes
   when: emacs_package != 'source'
   apt:
     name: "{{ emacs_package }}"
     state: latest
 
 - name: Install emacs from source
+  become: yes
   when: emacs_package == 'source'
   block:
     - name: Install packages for building emacs
@@ -88,6 +90,11 @@
       with_items:
         - emacs
         - emacsclient
+
+    - name: Remove emacs source directory to conserve space
+      file:
+        path: "{{ emacs_source_root }}"
+        state: absent
 
 - name: Install elisp packages
   shell:
