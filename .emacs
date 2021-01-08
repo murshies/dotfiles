@@ -645,7 +645,8 @@ Start with the built-in linux mode and change things from there."
   (when (> (buffer-size) (* 1024 1024))
     (buffer-disable-undo)
     (fundamental-mode)
-    (linum-mode -1)))
+    (linum-mode -1)
+    (read-only-mode)))
 
 (defun eww-hook ()
   "Settings for the eww browser."
