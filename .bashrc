@@ -35,7 +35,7 @@ function ssh-tmux()
 function datetime()
 {
     local start=$(date)
-    $@
+    time $@
     local end=$(date)
     printf 'Started: %s\nEnded:   %s\n' "$start" "$end"
 }
