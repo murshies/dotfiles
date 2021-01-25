@@ -21,7 +21,7 @@ function ssh-tmux()
     shift
 
     if [ "$hostname" == "" ]; then
-        >&2 echo 'Usage: ssh-tmux hostname [tmux options...]'
+        >&2 echo "Usage: ${FUNCNAME[0]} hostname [tmux options...]"
         return
     fi
 
@@ -135,7 +135,7 @@ function goto-realdir()
 function venv-shim()
 {
     if (( $# < 2 )); then
-        echo "Usage: venv-shm venv_root cmd1 [cmd2...]"
+        echo "Usage: ${FUNCNAME[0]} venv_root cmd1 [cmd2...]"
         return
     fi
     local venv_root=$(readlink -f "$1")
