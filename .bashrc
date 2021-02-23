@@ -176,6 +176,7 @@ alias nohist='unset HISTFILE'
 alias pfg='ps -ef | grep -v grep | grep'
 alias sudo='sudo '
 alias tmux='tmux -2'
+alias timestamp='date -u +%Y%m%dT%H%M%SZ'
 
 export PATH=~/bin:$PATH
 export PS1='\n\[\033[01;32m\][\w]\[\033[00m\]\n\[\033[01;34m\]\u@\h\[\033[00m\] $ '
