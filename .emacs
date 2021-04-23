@@ -896,7 +896,8 @@ temporarily disabled."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(counsel-projectile
+      '(company
+        counsel-projectile
         dockerfile-mode
         dumb-jump
         erc-hl-nicks
@@ -904,6 +905,7 @@ temporarily disabled."
         groovy-mode
         ivy
         jinja2-mode
+        lsp-mode
         magit
         markdown-mode
         neotree
