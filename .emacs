@@ -905,6 +905,7 @@ temporarily disabled."
         groovy-mode
         ivy
         jinja2-mode
+        kubel
         lsp-mode
         magit
         markdown-mode
