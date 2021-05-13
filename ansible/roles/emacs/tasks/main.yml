@@ -69,7 +69,7 @@
 
     - name: Configure emacs
       shell:
-        cmd: ./configure --prefix="{{ emacs_install_root }}" --with-x-toolkit="{{ emacs_toolkit }}"
+        cmd: ./configure --with-native-compilation --prefix="{{ emacs_install_root }}" --with-x-toolkit="{{ emacs_toolkit }}"
         chdir: "{{ emacs_source_root }}"
 
     - name: Build emacs

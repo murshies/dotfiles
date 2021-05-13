@@ -910,6 +910,7 @@ temporarily disabled."
         magit
         markdown-mode
         neotree
+        protobuf-mode
         rust-mode
         rust-playground
         smooth-scrolling
