@@ -53,6 +53,7 @@
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode))
 (require 'dired-x nil 'noerror) ;; for dired-jump
+(require 'subr-x)
 (setq dabbrev-case-fold-search nil)
 
 (defun dabbrev-completion-all ()
@@ -138,8 +139,8 @@ This function assumes that there is an ssh command on the user's PATH."
 (defun copy-line-at-indentation ()
   "Copies the current line to the kill ring, excluding indentation."
   (interactive)
-  (kill-ring-save (+ (line-beginning-position) (current-indentation))
-                  (line-end-position))
+  (kill-new (string-trim (buffer-substring-no-properties
+                          (line-beginning-position) (line-end-position))))
   (message "Copied current line."))
 
 (defun try-to-load-elisp (elisp-file)
