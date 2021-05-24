@@ -1,4 +1,4 @@
-emacs_version: 27.1
+emacs_version: 27.2
 emacs_toolkit: athena # For gtk, use gtk2
 emacs_toolkit_package: libxaw7-dev # For gtk, use libgtk2.0-dev
 emacs_source_root: "/src/emacs-{{ emacs_version }}"
