@@ -870,6 +870,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 (define-key my-minor-mode-map (kbd "C-M-/") 'dabbrev-completion-all)
+(define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 
 ;; Enable dumb-jump mode when it's installed. This will also set global key
 ;; bindings for a few of the dumb-jump commands
