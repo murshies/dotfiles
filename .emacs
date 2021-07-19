@@ -53,7 +53,10 @@
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode))
 (require 'dired-x nil 'noerror) ;; for dired-jump
+(require 'subr-x)
 (setq dabbrev-case-fold-search nil)
+(setq lsp-headerline-breadcrumb-enable nil
+      lsp-keymap-prefix "M-'")
 
 (defun dabbrev-completion-all ()
   "dabbrev-completion, but with the prefix arg forced to search all buffers"
@@ -138,8 +141,8 @@ This function assumes that there is an ssh command on the user's PATH."
 (defun copy-line-at-indentation ()
   "Copies the current line to the kill ring, excluding indentation."
   (interactive)
-  (kill-ring-save (+ (line-beginning-position) (current-indentation))
-                  (line-end-position))
+  (kill-new (string-trim (buffer-substring-no-properties
+                          (line-beginning-position) (line-end-position))))
   (message "Copied current line."))
 
 (defun try-to-load-elisp (elisp-file)
@@ -503,23 +506,6 @@ associated with it."
   (set-cursor-color "black")
   (setq using-dark-theme nil))
 
-;; vterm settings
-(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
-(when (require 'vterm nil 'noerror)
-  (setq-default vterm-buffer-name-string "vterm %s")
-  (set-face-attribute 'vterm-color-blue nil :inherit 'term-color-cyan)
-  (vterm-define-key "M-.")
-  (define-key vterm-mode-map (kbd "C-v") 'vterm-send-C-v)
-  (define-key vterm-mode-map (kbd "C-a") 'vterm-send-C-a)
-  (define-key vterm-mode-map (kbd "C-e") 'vterm-send-C-e)
-  (define-key vterm-mode-map (kbd "<C-left>") 'vterm-send-M-b)
-  (define-key vterm-mode-map (kbd "<C-right>") 'vterm-send-M-f)
-  (define-key vterm-mode-map (kbd "M-.") 'vterm-send-M-.)
-  (define-key vterm-mode-map (kbd "C-c C-x") 'vterm-send-C-x)
-  (define-key vterm-mode-map (kbd "C-c C-c") 'vterm-send-C-c)
-  (define-key vterm-mode-map (kbd "C-c M-x") 'vterm-send-M-x)
-  (define-key my-minor-mode-map [f11] 'vterm))
-
 ;; We need to do this check + call, since apparently starting emacs in
 ;; non-daemon mode doesn't count as creating a frame.
 (when (not (daemonp)) (frame-creation-hook (selected-frame)))
@@ -871,6 +857,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 (define-key my-minor-mode-map (kbd "C-M-/") 'dabbrev-completion-all)
+(define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 
 ;; Enable dumb-jump mode when it's installed. This will also set global key
 ;; bindings for a few of the dumb-jump commands
@@ -897,7 +884,8 @@ temporarily disabled."
 
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
-      '(counsel-projectile
+      '(company
+        counsel-projectile
         dockerfile-mode
         dumb-jump
         erc-hl-nicks
@@ -905,20 +893,18 @@ temporarily disabled."
         groovy-mode
         ivy
         jinja2-mode
+        kubel
+        lsp-mode
         magit
         markdown-mode
         neotree
+        protobuf-mode
         rust-mode
         rust-playground
         smooth-scrolling
         undo-tree
         web-mode
         yaml-mode))
-
-;; If emacs was compiled with module support, include the following packages in
-;; the list of packages to install.
-(if module-file-suffix
-    (setq packages-to-install (append packages-to-install '(vterm))))
 
 ;; General function for ensuring that a list of packages is installed.
 
