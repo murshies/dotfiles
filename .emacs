@@ -786,9 +786,10 @@ temporarily disabled."
 
 (defun set-additional-project-settings ()
   "Additional settings related to project management."
-  (setq ivy-height 15)
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-on-del-error-function nil))
+  (setq ivy-height 15
+        ivy-initial-inputs-alist nil
+        ivy-on-del-error-function nil
+        ivy-dynamic-exhibit-delay-ms 250))
 
 (defun projectile-open-magit-status ()
   "Run magit-status on a known projectile project."
