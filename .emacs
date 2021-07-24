@@ -103,7 +103,7 @@ the default directory as the eshell buffer's default directory."
 (setq eshell-prompt-regexp "[#$] ")
 (setq eshell-highlight-prompt nil)
 
-(remove-hook 'find-file-hooks 'vc-find-file-hook)
+(setq vc-handled-backends ())
 
 ;; ============================================================================
 ;; Utility functions
