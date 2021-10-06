@@ -11,6 +11,10 @@
         update_cache: yes
   roles:
     - cli
+    - docker
+    - gcloud
+    - kubectl
+    - minikube
     - emacs
     - gui
     - golang

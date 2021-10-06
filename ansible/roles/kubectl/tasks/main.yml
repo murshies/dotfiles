@@ -1,0 +1,29 @@
+- name: Install packages for kubectl download
+  become: yes
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: latest
+    update_cache: yes
+
+- name: Add apt key for kubectl
+  become: yes
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add kubectl package source
+  become: yes
+  copy:
+    content: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    dest: /etc/apt/sources.list.d/kubernetes.list
+    mode: 0644
+
+- name: Install kubectl from apt repo
+  become: yes
+  apt:
+    update_cache: yes
+    name: kubectl
+    state: latest

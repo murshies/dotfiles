@@ -13,4 +13,4 @@ if [ -z "$container_name" ] || [ -z "$vnc_passwd" ]; then
     exit 1
 fi
 
-docker run -p $vnc_port:5901 -e VNCPASSWD="$vnc_passwd" -v /var/run/docker.sock:/var/run/docker.sock -v $HOME:/root/host --name "$container_name" -d murshies/devenv:latest
+docker run -p $vnc_port:5901 -e VNCPASSWD="$vnc_passwd" -v /var/run/docker.sock:/var/run/docker.sock -v $HOME:/root/host --name "$container_name" -d murshies/devenv:latest sleep infinity

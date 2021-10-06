@@ -1,0 +1,15 @@
+- name: Install docker
+  become: yes
+  apt:
+    name: docker.io
+    state: latest
+    update_cache: yes
+
+- name: Add user to docker group
+  when: ansible_user_id != 'root'
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    groups:
+      - docker
+    append: yes
