@@ -6,7 +6,6 @@
       - aspell
       - ca-certificates
       - curl
-      - docker.io
       - git
       - gnupg2
       - htop
@@ -23,15 +22,20 @@
       - zip
     state: latest
 
-- name: Clone dotfiles repo to the user home directory
-  git:
-    repo: "{{ dotfiles_repo }}"
-    dest: "{{ ansible_user_dir }}/dotfiles"
+- name: Copy pull-dotfiles.sh to user's bin directory
+  copy:
+    src: pull-dotfiles.sh
+    dest: "{{ ansible_user_dir }}/bin/"
+    mode: 0755
 
-- name: symlink dotfiles to the user home directory
-  file:
-    src: "{{ ansible_user_dir }}/dotfiles/{{ item }}"
-    dest: "{{ ansible_user_dir }}/{{ item }}"
-    state: link
-    force: yes
-  with_items: "{{ dotfiles }}"
+- name: Copy aupdate to user's bin directory
+  copy:
+    src: aupdate
+    dest: "{{ ansible_user_dir }}/bin/"
+    mode: 0755
+
+- name: Copy server-mode.sh to user's bin directory
+  copy:
+    src: server-mode.sh
+    dest: "{{ ansible_user_dir }}/bin/"
+    mode: 0755

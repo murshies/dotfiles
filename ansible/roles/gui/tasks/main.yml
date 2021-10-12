@@ -1,14 +1,14 @@
-- name: Install tigervnc server
+- name: Install OpenSSH server
   become: yes
   apt:
-    name: tigervnc-standalone-server
+    name: openssh-server
     state: present
 
-- name: Create .vnc config directory
-  file:
-    path: "{{ ansible_user_dir }}/.vnc"
-    mode: 0700
-    state: directory
+- name: Install x2goserver
+  become: yes
+  apt:
+    name: x2goserver
+    state: present
 
 - name: Install openbox
   become: yes
@@ -41,10 +41,15 @@
     content: |
       # -*- mode: sh -*-
       tint2 &
-      vncconfig &
       emacs --daemon --eval '(progn (load-project-management) (setenv "EDITOR" "emacsclient"))'
       emacsclient -c --eval "(toggle-frame-maximized)" &
 
+- name: Copy ssh-server.sh to user's bin directory
+  copy:
+    src: ssh-server.sh
+    dest: "{{ ansible_user_dir }}/bin/"
+    mode: 0755
+      
 - name: Copy openbox rc.xml to user's configuration directory
   copy:
     src: rc.xml

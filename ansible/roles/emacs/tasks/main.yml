@@ -96,8 +96,8 @@
         path: "{{ emacs_source_root }}"
         state: absent
 
-- name: Install elisp packages
-  shell:
-    # Use the --batch command line parameter and then explicitly load the
-    # .emacs file in order to avoid the need to allocate a tty.
-    cmd: emacs --batch --eval '(progn (load-file "{{ ansible_user_dir }}/.emacs") (install-selected-packages))'
+- name: Copy install-emacs-packages.sh to user's bin directory
+  copy:
+    src: install-emacs-packages.sh
+    dest: "{{ ansible_user_dir }}/bin/"
+    mode: 0755
