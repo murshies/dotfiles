@@ -751,10 +751,15 @@ buffer), but with pylint instead. It will use the default .pylintrc file."
 
 (defun load-project-management ()
   (interactive)
-  (ivy-mode)
-  (counsel-projectile-mode)
-  (set-additional-project-settings)
-  (set-additional-project-keys))
+  (if (or
+       (not (fboundp 'ivy-mode))
+       (not (fboundp 'counsel-projectile-mode)))
+      (message "Project management not installed, skipping init")
+    (progn
+      (ivy-mode)
+      (counsel-projectile-mode)
+      (set-additional-project-settings)
+      (set-additional-project-keys))))
 
 (defun determine-projectile-search-program ()
   (cond
