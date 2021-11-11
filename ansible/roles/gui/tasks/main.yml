@@ -42,7 +42,6 @@
       # -*- mode: sh -*-
       tint2 &
       emacs --daemon --eval '(progn (load-project-management) (setenv "EDITOR" "emacsclient"))'
-      emacsclient -c --eval "(toggle-frame-maximized)" &
 
 - name: Copy ssh-server.sh to user's bin directory
   copy:
