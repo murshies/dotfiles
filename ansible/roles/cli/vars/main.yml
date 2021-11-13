@@ -1,7 +1,0 @@
-dotfiles_to_root: yes
-dotfiles_repo: https://github.com/murshies/dotfiles
-dotfiles:
-  - .bashrc
-  - .emacs
-  - .inputrc
-  - .tmux.conf
