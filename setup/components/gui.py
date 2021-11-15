@@ -53,3 +53,9 @@ def run():
     sh.mkdir('-p', xfce4terminal_dir)
     sh.cp(os.path.join(BASE_PATH, 'terminalrc'),
           os.path.join(xfce4terminal_dir, 'terminalrc'))
+
+    logger.info("Copy tint2rc to user's config directory")
+    tint2rc_dir = os.path.join(os.environ['HOME'], '.config', 'tint2')
+    sh.mkdir('-p', tint2rc_dir)
+    sh.cp(os.path.join(BASE_PATH, 'tint2rc'),
+          os.path.join(tint2rc_dir, 'tint2rc'))

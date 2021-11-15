@@ -89,7 +89,13 @@ def emacs_from_source():
                 os.path.join('/', 'usr', 'bin', exe))
 
         logger.info('Remove emacs source directory to conserve space')
-        sh.sudo.rm('-rf', EMACS_SOURCE_ROOT)
+
+    sh.sudo.rm('-rf', EMACS_SOURCE_ROOT)
+
+    logger.info("Copy the emacs icons to the user's .icons directory")
+    build_icons_dir = os.path.join(EMACS_INSTALL_ROOT, 'share', 'icons')
+    home_icons_dir = os.path.join(os.environ['HOME'], '.icons')
+    sh.cp('-r', build_icons_dir, home_icons_dir)
 
 
 def emacs_from_package():
@@ -107,3 +113,7 @@ def run():
     sh.mkdir('-p', user_bin)
     sh.cp(os.path.join(BASE_PATH, 'install-emacs-packages.sh'),
           os.path.join(user_bin, 'install-emacs-packages.sh'))
+
+    logger.info('Copy modified emacs.desktop to applications directory')
+    sh.sudo.cp(os.path.join(BASE_PATH, 'emacs.desktop'),
+               '/usr/share/applications/emacs.desktop')
