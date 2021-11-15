@@ -58,6 +58,10 @@
 (setq lsp-headerline-breadcrumb-enable nil
       lsp-keymap-prefix "M-'")
 
+(defun git-quick-status()
+  (interactive)
+  (shell-command "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD"))
+
 (defun dabbrev-completion-all ()
   "dabbrev-completion, but with the prefix arg forced to search all buffers"
   (interactive)
@@ -863,6 +867,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 (define-key my-minor-mode-map (kbd "C-M-/") 'dabbrev-completion-all)
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
+(define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 
 ;; Enable dumb-jump mode when it's installed. This will also set global key
 ;; bindings for a few of the dumb-jump commands
