@@ -79,10 +79,7 @@ This function is meant to be called as a command in eshell. Wildcards are
 supported."
   (let* ((unflattened (append (list file) files))
          (flattened (eshell-flatten-list unflattened))
-         (full-paths (mapcar (lambda (f)
-                               (concat default-directory f))
-                             flattened)))
-    (mapc #'find-file full-paths)))
+    (mapc #'find-file flattened)))
 
 (defun eshell/a (cmd &rest args)
   "Runs an asynchronous command.
