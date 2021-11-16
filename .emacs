@@ -105,8 +105,6 @@ the default directory as the eshell buffer's default directory."
          (propertize (concat user-login-name "@" system-name)
                      'face '(:foreground "Sky Blue" :weight bold))
          (if (= (user-uid) 0) " # " " $ "))))
-(setq eshell-prompt-regexp "[#$] ")
-(setq eshell-highlight-prompt nil)
 
 (setq vc-handled-backends ())
 
@@ -599,9 +597,6 @@ Start with the built-in linux mode and change things from there."
   (linum-mode)
   (diff-auto-refine-mode -1))
 
-(defun eshell-hook ()
-  (setq pcomplete-cycle-completions nil))
-
 (defun org-hook ()
   (org-indent-mode)
   (setq org-log-done "time")
@@ -662,7 +657,6 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'clojure-mode-hook 'clojure-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
-(add-hook 'eshell-mode-hook 'eshell-hook)
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'term-mode-hook 'term-hook)
