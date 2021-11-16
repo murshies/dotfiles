@@ -102,6 +102,13 @@ the default directory as the eshell buffer's default directory."
   "Shorthand for ls -lah in eshell"
   (eshell/ls "-lah" args))
 
+(defun eshell/cds (&optional dir)
+  "Visit a directory as root.
+The directory is optional. WHen it isn't provided, visit the
+current directory as root."
+  (let ((dir-to-visit (concat "/sudo::" (if dir dir default-directory))))
+    (eshell/cd dir-to-visit)))
+
 ;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
@@ -742,8 +749,8 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-c C-h") 'highlight-all-current-region)
 (define-key my-minor-mode-map (kbd "M-N") 'create-new-buffer)
 (define-key my-minor-mode-map (kbd "M-P") 'window-browser)
-(define-key my-minor-mode-map (kbd "C-c s e") 'eshell)
-(define-key my-minor-mode-map (kbd "C-c s d") 'eshell-cd-to-current-directory)
+(define-key my-minor-mode-map (kbd "C-c s") 'eshell)
+(define-key my-minor-mode-map (kbd "C-c a") 'eshell-cd-to-current-directory)
 (define-key my-minor-mode-map (kbd "M-I") 'windmove-up)
 (define-key my-minor-mode-map (kbd "M-K") 'windmove-down)
 (define-key my-minor-mode-map (kbd "M-J") 'windmove-left)
