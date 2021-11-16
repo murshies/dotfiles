@@ -16,18 +16,10 @@ GUI_PACKAGES = [
     'tint2',
     'xfce4-terminal',
 ]
-KEYBOARD_LAYOUT = '''
-# KEYBOARD CONFIGURATION FILE
-
-# Consult the keyboard(5) manual page.
-
-XKBMODEL="pc105"
-XKBLAYOUT="us"
-XKBVARIANT=""
-XKBOPTIONS=""
-
-BACKSPACE="guess"
-'''
+BIN_SCRIPTS = [
+    'ssh-server.sh',
+    'dind.sh',
+]
 
 def run():
     logger.info('Install packages')
@@ -42,11 +34,12 @@ def run():
         sh.cp(os.path.join(BASE_PATH, script),
               os.path.join(openbox_dir, script))
 
-    logger.info("Copy ssh-server.sh to user's home directory")
+    logger.info("Copy scripts to user's bin directory")
     user_bin = os.path.join(os.environ['HOME'], 'bin')
     sh.mkdir('-p', user_bin)
-    sh.cp(os.path.join(BASE_PATH, 'ssh-server.sh'),
-          os.path.join(user_bin, 'ssh-server.sh'))
+    for bin_script in BIN_SCRIPTS:
+        sh.cp(os.path.join(BASE_PATH, bin_script),
+              os.path.join(user_bin, bin_script))
 
     logger.info('Create xfce4-terminal config directory and copy config')
     xfce4terminal_dir = os.path.join(os.environ['HOME'], '.config', 'xfce4', 'terminal')
