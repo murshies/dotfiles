@@ -90,6 +90,14 @@ the default directory as the eshell buffer's default directory."
      default-directory
      (background-command-buffer full-cmd))))
 
+(defun eshell/ll (&rest args)
+  "Shorthand for ls -l in eshell"
+  (eshell/ls "-l" args))
+
+(defun eshell/lah (&rest args)
+  "Shorthand for ls -lah in eshell"
+  (eshell/ls "-lah" args))
+
 ;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
@@ -107,29 +115,6 @@ the default directory as the eshell buffer's default directory."
 ;; ============================================================================
 ;; Utility functions
 ;; ============================================================================
-
-(defun ssh-ansi (ssh-args)
-  "Open an ssh connection in a new buffer.
-
-This offers functionality similar to the ssh package, but uses an ansi-term
-terminal instead of a shell-mode terminal. This function takes the ssh
-arguments as one interactive parameter. The name of the new ssh buffer is based
-off of the first ssh argument (space delimited).
-
-This function assumes that there is an ssh command on the user's PATH."
-  (interactive "sEnter ssh arguments: ")
-  (let* ((buffer-name (concat "ssh " (car (split-string ssh-args))))
-         (full-buffer-name
-          (generate-new-buffer-name (concat "*" buffer-name "*")))
-         (extra-ssh-args "-o ServerAliveInterval=5 -o ServerAliveCountMax=2 ")
-         (ssh-command (concat "ssh " extra-ssh-args ssh-args))
-         (full-command (concat "while [ 1 ]; do "
-                               ssh-command
-                               " ; sleep 1 ; done")))
-    (ansi-term "/bin/bash" buffer-name)
-    (switch-to-buffer full-buffer-name)
-    (insert full-command)
-    (term-send-input)))
 
 (defun highlight-line-mode ()
   (if (display-graphic-p)
@@ -310,57 +295,6 @@ called starting-directory."
   (insert (concat "cd " starting-directory))
   (term-send-input))
 
-(defun get-ansi-shell-command ()
-  "A helper function for handling the logic of determining which shell should
-be used for ansi-term buffers."
-  (let ((default-shell "/bin/bash"))
-    (if (boundp 'explicit-shell-file-name)
-        (or explicit-shell-file-name default-shell)
-      default-shell)))
-
-(defun named-ansi-term (program)
-  "Creates an ansi-term buffer with a customized name. The format of the name
-is *ansi-<current directory>*."
-  (interactive
-   (list
-    (let ((shell-to-use (get-ansi-shell-command)))
-      (read-string "Run program: " shell-to-use nil
-                   shell-to-use))))
-  (let* ((absolute-directory
-          (directory-file-name (expand-file-name default-directory)))
-         (cd-name (car (last (split-string absolute-directory "/"))))
-         (buffer-name (concat "ansi-" cd-name)))
-    (ansi-term program buffer-name)))
-
-(defun ansi-term-in-directory (directory)
-  "Creates an ansi term in the directory that is interactively entered.
-named-ansi-term is called interactively to allow the user to enter the program
-that will be run."
-  (interactive (list (read-file-name "Enter the shell starting directory: ")))
-  (let ((default-directory (file-name-as-directory directory)))
-    (call-interactively 'named-ansi-term)))
-
-(defun generate-etags-in-directory (directory file-patterns)
-  "Generate an etags file in a directory specified by the user.
-The user also specifies a pattern (passed to find) that will match against
-files in the specified directory and subdirectories."
-  (interactive
-   (list
-    (read-directory-name "Enter the etags root: ")
-    (read-regexp "Enter any number of file name patterns, separated by spaces: ")))
-  (let* ((tag-file (concat (file-name-as-directory directory) "TAGS"))
-         (file-pattern-list
-          (cl-remove-if (lambda (s) (= (length s) 0))
-                        (split-string file-patterns)))
-         (find-file-string
-          (mapconcat 'identity file-pattern-list "\" -or -name \""))
-         (etags-command
-          (format "find \"%s\" -type f -and \\( -name \"%s\" \\) | etags -f %s -"
-                  directory find-file-string tag-file)))
-    (compilation-start etags-command nil
-                       (lambda (_) (format "*etags [%s %s]*"
-                                           directory file-patterns)))))
-
 (defun directory-for-background-command (prefix-arg command-buffer)
   "A helper function to determine the running directory for the
 run-async-shell-command command."
@@ -381,7 +315,7 @@ This defines the actual command logic."
   (let ((default-directory directory))
     (async-shell-command command command-buffer)))
 
-(defun run-async-shell-command (prefix-arg command)
+(defun -shell-command (prefix-arg command)
   "Run an asynchronous command.
 
 The prefix argument controls the working directory for the command:
@@ -409,27 +343,6 @@ more of any character."
   (interactive)
   (let ((search-whitespace-regexp ".+"))
     (isearch-backward)))
-
-(defun toggle-pin-buffer-to-window ()
-  "If the current window is not dedicated to its buffer, dedicate it and vice
-versa."
-  (interactive)
-  (set-window-dedicated-p (get-buffer-window) (not (window-dedicated-p)))
-  (message (format "Window is%s dedicated to its buffer"
-                   (if (window-dedicated-p) "" " not"))))
-
-(defun toggle-close-confirm ()
-  "Toggle emacs close confirmation behavior. Enable a yes or no prompt when
-calling save-buffers-kill-terminal if it would exit immediately and vice
-versa."
-  (interactive)
-  (if confirm-kill-emacs
-      (progn
-        (setq confirm-kill-emacs nil)
-        (message "Close confirmation disabled."))
-    (progn
-      (setq confirm-kill-emacs 'yes-or-no-p)
-      (message "Close confirmation enabled."))))
 
 (defun save-filename-full-path ()
   "Save the file name of the current buffer, with the full path, to the kill
@@ -827,9 +740,6 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-P") 'window-browser)
 (define-key my-minor-mode-map (kbd "C-c s e") 'eshell)
 (define-key my-minor-mode-map (kbd "C-c s d") 'eshell-cd-to-current-directory)
-(define-key my-minor-mode-map (kbd "C-c s a") 'named-ansi-term)
-(define-key my-minor-mode-map (kbd "C-c s s") 'ssh-ansi)
-(define-key my-minor-mode-map (kbd "C-c s w") 'ansi-term-in-directory)
 (define-key my-minor-mode-map (kbd "M-I") 'windmove-up)
 (define-key my-minor-mode-map (kbd "M-K") 'windmove-down)
 (define-key my-minor-mode-map (kbd "M-J") 'windmove-left)
