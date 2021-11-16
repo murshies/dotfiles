@@ -31,6 +31,7 @@ PACKAGES = [
     'gnupg2',
     'htop',
     'ipcalc',
+    'iputils-ping',
     'jq',
     'ncdu',
     'net-tools',
