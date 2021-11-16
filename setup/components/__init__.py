@@ -1,3 +1,10 @@
+"""
+Main module point for all installation components.
+
+The main purpose of this is to collect all components into an ordered
+dictionary, so that they can be iterated over.
+
+"""
 from collections import OrderedDict
 
 from . import cli

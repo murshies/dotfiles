@@ -1,4 +1,4 @@
-
+"""Component for installing golang."""
 import logging
 import os
 import sh
@@ -7,7 +7,9 @@ from .util import apt_install
 
 logger = logging.getLogger(__name__)
 
-def run():
+
+def run() -> None:
+    """Run the golang component installation."""
     logger.info('Install golang')
     apt_install('golang')
 

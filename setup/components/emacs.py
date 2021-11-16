@@ -1,4 +1,4 @@
-
+"""Component for installing emacs."""
 from contextlib import contextmanager
 import logging
 import os
@@ -9,8 +9,8 @@ from .util import apt_install
 
 BASE_PATH = os.path.join('.', 'files')
 EMACS_VERSION = '27.2'
-EMACS_TOOLKIT = 'athena' # For gtk, use gkt2
-EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev' # For gtk, use libgtk2.0-dev
+EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
+EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
 EMACS_INSTALL_ROOT = os.path.join('/', 'opt', f'emacs-{EMACS_VERSION}')
 EMACS_PACKAGE = 'source'
@@ -38,8 +38,10 @@ EMACS_BUILD_PACKAGES = [
 
 logger = logging.getLogger(__name__)
 
+
 @contextmanager
-def cwd(directory):
+def cwd(directory: str) -> None:
+    """Context manager for temporarily changing the working directory."""
     currdir = os.getcwd()
     try:
         os.chdir(directory)
@@ -47,7 +49,9 @@ def cwd(directory):
     finally:
         os.chdir(currdir)
 
-def emacs_from_source():
+
+def emacs_from_source() -> None:
+    """Install emacs from source."""
     logger.info('Installing emacs from source')
 
     logger.info('Installing packages for building emacs')
@@ -98,11 +102,14 @@ def emacs_from_source():
     sh.cp('-r', build_icons_dir, home_icons_dir)
 
 
-def emacs_from_package():
+def emacs_from_package() -> None:
+    """Install emacs from the package manager."""
     logger.info('Installing emacs from package')
     apt_install(EMACS_PACKAGE)
 
-def run():
+
+def run() -> None:
+    """Run the emacs component installation."""
     if EMACS_PACKAGE == 'source':
         emacs_from_source()
     else:

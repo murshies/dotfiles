@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""The main entrypoint for environment setup."""
 
 import argparse
 import logging
@@ -8,15 +9,28 @@ import sys
 
 from components import COMPONENTS
 
+
 def get_args() -> argparse.Namespace:
+    """
+    Parse the command line arguments.
+
+    :return argparse.Namespace: The object containing the parsed parameters.
+    """
     parser = argparse.ArgumentParser()
 
     return parser.parse_args()
 
+
 def main() -> int:
+    """
+    Run the main function for this script.
+
+    :return int: The return code.
+    """
     logging.basicConfig(
         level=logging.INFO,
-        format='%(asctime)s %(name)s.%(funcName)s:%(lineno)d ::%(levelname)s: %(message)s',
+        format=('%(asctime)s %(name)s.%(funcName)s:%(lineno)d '
+                '::%(levelname)s: %(message)s'),
     )
     logger = logging.getLogger('setup')
     logger.info('Doing initial package update and upgrade')
@@ -41,6 +55,7 @@ def main() -> int:
         logger.info('Running setup for %s', component_name)
         component_exe()
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())

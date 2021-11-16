@@ -1,4 +1,4 @@
-
+"""Component for installing the google cloud sdk."""
 import logging
 import sh
 
@@ -12,7 +12,9 @@ GCLOUD_DOWNLOAD_PACKAGES = [
 
 logger = logging.getLogger(__name__)
 
-def run():
+
+def run() -> None:
+    """Run the gcloud component installation."""
     logger.info('Install packages for gcloud download')
     apt_install(*GCLOUD_DOWNLOAD_PACKAGES)
 

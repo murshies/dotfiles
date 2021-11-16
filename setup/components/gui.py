@@ -1,10 +1,10 @@
-
+"""Component for installing an openbox-based graphical environment."""
 import logging
 import os
 import os.path
 import sh
 
-from .util import apt_install, write_root_file
+from .util import apt_install
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,9 @@ BIN_SCRIPTS = [
     'dind.sh',
 ]
 
-def run():
+
+def run() -> None:
+    """Run the gui component installation."""
     logger.info('Install packages')
     apt_install(*GUI_PACKAGES)
 
@@ -42,7 +44,8 @@ def run():
               os.path.join(user_bin, bin_script))
 
     logger.info('Create xfce4-terminal config directory and copy config')
-    xfce4terminal_dir = os.path.join(os.environ['HOME'], '.config', 'xfce4', 'terminal')
+    xfce4terminal_dir = os.path.join(
+        os.environ['HOME'], '.config', 'xfce4', 'terminal')
     sh.mkdir('-p', xfce4terminal_dir)
     sh.cp(os.path.join(BASE_PATH, 'terminalrc'),
           os.path.join(xfce4terminal_dir, 'terminalrc'))

@@ -1,4 +1,4 @@
-
+"""Component for install cli packages."""
 import logging
 import os
 import os.path
@@ -44,7 +44,9 @@ PACKAGES = [
     'zip',
 ]
 
-def run():
+
+def run() -> None:
+    """Run the cli component installation."""
     logger.info('Installing cli packages')
     apt_install(*PACKAGES)
     logger.info("Copying scripts to user's bin directory")
