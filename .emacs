@@ -323,7 +323,7 @@ This defines the actual command logic."
   (let ((default-directory directory))
     (async-shell-command command command-buffer)))
 
-(defun -shell-command (prefix-arg command)
+(defun run-async-shell-command (prefix-arg command)
   "Run an asynchronous command.
 
 The prefix argument controls the working directory for the command:
