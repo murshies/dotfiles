@@ -6,8 +6,8 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(setq font-size 110)
-(eval-after-load "linum" '(set-face-attribute 'linum nil :height font-size))
+(when (not (boundp 'font-size))
+  (setq font-size 110))
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
 (global-visual-line-mode)
@@ -58,6 +58,13 @@
 (setq dabbrev-case-fold-search nil)
 (setq lsp-headerline-breadcrumb-enable nil
       lsp-keymap-prefix "M-'")
+
+(defun set-font-size (size)
+  (interactive "nFont size: ")
+  (setq font-size size)
+  (set-face-attribute 'default nil :height font-size))
+
+(set-font-size font-size)
 
 (defun git-quick-status()
   (interactive)
