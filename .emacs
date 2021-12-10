@@ -113,6 +113,25 @@ current directory as root."
   (let ((dir-to-visit (concat "/sudo::" (if dir dir default-directory))))
     (eshell/cd dir-to-visit)))
 
+(defun eshell/cd-start-dir ()
+  "Change to the starting directory of the eshell buffer"
+  (eshell/cd eshell-starting-directory))
+
+(defun eshell-in-dir (starting-dir)
+  "Start a new eshell in a specific directory"
+  (interactive "DEnter the starting directory: ")
+  (let ((default-directory starting-dir)
+        (eshell-buffer-name (format "*eshell %s*" starting-dir)))
+    (eshell)
+    (setq eshell-starting-directory starting-dir)
+    (eshell/cd starting-dir)))
+
+(defun eshell-hook ()
+  (make-local-variable 'eshell-starting-directory)
+  (setq eshell-starting-directory default-directory))
+
+(add-hook 'eshell-mode-hook 'eshell-hook)
+
 ;; eshell custom prompt
 (setq eshell-prompt-function
       (lambda ()
