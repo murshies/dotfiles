@@ -5,7 +5,7 @@ import os
 import os.path
 import sh
 
-from .util import apt_install
+from .util import apt_install, write_root_file
 
 BASE_PATH = os.path.join('.', 'files')
 EMACS_VERSION = '27.2'
@@ -13,7 +13,8 @@ EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
 EMACS_INSTALL_ROOT = os.path.join('/', 'opt', f'emacs-{EMACS_VERSION}')
-EMACS_PACKAGE = 'source'
+EMACS_PACKAGE = os.environ.get('EMACS_PACKAGE', 'source')
+EMACS_PPA = os.environ.get('EMACS_PPA', '').lower() == 'true'
 EMACS_BUILD_PACKAGES = [
     EMACS_TOOLKIT_PACKAGE,
     'autoconf',
@@ -35,6 +36,22 @@ EMACS_BUILD_PACKAGES = [
     'texinfo',
     'git',
 ]
+
+EMACS_DESKTOP_ENTRY = """
+[Desktop Entry]
+Name=Emacs
+GenericName=Text Editor
+Comment=Edit text
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+Exec=emacsclient -a '' --eval "(load-project-management)" -c %F
+Icon={emacs_package}
+Type=Application
+Terminal=false
+Categories=Development;TextEditor;
+StartupWMClass=Emacs
+Keywords=Text;Editor;
+
+"""
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +122,16 @@ def emacs_from_source() -> None:
 def emacs_from_package() -> None:
     """Install emacs from the package manager."""
     logger.info('Installing emacs from package')
+    if EMACS_PPA:
+        add_emacs_ppa()
     apt_install(EMACS_PACKAGE)
+
+
+def add_emacs_ppa() -> None:
+    """Add extra PPA for emacs packages."""
+    apt_install('software-properties-common')
+    sh.sudo('add-apt-repository', 'ppa:kelleyk/emacs')
+    sh.sudo.apt.update()
 
 
 def run() -> None:
@@ -121,6 +147,13 @@ def run() -> None:
     sh.cp(os.path.join(BASE_PATH, 'install-emacs-packages.sh'),
           os.path.join(user_bin, 'install-emacs-packages.sh'))
 
-    logger.info('Copy modified emacs.desktop to applications directory')
-    sh.sudo.cp(os.path.join(BASE_PATH, 'emacs.desktop'),
-               '/usr/share/applications/emacs.desktop')
+    logger.info('Create emacs.desktop file in applications directory')
+    emacs_package = 'emacs' if EMACS_PACKAGE == 'source' else EMACS_PACKAGE
+    emacs_desktop = EMACS_DESKTOP_ENTRY.format(
+        emacs_package=emacs_package
+    )
+    write_root_file(
+        emacs_desktop,
+        '/usr/share/applications/emacs.desktop',
+        '0644'
+    )
