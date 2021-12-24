@@ -105,7 +105,7 @@ def emacs_from_source() -> None:
         logger.info('Make emacs symlinks')
         for exe in ('emacs', 'emacsclient'):
             sh.sudo.ln(
-                '-s',
+                '-sf',
                 os.path.join(EMACS_INSTALL_ROOT, 'bin', exe),
                 os.path.join('/', 'usr', 'bin', exe))
 
