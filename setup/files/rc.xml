@@ -325,6 +325,17 @@
   <keybind key="Print">
     <action name="Execute"><command>scrot</command></action>
   </keybind>
+
+  <keybind key="A-F2">
+    <action name="Execute">
+      <command>rofi -modi combi -show combi -combi-modi drun,run</command>
+    </action>
+  </keybind>
+  <keybind key="A-2">
+    <action name="Execute">
+      <command>rofi -modi combi -show combi -combi-modi drun,run</command>
+    </action>
+  </keybind>
 </keyboard>
 
 <mouse>

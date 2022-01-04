@@ -15,6 +15,7 @@ GUI_PACKAGES = [
     'openbox',
     'tint2',
     'xfce4-terminal',
+    'rofi',
 ]
 BIN_SCRIPTS = [
     'ssh-server.sh',

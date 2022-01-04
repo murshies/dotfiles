@@ -81,7 +81,7 @@ def emacs_from_source() -> None:
 
     logger.info('Download emacs source')
     sh.sudo.git.clone(
-        'https://git.savannah.gnu.org/git/emacs.git',
+        'https://github.com/emacs-mirror/emacs',
         EMACS_SOURCE_ROOT)
 
     with cwd(EMACS_SOURCE_ROOT):
