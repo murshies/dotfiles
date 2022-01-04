@@ -14,6 +14,7 @@ from . import gcloud
 from . import golang
 from . import gui
 from . import kubectl
+# from . import nix
 
 COMPONENTS = OrderedDict([
     ('cli', cli.run),

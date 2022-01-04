@@ -5,6 +5,7 @@ import os.path
 import sh
 
 from .util import apt_install
+from . import nix
 
 logger = logging.getLogger(__name__)
 
@@ -22,20 +23,41 @@ SCRIPTS = [
     'pull-dotfiles.sh',
     'server-mode.sh',
 ]
+# PACKAGES = [
+#     'apt-transport-https',
+#     'aspell',
+#     'ca-certificates',
+#     'curl',
+#     'git',
+#     'gnupg2',
+#     'htop',
+#     'ipcalc',
+#     'iputils-ping',
+#     'jq',
+#     'ncdu',
+#     'net-tools',
+#     'psmisc',
+#     'ripgrep',
+#     'tmux',
+#     'traceroute',
+#     'unzip',
+#     'wget',
+#     'zip',
+# ]
 PACKAGES = [
-    'apt-transport-https',
+    # 'apt-transport-https',
     'aspell',
-    'ca-certificates',
+    # 'ca-certificates',
     'curl',
     'git',
-    'gnupg2',
+    # 'gnupg2',
     'htop',
     'ipcalc',
-    'iputils-ping',
+    # 'iputils-ping',
     'jq',
     'ncdu',
-    'net-tools',
-    'psmisc',
+    # 'net-tools',
+    # 'psmisc',
     'ripgrep',
     'tmux',
     'traceroute',
@@ -48,7 +70,8 @@ PACKAGES = [
 def run() -> None:
     """Run the cli component installation."""
     logger.info('Installing cli packages')
-    apt_install(*PACKAGES)
+    # apt_install(*PACKAGES)
+    nix.pkg_install(*PACKAGES, root=True)
     logger.info("Copying scripts to user's bin directory")
     user_bin = os.path.join(os.environ['HOME'], 'bin')
     sh.mkdir('-p', user_bin)

@@ -5,17 +5,11 @@ import os.path
 import sh
 
 from .util import apt_install
+from . import nix
 
 logger = logging.getLogger(__name__)
 
 BASE_PATH = os.path.join('.', 'files')
-GUI_PACKAGES = [
-    'openssh-server',
-    'x2goserver',
-    'openbox',
-    'tint2',
-    'xfce4-terminal',
-]
 BIN_SCRIPTS = [
     'ssh-server.sh',
     'dind.sh',
@@ -25,7 +19,9 @@ BIN_SCRIPTS = [
 def run() -> None:
     """Run the gui component installation."""
     logger.info('Install packages')
-    apt_install(*GUI_PACKAGES)
+    apt_install('openssh-server', 'x2goserver', 'tint2')
+    nix.pkg_install('openbox', root=True)
+    nix.pkg_install('xfce4-terminal')
 
     logger.info('Create openbox directories')
     openbox_dir = os.path.join(os.environ['HOME'], '.config', 'openbox')
@@ -55,3 +51,15 @@ def run() -> None:
     sh.mkdir('-p', tint2rc_dir)
     sh.cp(os.path.join(BASE_PATH, 'tint2rc'),
           os.path.join(tint2rc_dir, 'tint2rc'))
+
+    logger.info('Link openbox binaries on default path')
+    src_dir = '/nix/var/nix/profiles/default/bin'
+    dst_dir = '/usr/local/bin'
+    exes = [
+        exe for exe in sh.ls(src_dir).split()
+        if exe.startswith('openbox')
+    ]
+    for exe in exes:
+        src = os.path.join(src_dir, exe)
+        dst = os.path.join(dst_dir, exe)
+        sh.sudo.ln('-sf', src, dst)

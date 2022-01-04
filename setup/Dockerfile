@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 
 ARG username=user
 ENV USER=${username}
+ENV DOCKER=true
 
 RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils
 

@@ -7,7 +7,7 @@ import os
 import sh
 import sys
 
-from components import COMPONENTS
+from components import COMPONENTS, nix
 
 
 def get_args() -> argparse.Namespace:
@@ -51,9 +51,11 @@ def main() -> int:
     with open(profile_file_name, 'w') as f:
         f.writelines(profile_lines)
 
-    for component_name, component_exe in COMPONENTS.items():
-        logger.info('Running setup for %s', component_name)
-        component_exe()
+    nix.install()
+    with nix.daemon():
+        for component_name, component_exe in COMPONENTS.items():
+            logger.info('Running setup for %s', component_name)
+            component_exe()
     return 0
 
 
