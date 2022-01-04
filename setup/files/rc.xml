@@ -289,6 +289,27 @@
     </action>
   </keybind>
 
+  <!-- Keybindings for window resizing -->
+  <keybind key="A-8">
+    <action name="UnmaximizeFull"/>
+    <action name="MaximizeVert"/>
+    <action name="MoveResizeTo">
+      <width>50%</width>
+    </action>
+    <action name="MoveToEdgeWest"/>
+  </keybind>
+  <keybind key="A-9">
+    <action name="UnmaximizeFull"/>
+    <action name="MaximizeVert"/>
+    <action name="MoveResizeTo">
+      <width>50%</width>
+    </action>
+    <action name="MoveToEdgeEast"/>
+  </keybind>
+  <keybind key="A-0">
+    <action name="ToggleMaximize"/>
+  </keybind>
+  
   <!-- Keybindings for window switching with the arrow keys -->
   <keybind key="W-S-Right">
     <action name="DirectionalCycleWindows">
