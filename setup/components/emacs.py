@@ -129,8 +129,10 @@ def emacs_from_package() -> None:
 
 def add_emacs_ppa() -> None:
     """Add extra PPA for emacs packages."""
+    ppa_name = 'ppa:kelleyk/emacs'
+    logger.info('Adding PPA %s for installing emacs', ppa_name)
     apt_install('software-properties-common')
-    sh.sudo('add-apt-repository', 'ppa:kelleyk/emacs')
+    sh.sudo('add-apt-repository', ppa_name)
     sh.sudo.apt.update()
 
 
