@@ -1,7 +1,9 @@
 #!/bin/bash
 
-export USER_ID=${LOCAL_UID:-5000}
-useradd -m -s /bin/bash -u $USER_ID -G sudo $RUNTIME_USER
+export USER_UID=${LOCAL_UID:-5000}
+export USER_GID=${LOCAL_GID:-$USER_UID}
+groupadd -g $USER_GID $RUNTIME_USER
+useradd -m -s /bin/bash -u $USER_UID -g $USER_GID -G sudo $RUNTIME_USER
 echo "$RUNTIME_USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 for target in .config .icons bin go; do
     if [ -e /home/setup/$target ]; then
