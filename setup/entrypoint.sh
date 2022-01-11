@@ -16,6 +16,7 @@ cd /home/$RUNTIME_USER
 if id -u setup &> /dev/null; then
     userdel -r setup &> /dev/null
 fi
+chown $RUNTIME_USER $(tty)
 if [ "$#" -ne 0 ]; then
     exec su - $RUNTIME_USER -c "$@"
 else
