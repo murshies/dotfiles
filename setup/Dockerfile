@@ -4,7 +4,7 @@ ARG username=user
 ARG setup_user=setup
 ENV USER=${setup_user}
 
-RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils gosu
+RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils
 
 ENV TZ=Etc/UTC
 RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone

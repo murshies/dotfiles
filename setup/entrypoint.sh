@@ -11,12 +11,13 @@ for target in .config .icons bin go; do
         chown -R $RUNTIME_USER:$RUNTIME_USER /home/$RUNTIME_USER/$target
     fi
 done
-gosu $RUNTIME_USER /setup/files/dind.sh
+su $RUNTIME_USER -c /setup/files/dind.sh
 cd /home/$RUNTIME_USER
-if [ "$#" -ne 0 ]; then
-    exec gosu $RUNTIME_USER "$@"
-else
-    exec gosu $RUNTIME_USER /bin/bash -il
+if id -u setup &> /dev/null; then
+    userdel -r setup &> /dev/null
 fi
-
-
+if [ "$#" -ne 0 ]; then
+    exec su - $RUNTIME_USER -c "$@"
+else
+    exec su - $RUNTIME_USER
+fi
