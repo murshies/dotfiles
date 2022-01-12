@@ -12,4 +12,4 @@ if [ -z "$container_name" ] ; then
     exit 1
 fi
 
-docker run -e LOCAL_UID=$(id -u) -v /var/run/docker.sock:/var/run/docker.sock -v $HOME:/mnt/host -p $ssh_port:22 --name "$container_name" -d murshies/devenv:latest bash /home/user/bin/server-mode.sh
+docker run -e LOCAL_UID=$(id -u) -v /var/run/docker.sock:/var/run/docker.sock -v $HOME:/mnt/host -p $ssh_port:22 --name "$container_name" -d murshies/devenv:latest /home/user/bin/server-mode.sh

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 export USER_UID=${LOCAL_UID:-5000}
 export USER_GID=${LOCAL_GID:-$USER_UID}
 groupadd -g $USER_GID $RUNTIME_USER
@@ -16,7 +17,9 @@ cd /home/$RUNTIME_USER
 if id -u setup &> /dev/null; then
     userdel -r setup &> /dev/null
 fi
-chown $RUNTIME_USER $(tty)
+if tty -s; then
+    chown $RUNTIME_USER $(tty)
+fi
 if [ "$#" -ne 0 ]; then
     exec su - $RUNTIME_USER -c "$@"
 else
