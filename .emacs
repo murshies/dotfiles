@@ -60,7 +60,8 @@
       lsp-keymap-prefix "M-'")
 
 (defun set-font-size (size)
-  (interactive "nFont size: ")
+  (interactive
+   (list (read-number (format "Font size (currently %d): " font-size))))
   (setq font-size size)
   (set-face-attribute 'default nil :height font-size))
 
