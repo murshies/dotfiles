@@ -411,14 +411,11 @@ associated with it."
 
 (define-minor-mode my-minor-mode
   "A minor mode to hold all of my global custom keybindings."
-  :keymap my-minor-mode-map)
+  :keymap my-minor-mode-map
+  :init-value t
+  :global t)
 
-(define-global-minor-mode
-  my-global-minor-mode
-  my-minor-mode
-  (lambda () (my-minor-mode)))
-
-(my-global-minor-mode)
+(my-minor-mode)
 
 ;; Frame hook setup
 ;; This defines a hook that will be run whenever a frame is created, or when
