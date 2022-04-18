@@ -8,7 +8,7 @@ import sh
 from .util import apt_install, write_root_file
 
 BASE_PATH = os.path.join('.', 'files')
-EMACS_VERSION = '27.2'
+EMACS_VERSION = '28.1'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
