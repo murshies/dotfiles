@@ -58,6 +58,7 @@
 (setq dabbrev-case-fold-search nil)
 (setq lsp-headerline-breadcrumb-enable nil
       lsp-keymap-prefix "M-'")
+(setq mouse-wheel-scroll-amount '(4))
 
 (defun set-font-size (size)
   (interactive
