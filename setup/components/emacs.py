@@ -101,7 +101,7 @@ def emacs_from_source() -> None:
     logger.info('Reset emacs source and install directories')
     for directory in (EMACS_SOURCE_ROOT, EMACS_INSTALL_ROOT):
         sh.sudo.rm('-rf', directory)
-        sh.sudo.mkdir('-p', directory)
+        sh.sudo.mkdir('-p', '-m', '0755', directory)
 
     logger.info('Download emacs source')
     sh.sudo.git.clone(
