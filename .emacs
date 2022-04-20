@@ -52,7 +52,8 @@
 ;; Note: loading features that were downloaded from the package manager must be
 ;; done after calling package-initialize.
 (when (require 'undo-tree nil 'noerror)
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree"))))
 (require 'dired-x nil 'noerror) ;; for dired-jump
 (require 'subr-x)
 (setq dabbrev-case-fold-search nil)
