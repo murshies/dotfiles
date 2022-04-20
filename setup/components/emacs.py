@@ -4,6 +4,7 @@ import logging
 import os
 import os.path
 import sh
+from typing import List
 
 from .util import apt_install, write_root_file
 
@@ -15,27 +16,6 @@ EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
 EMACS_INSTALL_ROOT = os.path.join('/', 'opt', f'emacs-{EMACS_VERSION}')
 EMACS_PACKAGE = os.environ.get('EMACS_PACKAGE', 'source')
 EMACS_PPA = os.environ.get('EMACS_PPA', '').lower() == 'true'
-EMACS_BUILD_PACKAGES = [
-    EMACS_TOOLKIT_PACKAGE,
-    'autoconf',
-    'build-essential',
-    'libgnutls28-dev',
-    'libncurses5-dev',
-    'libxpm-dev',
-    'libjpeg-dev',
-    'libtiff5-dev',
-    'libpng-dev',
-    'libgif-dev',
-    'libxml2-dev',
-    'libxft-dev',
-    'libfreetype6-dev',
-    'libjansson-dev',
-    'cmake',
-    'libtool',
-    'libtool-bin',
-    'texinfo',
-    'git',
-]
 
 EMACS_DESKTOP_ENTRY = """
 [Desktop Entry]
@@ -56,6 +36,50 @@ Keywords=Text;Editor;
 logger = logging.getLogger(__name__)
 
 
+def gcc_major_version() -> int:
+    """
+    Determine the installed default gcc major version.
+
+    :return: The GCC major version.
+    :rtype: int
+    """
+    version_output = sh.gcc('--version')
+    full_version = version_output.split('\n')[0].split(' ')[-1]
+    major_version = full_version.split('.')[0]
+    return int(major_version)
+
+
+def emacs_build_packages() -> List[str]:
+    """
+    Generate the list of packages to install to build emacs.
+
+    :return: The list of package names.
+    :rtype: List[str]
+    """
+    return [
+        EMACS_TOOLKIT_PACKAGE,
+        'autoconf',
+        'build-essential',
+        'cmake',
+        'git',
+        'libfreetype6-dev',
+        f'libgccjit-{gcc_major_version()}-dev',
+        'libgif-dev',
+        'libgnutls28-dev',
+        'libjansson-dev',
+        'libjpeg-dev',
+        'libncurses5-dev',
+        'libpng-dev',
+        'libtiff5-dev',
+        'libtool',
+        'libtool-bin',
+        'libxft-dev',
+        'libxml2-dev',
+        'libxpm-dev',
+        'texinfo',
+    ]
+
+
 @contextmanager
 def cwd(directory: str) -> None:
     """Context manager for temporarily changing the working directory."""
@@ -72,7 +96,7 @@ def emacs_from_source() -> None:
     logger.info('Installing emacs from source')
 
     logger.info('Installing packages for building emacs')
-    apt_install(*EMACS_BUILD_PACKAGES)
+    apt_install(*emacs_build_packages())
 
     logger.info('Reset emacs source and install directories')
     for directory in (EMACS_SOURCE_ROOT, EMACS_INSTALL_ROOT):
