@@ -553,12 +553,6 @@ Start with the built-in linux mode and change things from there."
   (setq lua-indent-level 4))
 
 (defun term-hook ()
-  ;; The default blue is incredibly difficult to read
-  (set-face-attribute 'term-color-blue nil :foreground "SkyBlue")
-  (set-face-attribute 'term-color-red nil :foreground "Orchid")
-  (set-face-attribute 'ansi-color-blue nil
-                      :foreground "SkyBlue"
-                      :background "SkyBlue")
   (make-local-variable 'starting-directory)
   (setq starting-directory default-directory)
   (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
@@ -568,6 +562,16 @@ Start with the built-in linux mode and change things from there."
     (lookup-key (current-global-map) (kbd "M-x")))
   (define-key term-raw-map (kbd "M-:") 'eval-expression)
   (define-key term-raw-map (kbd "M-P") 'window-browser))
+
+(defun all-terms-hook ()
+  ;; Change ansi-color-blue and ansi-color-red to colors that are easier to
+  ;; read.
+  (set-face-attribute 'ansi-color-blue nil
+                      :foreground "SkyBlue"
+                      :background "SkyBlue")
+  (set-face-attribute 'ansi-color-red nil
+                      :foreground "Orchid"
+                      :background "Orchid"))
 
 (defun clojure-hook ()
   (define-key clojure-mode-map (kbd "C-'") 'clojure-toggle-keyword-string)
@@ -607,6 +611,9 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'term-mode-hook 'term-hook)
+(add-hook 'term-mode-hook 'all-terms-hook)
+(add-hook 'comint-mode-hook 'all-terms-hook)
+(add-hook 'vterm-mode-hook 'all-terms-hook)
 (add-hook 'before-save-hook 'before-save)
 (add-hook 'find-file-hook 'large-file-hook)
 (add-hook 'eww-mode-hook 'eww-hook)
