@@ -815,6 +815,9 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 
+(when (require 'vterm nil 'noerror)
+  (define-key my-minor-mode-map (kbd "C-c C-v") 'vterm))
+
 ;; Enable dumb-jump mode when it's installed. This will also set global key
 ;; bindings for a few of the dumb-jump commands
 (when (require 'dumb-jump nil 'noerror)
