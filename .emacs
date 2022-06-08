@@ -819,6 +819,11 @@ temporarily disabled."
   (defun vterm-new-term ()
     (interactive)
     (vterm t))
+  (defun vssh (ssh-params)
+    (interactive "sEnter SSH host: ")
+    (let ((vterm-buffer-name (format "*vterm ssh %s*" ssh-params))
+          (default-directory (format "/ssh:%s:" ssh-params)))
+      (vterm t)))
   (define-key my-minor-mode-map (kbd "C-c C-v") 'vterm-new-term))
 
 ;; Enable dumb-jump mode when it's installed. This will also set global key
