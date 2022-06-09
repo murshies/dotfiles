@@ -814,6 +814,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-M-/") 'dabbrev-completion-all)
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
+(define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
 
 (when (require 'vterm nil 'noerror)
   (defun vterm-new-term ()
@@ -825,13 +826,6 @@ temporarily disabled."
           (default-directory (format "/ssh:%s:" ssh-params)))
       (vterm t)))
   (define-key my-minor-mode-map (kbd "C-c C-v") 'vterm-new-term))
-
-;; Enable dumb-jump mode when it's installed. This will also set global key
-;; bindings for a few of the dumb-jump commands
-(when (require 'dumb-jump nil 'noerror)
-  (define-key my-minor-mode-map (kbd "C-M-g") 'dumb-jump-go)
-  (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
-  (define-key my-minor-mode-map (kbd "C-M-q") 'dumb-jump-quick-look))
 
 ;; ============================================================================
 ;; Backup file behavior
@@ -854,7 +848,6 @@ temporarily disabled."
       '(company
         counsel-projectile
         dockerfile-mode
-        dumb-jump
         erc-hl-nicks
         go-mode
         groovy-mode
