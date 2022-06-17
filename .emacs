@@ -819,7 +819,10 @@ temporarily disabled."
 (when (require 'vterm nil 'noerror)
   (defun vterm-new-term ()
     (interactive)
-    (vterm t))
+    (if current-prefix-arg
+      (let ((default-directory (getenv "HOME")))
+        (vterm t))
+      (vterm t)))
   (defun vssh (ssh-params)
     (interactive "sEnter SSH host: ")
     (let ((vterm-buffer-name (format "*vterm ssh %s*" ssh-params))
