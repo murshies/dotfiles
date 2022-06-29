@@ -747,7 +747,8 @@ temporarily disabled."
   (setq ivy-height 15
         ivy-initial-inputs-alist nil
         ivy-on-del-error-function nil
-        ivy-dynamic-exhibit-delay-ms 250))
+        ivy-dynamic-exhibit-delay-ms 250
+        projectile-track-known-projects-automatically nil))
 
 (defun projectile-open-magit-status ()
   "Run magit-status on a known projectile project."
