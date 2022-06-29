@@ -16,6 +16,7 @@ GUI_PACKAGES = [
     'tint2',
     'xfce4-terminal',
     'rofi',
+    'pcmanfm',
 ]
 BIN_SCRIPTS = [
     'ssh-server.sh',
