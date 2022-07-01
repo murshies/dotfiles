@@ -1,0 +1,18 @@
+# -*- mode: dockerfile -*-
+FROM ubuntu:20.04
+
+COPY . /setup
+WORKDIR /setup
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y python-is-python3 python3-pip python3-venv sudo debconf-utils
+
+ENV TZ=Etc/UTC
+RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN echo keyboard-configuration keyboard-configuration/layout select 'English (US)' | sudo debconf-set-selections && \
+    echo keyboard-configuration keyboard-configuration/layoutcode select 'us' | sudo debconf-set-selections
+RUN sudo apt-get install -y keyboard-configuration
+
+# RUN . ./venv-setup.sh && ./setup.py emacs
+ENTRYPOINT ["/setup/debian/build_emacs_deb.sh"]

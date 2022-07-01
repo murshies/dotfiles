@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DPKG_ROOT=/opt/emacs-murshies
+
+for exe in emacs emacsclient; do
+    ln -sf $DPKG_ROOT/bin/$exe /usr/bin/$exe
+done

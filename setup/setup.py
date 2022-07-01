@@ -17,6 +17,10 @@ def get_args() -> argparse.Namespace:
     :return argparse.Namespace: The object containing the parsed parameters.
     """
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'components', nargs='*', default=COMPONENTS.keys(),
+        help='The list of components to install'
+    )
 
     return parser.parse_args()
 
@@ -34,6 +38,7 @@ def main() -> int:
     )
     logger = logging.getLogger('setup')
     logger.info('Doing initial package update and upgrade')
+    args = get_args()
     sh.sudo('apt-get', 'update')
     sh.sudo('apt-get', 'upgrade', '-y')
 
@@ -51,9 +56,9 @@ def main() -> int:
     with open(profile_file_name, 'w') as f:
         f.writelines(profile_lines)
 
-    for component_name, component_exe in COMPONENTS.items():
+    for component_name in args.components:
         logger.info('Running setup for %s', component_name)
-        component_exe()
+        COMPONENTS[component_name]()
     return 0
 
 

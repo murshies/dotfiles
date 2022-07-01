@@ -17,14 +17,14 @@ RUN sudo apt-get install -y keyboard-configuration
 RUN useradd -m -s /bin/bash -u 12345 -G sudo ${setup_user}
 RUN echo "${setup_user} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 # Copy requirements.txt separately first in order to cache the pip install
-COPY requirements.txt /setup/
-WORKDIR /setup
-# RUN pip3 install -r requirements.txt
 COPY . /setup
+WORKDIR /setup
 
 RUN chown -R ${setup_user}:${setup_user} /setup
 USER ${setup_user}
-RUN ./setup.sh
+ENV EMACS_PPA=true
+ENV EMACS_PACKAGE=source
+RUN source ./venv-setup.sh && ./setup.py
 # WORKDIR /home/${setup_user}
 ENV RUNTIME_USER=${username}
 USER root
