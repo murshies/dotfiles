@@ -820,9 +820,13 @@ temporarily disabled."
 (when (require 'vterm nil 'noerror)
   (defun vterm-new-term ()
     (interactive)
-    (if current-prefix-arg
-      (let ((default-directory (getenv "HOME")))
-        (vterm t))
+    (let* ((prefix-val (car current-prefix-arg))
+           (default-directory
+             (cond ((eql prefix-val 4) ;; C-u pressed once
+                    (getenv "HOME"))
+                   ((eql prefix-val 16) ;; C-u pressed twice
+                    (read-directory-name "Enter starting directory: "))
+                   (t default-directory)))) ;; Any other prefix (including none)
       (vterm t)))
   (defun vssh (ssh-params)
     (interactive "sEnter SSH host: ")
