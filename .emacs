@@ -34,9 +34,6 @@
 (setq org-replace-disputed-keys t)
 (setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
 (setq ring-bell-function 'ignore)
-;; Scroll when we're 2 row away from the edge of the window.
-(setq smooth-scroll-margin 2)
-(setq tags-add-tables nil)
 (setq smerge-command-prefix (kbd "C-c v"))
 (setq-default indent-tabs-mode nil)
 (setq-default major-mode 'text-mode)
@@ -494,7 +491,6 @@ display, set the format string so that there is a space after each number."
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
         c-mode-hook
-        clojure-mode-hook
         conf-mode-hook
         css-mode-hook
         dockerfile-mode-hook
@@ -504,14 +500,12 @@ display, set the format string so that there is a space after each number."
         java-mode-hook
         js-mode-hook
         lisp-mode-hook
-        lua-mode-hook
         makefile-mode-hook
         org-mode-hook
         perl-mode-hook
         python-mode-hook
         racket-mode-hook
         ruby-mode-hook
-        rust-mode-hook
         sh-mode-hook
         text-mode-hook
         web-mode-hook
@@ -549,9 +543,6 @@ Start with the built-in linux mode and change things from there."
    (if (version< emacs-version "25.1")
        'show-all 'outline-show-all)))
 
-(defun lua-hook ()
-  (setq lua-indent-level 4))
-
 (defun term-hook ()
   (make-local-variable 'starting-directory)
   (setq starting-directory default-directory)
@@ -572,10 +563,6 @@ Start with the built-in linux mode and change things from there."
   (set-face-attribute 'ansi-color-red nil
                       :foreground "Orchid"
                       :background "Orchid"))
-
-(defun clojure-hook ()
-  (define-key clojure-mode-map (kbd "C-'") 'clojure-toggle-keyword-string)
-  (define-key clojure-mode-map (kbd "C-:") 'move-backwards))
 
 (defun large-file-hook ()
   "Settings for large files."
@@ -606,10 +593,8 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
-(add-hook 'clojure-mode-hook 'clojure-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'org-mode-hook 'org-hook)
-(add-hook 'lua-mode-hook 'lua-hook)
 (add-hook 'term-mode-hook 'term-hook)
 (add-hook 'term-mode-hook 'all-terms-hook)
 (add-hook 'comint-mode-hook 'all-terms-hook)
@@ -647,37 +632,6 @@ Start with the built-in linux mode and change things from there."
 
 ;; Open C/C++ header files in c++-mode instead of c-mode.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-;; Define key bindings for python-mode when it is loaded. This is usually done
-;; when the first python file of the emacs session is opened.
-(eval-after-load "python"
-  '(progn (define-key python-mode-map (kbd "C-c v f") 'pyflakes-current-file)
-          (define-key python-mode-map (kbd "C-c v l") 'pylint-current-file)
-          (define-key python-mode-map (kbd "C-c C-b") 'python-run-current-buffer)))
-
-(defun pyflakes-current-file ()
-  "Run pyflakes on the current file.
-Even though the documentation for python-check says that the default file is
-supposed to be the current buffer's default, this isn't true after the first
-time that pyflakes it run. This function fixes this issue."
-  (interactive)
-  (python-check (concat "pyflakes \"" buffer-file-name "\"")))
-
-(defun pylint-current-file ()
-  "Run pylint on the current file.
-This runs in the same way as pyflakes-current-file (inside a compilation-mode
-buffer), but with pylint instead. It will use the default .pylintrc file."
-  (interactive)
-  (python-check (concat "pylint -f text \"" buffer-file-name "\"")))
-
-(defun python-run-current-buffer ()
-  (interactive)
-  (save-selected-window
-    (python-shell-send-buffer)
-    (python-shell-switch-to-shell)
-    (end-of-buffer)
-    (insert "main()")
-    (comint-send-input)))
 
 ;; Similar to the python-mode checks, only define keybindings that are specific
 ;; to yaml-mode after it has been loaded.
@@ -865,11 +819,7 @@ temporarily disabled."
         lsp-mode
         magit
         markdown-mode
-        neotree
         protobuf-mode
-        rust-mode
-        rust-playground
-        smooth-scrolling
         undo-tree
         web-mode
         yaml-mode))
