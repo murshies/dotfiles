@@ -633,20 +633,6 @@ Start with the built-in linux mode and change things from there."
 ;; Open C/C++ header files in c++-mode instead of c-mode.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; Similar to the python-mode checks, only define keybindings that are specific
-;; to yaml-mode after it has been loaded.
-(eval-after-load "yaml"
-  '(define-key yaml-mode-map (kbd "C-c v l") 'ansible-lint-current-file))
-
-(defun ansible-lint-current-file ()
-  "Runs an ansible syntax-check on the current file."
-  (interactive)
-  (let* ((command (concat "ansible-playbook --syntax-check \""
-                          buffer-file-name
-                          "\""))
-         (buffer-name (concat "*" command "*")))
-    (compilation-start command nil (lambda (_modename) buffer-name))))
-
 (defadvice shr-color-check (before shr-color-inhibit)
   "This advice tells eww to use the default foreground and background colors."
   (setq bg (face-background 'default))
