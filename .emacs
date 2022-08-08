@@ -145,6 +145,12 @@ current directory as root."
                      'face '(:foreground "Sky Blue" :weight bold))
          (if (= (user-uid) 0) " # " " $ "))))
 
+(defun essh (ssh-params)
+  (interactive "sEnter SSH host: ")
+  (let ((default-directory (format "/ssh:%s:~" ssh-params))
+        (eshell-buffer-name (format "*eshell ssh %s*" ssh-params)))
+    (eshell t)))
+
 (setq vc-handled-backends ())
 
 ;; ============================================================================
