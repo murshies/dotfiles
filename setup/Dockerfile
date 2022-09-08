@@ -1,8 +1,7 @@
 FROM ubuntu:20.04
 
-ARG username=user
-ARG setup_user=setup
-ENV USER=${setup_user}
+ENV USERNAME=user
+ENV USER=${USERNAME}
 
 RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils
 
@@ -14,18 +13,12 @@ RUN echo keyboard-configuration keyboard-configuration/layout select 'English (U
     echo keyboard-configuration keyboard-configuration/layoutcode select 'us' | sudo debconf-set-selections
 RUN sudo apt-get install -y keyboard-configuration
 
-RUN useradd -m -s /bin/bash -u 12345 -G sudo ${setup_user}
-RUN echo "${setup_user} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-# Copy requirements.txt separately first in order to cache the pip install
-COPY requirements.txt /setup/
-WORKDIR /setup
-# RUN pip3 install -r requirements.txt
+RUN useradd -m -s /bin/bash -u 5000 -G sudo ${USERNAME}
+RUN echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 COPY . /setup
+WORKDIR /setup
 
-RUN chown -R ${setup_user}:${setup_user} /setup
-USER ${setup_user}
+RUN chown -R ${USERNAME}:${USERNAME} /setup
+USER ${USERNAME}
 RUN ./setup.sh
-# WORKDIR /home/${setup_user}
-ENV RUNTIME_USER=${username}
-USER root
-ENTRYPOINT ["/setup/entrypoint.sh"]
+WORKDIR /home/${USERNAME}

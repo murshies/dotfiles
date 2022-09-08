@@ -14,6 +14,7 @@ from . import gcloud
 from . import golang
 from . import gui
 from . import kubectl
+from .consts import SKEL_DIR
 
 COMPONENTS = OrderedDict([
     ('cli', cli.run),

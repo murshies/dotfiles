@@ -1,4 +1,5 @@
 """Module for utility functions shared across components."""
+import os
 import sh
 
 
@@ -35,3 +36,18 @@ def get_net_file(url: str, dst: str, mode: str = None) -> None:
     sh.sudo.tee(sh.curl('--output', '-', url), dst)
     if mode:
         sh.sudo.chmod(mode, dst)
+
+
+def root_copy(src: str, dst: str, filename: str) -> None:
+    """
+    Copy a file from one directory to another as root.
+
+    :param src: The source directory
+    :type src: str
+    :param dst: The destination directory
+    :type dst: str
+    :param filename: The name of the file to copy
+    :type filename: str
+    """
+    sh.sudo.cp(os.path.join(src, filename),
+               os.path.join(dst, filename))

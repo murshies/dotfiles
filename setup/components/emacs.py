@@ -6,9 +6,9 @@ import os.path
 import sh
 from typing import List
 
-from .util import apt_install, write_root_file
+from .consts import FILES_DIR, SKEL_DIR
+from .util import apt_install, root_copy, write_root_file
 
-BASE_PATH = os.path.join('.', 'files')
 EMACS_VERSION = '28.1'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
@@ -131,16 +131,14 @@ def emacs_from_source() -> None:
             sh.sudo.ln(
                 '-sf',
                 os.path.join(EMACS_INSTALL_ROOT, 'bin', exe),
-                os.path.join('/', 'usr', 'bin', exe))
+                os.path.join('/usr/bin', exe))
 
-        logger.info('Remove emacs source directory to conserve space')
-
+    logger.info('Remove emacs source directory to conserve space')
     sh.sudo.rm('-rf', EMACS_SOURCE_ROOT)
 
-    logger.info("Copy the emacs icons to the user's .icons directory")
-    build_icons_dir = os.path.join(EMACS_INSTALL_ROOT, 'share', 'icons')
-    home_icons_dir = os.path.join(os.environ['HOME'], '.icons')
-    sh.cp('-r', build_icons_dir, home_icons_dir)
+    logger.info('Install emacs icons')
+    build_icons_dir = os.path.join(EMACS_INSTALL_ROOT, 'share', 'icons', '.')
+    sh.sudo.cp('-r', build_icons_dir, '/usr/share/icons')
 
 
 def emacs_from_package() -> None:
@@ -167,11 +165,10 @@ def run() -> None:
     else:
         emacs_from_package()
 
-    logger.info("Copy install-emacs-packages.sh to user's bin directory")
-    user_bin = os.path.join(os.environ['HOME'], 'bin')
-    sh.mkdir('-p', user_bin)
-    sh.cp(os.path.join(BASE_PATH, 'install-emacs-packages.sh'),
-          os.path.join(user_bin, 'install-emacs-packages.sh'))
+    logger.info('Copy install-emacs-packages.sh to the skeleton directory')
+    skel_bin_dir = os.path.join(SKEL_DIR, 'bin')
+    sh.sudo.mkdir('-p', skel_bin_dir)
+    root_copy(FILES_DIR, skel_bin_dir, 'install-emacs-packages.sh')
 
     logger.info('Create emacs.desktop file in applications directory')
     emacs_package = 'emacs' if EMACS_PACKAGE == 'source' else EMACS_PACKAGE

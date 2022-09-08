@@ -3,7 +3,8 @@ import logging
 import os
 import sh
 
-from .util import apt_install
+from .consts import FILES_DIR, SCRIPTS_DIR
+from .util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +14,5 @@ def run() -> None:
     logger.info('Install golang')
     apt_install('golang')
 
-    logger.info('Install gopls for user')
-    sh.go.get('golang.org/x/tools/gopls@latest',
-              _env={**os.environ, 'GO111MODULE': 'on'})
+    logger.info('Copy gopls install script to %s', SCRIPTS_DIR)
+    root_copy(FILES_DIR, SCRIPTS_DIR, 'install-gopls.sh')

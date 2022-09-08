@@ -4,7 +4,8 @@ import os
 import os.path
 import sh
 
-from .util import apt_install
+from .consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
+from .util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
 
@@ -16,11 +17,11 @@ DOTFILES = [
     '.inputrc',
     '.tmux.conf',
 ]
-BASE_PATH = os.path.join('.', 'files')
 SCRIPTS = [
     'aupdate',
     'pull-dotfiles.sh',
     'server-mode.sh',
+    'bootstrap-user.sh',
 ]
 PACKAGES = [
     'apt-transport-https',
@@ -49,9 +50,8 @@ def run() -> None:
     """Run the cli component installation."""
     logger.info('Installing cli packages')
     apt_install(*PACKAGES)
-    logger.info("Copying scripts to user's bin directory")
-    user_bin = os.path.join(os.environ['HOME'], 'bin')
-    sh.mkdir('-p', user_bin)
+
+    logger.info('Copying scripts to %s', SCRIPTS_DIR)
+    sh.sudo.mkdir('-p', SCRIPTS_DIR)
     for script in SCRIPTS:
-        sh.cp(os.path.join(BASE_PATH, script),
-              os.path.join(user_bin, script))
+        root_copy(FILES_DIR, SCRIPTS_DIR, script)

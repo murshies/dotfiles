@@ -7,7 +7,7 @@ import os
 import sh
 import sys
 
-from components import COMPONENTS
+from components import COMPONENTS, SKEL_DIR
 
 
 def get_args() -> argparse.Namespace:
@@ -50,6 +50,9 @@ def main() -> int:
         profile_lines.append(f'{bin_path_line}\n')
     with open(profile_file_name, 'w') as f:
         f.writelines(profile_lines)
+
+    logger.info('Remove any existing skeleton directory')
+    sh.sudo.rm('-rf', SKEL_DIR)
 
     for component_name, component_exe in COMPONENTS.items():
         logger.info('Running setup for %s', component_name)

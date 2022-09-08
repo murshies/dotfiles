@@ -4,11 +4,11 @@ import os
 import os.path
 import sh
 
-from .util import apt_install
+from .consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
+from .util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
 
-BASE_PATH = os.path.join('.', 'files')
 GUI_PACKAGES = [
     'openssh-server',
     'x2goserver',
@@ -19,7 +19,6 @@ GUI_PACKAGES = [
     'pcmanfm',
 ]
 BIN_SCRIPTS = [
-    'ssh-server.sh',
     'dind.sh',
 ]
 
@@ -29,31 +28,22 @@ def run() -> None:
     logger.info('Install packages')
     apt_install(*GUI_PACKAGES)
 
-    logger.info('Create openbox directories')
-    openbox_dir = os.path.join(os.environ['HOME'], '.config', 'openbox')
-    sh.mkdir('-p', openbox_dir)
-
-    logger.info('Copy openbox scripts to openbox config directory')
-    for script in ('autostart.sh', 'rc.xml'):
-        sh.cp(os.path.join(BASE_PATH, script),
-              os.path.join(openbox_dir, script))
-
-    logger.info("Copy scripts to user's bin directory")
-    user_bin = os.path.join(os.environ['HOME'], 'bin')
-    sh.mkdir('-p', user_bin)
+    logger.info("Copying scripts to %s", SCRIPTS_DIR)
+    sh.mkdir('-p', SCRIPTS_DIR)
     for bin_script in BIN_SCRIPTS:
-        sh.cp(os.path.join(BASE_PATH, bin_script),
-              os.path.join(user_bin, bin_script))
+        root_copy(FILES_DIR, SCRIPTS_DIR, bin_script)
 
-    logger.info('Create xfce4-terminal config directory and copy config')
-    xfce4terminal_dir = os.path.join(
-        os.environ['HOME'], '.config', 'xfce4', 'terminal')
-    sh.mkdir('-p', xfce4terminal_dir)
-    sh.cp(os.path.join(BASE_PATH, 'terminalrc'),
-          os.path.join(xfce4terminal_dir, 'terminalrc'))
+    logger.info('Add config files to skeleton directory')
 
-    logger.info("Copy tint2rc to user's config directory")
-    tint2rc_dir = os.path.join(os.environ['HOME'], '.config', 'tint2')
-    sh.mkdir('-p', tint2rc_dir)
-    sh.cp(os.path.join(BASE_PATH, 'tint2rc'),
-          os.path.join(tint2rc_dir, 'tint2rc'))
+    openbox_skel_dir = os.path.join(SKEL_DIR, '.config', 'openbox')
+    sh.sudo.mkdir('-p', openbox_skel_dir)
+    for script in ('autostart.sh', 'rc.xml'):
+        root_copy(FILES_DIR, openbox_skel_dir, script)
+
+    xfce4_skel_dir = os.path.join(SKEL_DIR, '.config', 'xfce4', 'terminal')
+    sh.sudo.mkdir('-p', xfce4_skel_dir)
+    root_copy(FILES_DIR, xfce4_skel_dir, 'terminalrc')
+
+    tint2rc_skel_dir = os.path.join(SKEL_DIR, '.config', 'tint2')
+    sh.sudo.mkdir('-p', tint2rc_skel_dir)
+    root_copy(FILES_DIR, tint2rc_skel_dir, 'tint2rc')
