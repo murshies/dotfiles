@@ -777,8 +777,10 @@ temporarily disabled."
   (defun vssh (ssh-params)
     (interactive "sEnter SSH host: ")
     (let ((vterm-buffer-name (format "*vterm ssh %s*" ssh-params))
-          (default-directory (format "/ssh:%s:" ssh-params)))
-      (vterm t)))
+          (default-directory (getenv "HOME")))
+      (vterm t)
+      (vterm-insert (format "exec ssh %s\n" ssh-params))
+      (setq default-directory (format "/ssh:%s:" ssh-params))))
   (define-key my-minor-mode-map (kbd "C-c C-v") 'vterm-new-term))
 
 ;; ============================================================================
