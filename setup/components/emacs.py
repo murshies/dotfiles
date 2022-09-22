@@ -6,7 +6,7 @@ import os.path
 import sh
 from typing import List
 
-from .consts import FILES_DIR, SKEL_DIR
+from .consts import FILES_DIR, SCRIPTS_DIR
 from .util import apt_install, root_copy, write_root_file
 
 EMACS_VERSION = '28.2'
@@ -165,10 +165,9 @@ def run() -> None:
     else:
         emacs_from_package()
 
-    logger.info('Copy install-emacs-packages.sh to the skeleton directory')
-    skel_bin_dir = os.path.join(SKEL_DIR, 'bin')
-    sh.sudo.mkdir('-p', skel_bin_dir)
-    root_copy(FILES_DIR, skel_bin_dir, 'install-emacs-packages.sh')
+    logger.info('Copy install-emacs-packages.sh to %s', SCRIPTS_DIR)
+    sh.sudo.mkdir('-p', SCRIPTS_DIR)
+    root_copy(FILES_DIR, SCRIPTS_DIR, 'install-emacs-packages.sh')
 
     logger.info('Create emacs.desktop file in applications directory')
     emacs_package = 'emacs' if EMACS_PACKAGE == 'source' else EMACS_PACKAGE
