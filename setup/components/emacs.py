@@ -9,7 +9,7 @@ from typing import List
 from .consts import FILES_DIR, SKEL_DIR
 from .util import apt_install, root_copy, write_root_file
 
-EMACS_VERSION = '28.1'
+EMACS_VERSION = '28.2'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')

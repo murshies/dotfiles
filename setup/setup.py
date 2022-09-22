@@ -17,7 +17,14 @@ def get_args() -> argparse.Namespace:
     :return argparse.Namespace: The object containing the parsed parameters.
     """
     parser = argparse.ArgumentParser()
-
+    parser.add_argument(
+        '-c', '--components', required=False, default=None,
+        help=('A common-separated list of components to run. If not '
+              'specified, run all components.'))
+    parser.add_argument(
+        '-l', '--list-components', dest='list_components', required=False,
+        action='store_true', default=False,
+        help='When specified, list all components to run and exit.')
     return parser.parse_args()
 
 
@@ -32,7 +39,13 @@ def main() -> int:
         format=('%(asctime)s %(name)s.%(funcName)s:%(lineno)d '
                 '::%(levelname)s: %(message)s'),
     )
+    args = get_args()
     logger = logging.getLogger('setup')
+
+    if args.list_components:
+        logger.info('List of components:\n%s', '\n'.join(COMPONENTS.keys()))
+        return 0
+
     logger.info('Doing initial package update and upgrade')
     sh.sudo('apt-get', 'update')
     sh.sudo('apt-get', 'upgrade', '-y')
@@ -54,7 +67,18 @@ def main() -> int:
     logger.info('Remove any existing skeleton directory')
     sh.sudo.rm('-rf', SKEL_DIR)
 
-    for component_name, component_exe in COMPONENTS.items():
+    components_to_run = COMPONENTS.keys()
+    if args.components:
+        components_to_run = [
+            component.strip() for component in args.components.split(',')
+        ]
+
+    logger.info('Running components:\n%s', '\n'.join(components_to_run))
+
+    for component_name in components_to_run:
+        if component_name not in COMPONENTS:
+            continue
+        component_exe = COMPONENTS[component_name]
         logger.info('Running setup for %s', component_name)
         component_exe()
     return 0
