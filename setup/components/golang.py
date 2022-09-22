@@ -13,6 +13,3 @@ def run() -> None:
     """Run the golang component installation."""
     logger.info('Install golang')
     apt_install('golang')
-
-    logger.info('Copy gopls install script to %s', SCRIPTS_DIR)
-    root_copy(FILES_DIR, SCRIPTS_DIR, 'install-gopls.sh')

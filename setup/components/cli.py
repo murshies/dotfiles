@@ -22,6 +22,7 @@ SCRIPTS = [
     'pull-dotfiles.sh',
     'server-mode.sh',
     'bootstrap-user.sh',
+    'install-gopls.sh',
 ]
 PACKAGES = [
     'apt-transport-https',
