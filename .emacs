@@ -275,6 +275,15 @@ the eshell buffer as part of its cleanup."
         (eshell-interrupt-process))))
   (tramp-cleanup-all-buffers))
 
+(defun sudo-conn ()
+  "Open a connection to the same machine, through sudo"
+  (interactive)
+  (find-file
+   (format "%s|sudo::"
+           (substring default-directory 0
+                      (string-search ":" default-directory
+                                     (+ (string-search ":" default-directory) 1))))))
+
 (defun window-browser ()
   "Enter an interactive browsing mode, where the following keys are mapped to
 specific window navigation functions:
