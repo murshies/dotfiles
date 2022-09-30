@@ -9,20 +9,16 @@ from .util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
 
-DOTFILES_TO_ROOT = True
-DOTFILES_REPO = 'https://github.com/murshies/dotfiles'
-DOTFILES = [
-    '.bashrc',
-    '.emacs',
-    '.inputrc',
-    '.tmux.conf',
-]
 SCRIPTS = [
     'aupdate',
-    'pull-dotfiles.sh',
-    'server-mode.sh',
     'bootstrap-user.sh',
     'install-gopls.sh',
+    'new-user.sh',
+    'pull-dotfiles.sh',
+    'server-mode.sh',
+]
+SKEL_FILES = [
+    '.bash_profile',
 ]
 PACKAGES = [
     'apt-transport-https',
@@ -56,3 +52,8 @@ def run() -> None:
     sh.sudo.mkdir('-p', SCRIPTS_DIR)
     for script in SCRIPTS:
         root_copy(FILES_DIR, SCRIPTS_DIR, script)
+
+    logger.info('Copying files to %s', SKEL_DIR)
+    sh.sudo.mkdir('-p', SKEL_DIR)
+    for f in SKEL_FILES:
+        root_copy(FILES_DIR, SKEL_DIR, f)
