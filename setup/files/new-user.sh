@@ -17,3 +17,4 @@ sudo useradd -m -s /bin/bash ${uid_str} -G sudo ${username}
 echo "${username} ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 sudo su - ${username} -c 'pull-dotfiles.sh'
 sudo su - ${username} -c 'bootstrap-user.sh'
+sudo su - ${username} -c 'dind.sh'
