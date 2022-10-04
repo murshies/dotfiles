@@ -850,7 +850,8 @@ temporarily disabled."
 (when (require 'equake nil 'noerror)
   (setq equake-size-height 0.75)
   (setq equake-opacity-active 90)
-  (setq equake-default-shell 'vterm))
+  (when (fboundp 'vterm)
+    (setq equake-default-shell 'vterm)))
 
 ;; Load local lisp files last. This allows local settings to override settings
 ;; made in .emacs.
