@@ -815,7 +815,6 @@ temporarily disabled."
       '(company
         counsel-projectile
         dockerfile-mode
-        equake
         erc-hl-nicks
         go-mode
         groovy-mode
@@ -845,13 +844,6 @@ temporarily disabled."
   (interactive)
   (package-refresh-contents)
   (install-packages-if-not-installed packages-to-install))
-
-;; equake settings
-(when (require 'equake nil 'noerror)
-  (setq equake-size-height 0.75)
-  (setq equake-opacity-active 90)
-  (when (fboundp 'vterm)
-    (setq equake-default-shell 'vterm)))
 
 ;; Load local lisp files last. This allows local settings to override settings
 ;; made in .emacs.
