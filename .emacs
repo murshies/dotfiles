@@ -790,9 +790,13 @@ temporarily disabled."
     (let ((vterm-buffer-name (format "*vterm ssh %s*" ssh-params))
           (default-directory (getenv "HOME")))
       (vterm t)
-      (vterm-insert (format "exec ssh %s\n" ssh-params))
+      (vterm-insert (format "exec bash -c 'if ! ssh %s; then read -n 1 -r -s -p \"Press any key to continue...\"; fi'\n" ssh-params))
       (setq default-directory (format "/ssh:%s:" ssh-params))))
-  (define-key my-minor-mode-map (kbd "C-c C-v") 'vterm-new-term))
+  (define-key my-minor-mode-map (kbd "C-c C-v") 'vterm-new-term)
+  (defun vterm-default-directory()
+    (interactive)
+    (vterm-insert (format "cd %s\n" default-directory)))
+  (define-key vterm-mode-map (kbd "C-c C-d") 'vterm-default-directory))
 
 ;; ============================================================================
 ;; Backup file behavior
