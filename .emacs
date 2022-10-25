@@ -58,6 +58,7 @@
 (setq lsp-headerline-breadcrumb-enable nil
       lsp-keymap-prefix "M-'")
 (setq mouse-wheel-scroll-amount '(4))
+(setq epa-pinentry-mode 'loopback)
 
 (defun set-font-size (size)
   (interactive
