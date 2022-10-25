@@ -525,6 +525,7 @@ display, set the format string so that there is a space after each number."
         racket-mode-hook
         ruby-mode-hook
         sh-mode-hook
+        sql-mode-hook
         text-mode-hook
         web-mode-hook
         yaml-mode-hook))
