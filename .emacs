@@ -81,6 +81,18 @@
   (interactive "sEnter prefix: ")
   (setq frame-title-prefix title-prefix))
 
+(defun get-ssh-config-hosts ()
+  "Get a list of hosts from the ssh config file.
+This function filters out all hosts with wildcards (*, ?, and !)."
+  (let* ((ssh-config-contents (with-temp-buffer
+                                (insert-file-contents (format "%s/.ssh/config" (getenv "HOME")))
+                                (split-string (buffer-string) "\n" t)))
+         (hosts (delq nil (mapcar (lambda (s)
+                                    (when (string-match "^Host \\([^*?!]+\\)$" s)
+                                      (match-string 1 s)))
+                                  ssh-config-contents))))
+    hosts))
+
 ;; eshell settings
 (defun eshell/e (file &rest files)
   "Open a list of files.
@@ -788,7 +800,9 @@ temporarily disabled."
                    (t default-directory)))) ;; Any other prefix (including none)
       (vterm t)))
   (defun vssh (ssh-params)
-    (interactive "sEnter SSH host: ")
+    (interactive
+     (list
+      (completing-read "Enter SSH host: " (get-ssh-config-hosts))))
     (let ((vterm-buffer-name (format "*vterm ssh %s*" ssh-params))
           (default-directory (getenv "HOME")))
       (vterm t)
