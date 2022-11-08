@@ -526,6 +526,7 @@ display, set the format string so that there is a space after each number."
         dockerfile-mode-hook
         emacs-lisp-mode-hook
         go-mode-hook
+        go-dot-mod-mode-hook
         groovy-mode-hook
         java-mode-hook
         js-mode-hook
