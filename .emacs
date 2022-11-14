@@ -59,6 +59,8 @@
       lsp-keymap-prefix "M-'")
 (setq mouse-wheel-scroll-amount '(4))
 (setq epa-pinentry-mode 'loopback)
+(with-eval-after-load "json"
+  (setq json-encoding-default-indentation "    "))
 
 (defun set-font-size (size)
   (interactive
