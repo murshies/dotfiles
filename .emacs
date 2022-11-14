@@ -815,7 +815,8 @@ temporarily disabled."
   (defun vterm-default-directory()
     (interactive)
     (vterm-insert (format "cd %s\n" default-directory)))
-  (define-key vterm-mode-map (kbd "C-c C-d") 'vterm-default-directory))
+  (define-key vterm-mode-map (kbd "C-c C-d") 'vterm-default-directory)
+  (setq vterm-max-scrollback 100000))
 
 ;; ============================================================================
 ;; Backup file behavior
