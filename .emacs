@@ -818,6 +818,10 @@ temporarily disabled."
   (define-key vterm-mode-map (kbd "C-c C-d") 'vterm-default-directory)
   (setq vterm-max-scrollback 100000))
 
+(when (and (require 'vterm nil 'noerror)
+           (require 'kubel nil 'noerror))
+  (kubel-vterm-setup))
+
 ;; ============================================================================
 ;; Backup file behavior
 ;; ============================================================================
