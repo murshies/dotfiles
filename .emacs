@@ -791,6 +791,13 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
 
+(defun dssh (ssh-params)
+  "Open a dired session to a remote host."
+  (interactive
+   (list
+    (completing-read "Enter SSH host: " (get-ssh-config-hosts))))
+  (dired (format "/ssh:%s:" ssh-params)))
+
 (when (require 'vterm nil 'noerror)
   (defun vterm-new-term ()
     (interactive)
