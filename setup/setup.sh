@@ -7,14 +7,12 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-export EMACS_PPA=true
-# To install from package, change EMACS_PACKAGE to a specific package name.
-export EMACS_PACKAGE=source
-
 venv_name=$(mktemp -d)
 echo "Creating virtualenv in $venv_name"
 python3 -m venv $venv_name
 . $venv_name/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
+export PYTHONPATH=$(dirname $(realpath "$0"))
+echo "PYTHONPATH is $PYTHONPATH"
 ./setup.py "$@"

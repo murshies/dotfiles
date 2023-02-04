@@ -4,8 +4,9 @@ import os
 import os.path
 import sh
 
-from .consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
-from .util import apt_install, root_copy
+from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
+from lib.resource import OS, resource, ResourceManager
+from lib.util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
 
@@ -23,10 +24,15 @@ BIN_SCRIPTS = [
 ]
 
 
+@resource(name='install-gui-packages', os=OS.UBUNTU)
+def install_gui_packages_ubuntu():
+    apt_install(*GUI_PACKAGES)
+
+
 def run() -> None:
     """Run the gui component installation."""
     logger.info('Install packages')
-    apt_install(*GUI_PACKAGES)
+    ResourceManager.run('install-gui-packages')
 
     logger.info("Copying scripts to %s", SCRIPTS_DIR)
     sh.mkdir('-p', SCRIPTS_DIR)

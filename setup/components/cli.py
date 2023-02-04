@@ -4,8 +4,9 @@ import os
 import os.path
 import sh
 
-from .consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
-from .util import apt_install, root_copy
+from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
+from lib.resource import OS, resource, ResourceManager, ubuntu_gte_20
+from lib.util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +21,7 @@ SCRIPTS = [
 SKEL_FILES = [
     '.bash_profile',
 ]
-PACKAGES = [
+BASE_PACKAGES = [
     'apt-transport-https',
     'aspell',
     'ca-certificates',
@@ -34,7 +35,6 @@ PACKAGES = [
     'ncdu',
     'net-tools',
     'psmisc',
-    'ripgrep',
     'tmux',
     'traceroute',
     'unzip',
@@ -42,11 +42,21 @@ PACKAGES = [
     'zip',
 ]
 
+@resource(name='install-ripgrep', os=OS.UBUNTU, os_version=ubuntu_gte_20)
+def install_ripgrep_ubuntu_gte_20():
+    apt_install('ripgrep')
+
+
+@resource(name='install-cli', os=OS.UBUNTU)
+def install_cli_packages_ubuntu():
+    apt_install(*BASE_PACKAGES)
+    ResourceManager.run('install-ripgrep')
+
 
 def run() -> None:
     """Run the cli component installation."""
     logger.info('Installing cli packages')
-    apt_install(*PACKAGES)
+    ResourceManager.run('install-cli')
 
     logger.info('Copying scripts to %s', SCRIPTS_DIR)
     sh.sudo.mkdir('-p', SCRIPTS_DIR)

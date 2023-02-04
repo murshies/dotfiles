@@ -2,13 +2,13 @@
 import logging
 import sh
 
-from .util import apt_install, get_net_file, write_root_file
+from lib.resource import OS, resource, ResourceManager
+from lib.util import apt_install, get_net_file, write_root_file
 
 logger = logging.getLogger(__name__)
 
-
-def run() -> None:
-    """Run the kubectl component installation."""
+@resource(name='install-kubectl', os=OS.UBUNTU)
+def install_kubectl_ubuntu():
     logger.info('Install packages for kubectl download')
     apt_install('apt-transport-https', 'ca-certificates', 'curl')
 
@@ -24,3 +24,7 @@ def run() -> None:
 
     logger.info('Install kubectl from apt repo')
     apt_install('kubectl')
+
+def run() -> None:
+    """Run the kubectl component installation."""
+    ResourceManager.run('install-kubectl')

@@ -6,8 +6,9 @@ import os.path
 import sh
 from typing import List
 
-from .consts import FILES_DIR, SCRIPTS_DIR
-from .util import apt_install, root_copy, write_root_file
+from lib.consts import FILES_DIR, SCRIPTS_DIR
+from lib.resource import OS, resource, ResourceManager
+from lib.util import apt_install, root_copy, write_root_file
 
 EMACS_VERSION = '28.2'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
@@ -15,7 +16,6 @@ EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
 EMACS_INSTALL_ROOT = os.path.join('/', 'opt', f'emacs-{EMACS_VERSION}')
 EMACS_PACKAGE = os.environ.get('EMACS_PACKAGE', 'source')
-EMACS_PPA = os.environ.get('EMACS_PPA', '').lower() == 'true'
 
 EMACS_DESKTOP_ENTRY = """
 [Desktop Entry]
@@ -91,12 +91,38 @@ def cwd(directory: str) -> None:
         os.chdir(currdir)
 
 
+@resource(name='install-emacs-deps', os=OS.UBUNTU)
+def install_emacs_deps_ubuntu():
+    build_deps = [
+        EMACS_TOOLKIT_PACKAGE,
+        'autoconf',
+        'build-essential',
+        'cmake',
+        'git',
+        'libfreetype6-dev',
+        f'libgccjit-{gcc_major_version()}-dev',
+        'libgif-dev',
+        'libgnutls28-dev',
+        'libjansson-dev',
+        'libjpeg-dev',
+        'libncurses5-dev',
+        'libpng-dev',
+        'libtiff5-dev',
+        'libtool',
+        'libtool-bin',
+        'libxft-dev',
+        'libxml2-dev',
+        'libxpm-dev',
+        'texinfo',
+    ]
+    apt_install(*build_deps)
+
 def emacs_from_source() -> None:
     """Install emacs from source."""
     logger.info('Installing emacs from source')
 
     logger.info('Installing packages for building emacs')
-    apt_install(*emacs_build_packages())
+    ResourceManager.run('install-emacs-deps')
 
     logger.info('Reset emacs source and install directories')
     for directory in (EMACS_SOURCE_ROOT, EMACS_INSTALL_ROOT):
@@ -141,29 +167,9 @@ def emacs_from_source() -> None:
     sh.sudo.cp('-r', build_icons_dir, '/usr/share/icons')
 
 
-def emacs_from_package() -> None:
-    """Install emacs from the package manager."""
-    logger.info('Installing emacs from package')
-    if EMACS_PPA:
-        add_emacs_ppa()
-    apt_install(EMACS_PACKAGE)
-
-
-def add_emacs_ppa() -> None:
-    """Add extra PPA for emacs packages."""
-    ppa_name = 'ppa:kelleyk/emacs'
-    logger.info('Adding PPA %s for installing emacs', ppa_name)
-    apt_install('software-properties-common')
-    sh.sudo('add-apt-repository', ppa_name)
-    sh.sudo.apt.update()
-
-
 def run() -> None:
     """Run the emacs component installation."""
-    if EMACS_PACKAGE == 'source':
-        emacs_from_source()
-    else:
-        emacs_from_package()
+    emacs_from_source()
 
     logger.info('Copy install-emacs-packages.sh to %s', SCRIPTS_DIR)
     sh.sudo.mkdir('-p', SCRIPTS_DIR)

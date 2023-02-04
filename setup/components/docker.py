@@ -3,13 +3,20 @@ import logging
 import os
 import sh
 
+from lib.resource import OS, resource, ResourceManager
+from lib.util import apt_install
+
 logger = logging.getLogger(__name__)
 
+
+@resource(name='install-docker', os=OS.UBUNTU)
+def install_docker_ubuntu():
+    apt_install('docker.io')
 
 def run():
     """Run the docker component installation."""
     logger.info('Installing docker')
-    sh.sudo('apt-get', 'install', '-y', 'docker.io')
+    ResourceManager.run('install-docker')
 
     logger.info('Add user to docker group')
     if os.environ['USER'] != 'root':

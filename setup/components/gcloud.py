@@ -2,7 +2,8 @@
 import logging
 import sh
 
-from .util import apt_install, get_net_file, write_root_file
+from lib.resource import OS, resource, ResourceManager
+from lib.util import apt_install, get_net_file, write_root_file
 
 GCLOUD_DOWNLOAD_PACKAGES = [
     'apt-transport-https',
@@ -12,9 +13,8 @@ GCLOUD_DOWNLOAD_PACKAGES = [
 
 logger = logging.getLogger(__name__)
 
-
-def run() -> None:
-    """Run the gcloud component installation."""
+@resource(name='install-gcloud', os=OS.UBUNTU)
+def install_gcloud_ubuntu():
     logger.info('Install packages for gcloud download')
     apt_install(*GCLOUD_DOWNLOAD_PACKAGES)
 
@@ -31,3 +31,8 @@ def run() -> None:
     logger.info('Update apt cache and install google-cloud-sdk package')
     sh.sudo('apt-get', 'update')
     apt_install('google-cloud-sdk')
+
+
+def run() -> None:
+    """Run the gcloud component installation."""
+    ResourceManager.run('install-gcloud')

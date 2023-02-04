@@ -7,7 +7,9 @@ import os
 import sh
 import sys
 
-from components import COMPONENTS, SKEL_DIR
+from components import COMPONENTS
+from lib.consts import SKEL_DIR
+from lib.resource import OS, resource, ResourceManager
 
 
 def get_args() -> argparse.Namespace:
@@ -26,6 +28,11 @@ def get_args() -> argparse.Namespace:
         action='store_true', default=False,
         help='When specified, list all components to run and exit.')
     return parser.parse_args()
+
+@resource(name='init-package-upgrade', os=OS.UBUNTU)
+def init_package_upgrade_ubuntu():
+    sh.sudo('apt-get', 'update')
+    sh.sudo('apt-get', 'upgrade', '-y')
 
 
 def main() -> int:
@@ -47,8 +54,7 @@ def main() -> int:
         return 0
 
     logger.info('Doing initial package update and upgrade')
-    sh.sudo('apt-get', 'update')
-    sh.sudo('apt-get', 'upgrade', '-y')
+    ResourceManager.run('init-package-upgrade')
 
     logger.info("Adding $HOME/bin to $PATH if it hasn't been added already")
     profile_file_name = os.path.join(os.environ['HOME'], '.profile')
