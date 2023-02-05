@@ -79,5 +79,3 @@ def ubuntu_gte_20(plat_version) -> bool:
         return major_version >= 20
     except ValueError:
         return False
-
-print(get_current_platform())
