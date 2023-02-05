@@ -21,4 +21,6 @@ WORKDIR /setup
 RUN chown -R ${USERNAME}:${USERNAME} /setup
 USER ${USERNAME}
 RUN ./setup.sh
+# Cleanup the virtualenv for docker builds
+RUN rm -rf /tmp/setup-venv-$(printf $(sha256sum requirements.txt))
 WORKDIR /home/${USERNAME}
