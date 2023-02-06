@@ -61,6 +61,7 @@
 (setq epa-pinentry-mode 'loopback)
 (with-eval-after-load "json"
   (setq json-encoding-default-indentation "    "))
+(setq native-comp-async-report-warnings-errors 'silent)
 
 (defun set-font-size (size)
   (interactive
