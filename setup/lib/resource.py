@@ -71,11 +71,3 @@ def resource(name: str, os=res_any, os_version=res_any, arch=res_any):
         ResourceManager.add_resource(res, func)
         return func
     return wrapper
-
-
-def ubuntu_gte_20(plat_version) -> bool:
-    try:
-        major_version = int(plat_version.split('.')[0])
-        return major_version >= 20
-    except ValueError:
-        return False

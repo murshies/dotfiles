@@ -5,7 +5,8 @@ import os.path
 import sh
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
-from lib.resource import OS, resource, ResourceManager, ubuntu_gte_20
+from lib.platform_filters import ubuntu_gte_18_10
+from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, root_copy
 
 logger = logging.getLogger(__name__)
@@ -42,8 +43,8 @@ BASE_PACKAGES = [
     'zip',
 ]
 
-@resource(name='install-ripgrep', os=OS.UBUNTU, os_version=ubuntu_gte_20)
-def install_ripgrep_ubuntu_gte_20():
+@resource(name='install-ripgrep', os=OS.UBUNTU, os_version=ubuntu_gte_18_10)
+def install_ripgrep_ubuntu_gte_18_10():
     apt_install('ripgrep')
 
 
