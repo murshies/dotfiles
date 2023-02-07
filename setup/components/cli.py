@@ -2,6 +2,7 @@
 import logging
 import os
 import os.path
+import requests
 import sh
 import shutil
 import tempfile
