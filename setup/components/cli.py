@@ -3,9 +3,11 @@ import logging
 import os
 import os.path
 import sh
+import shutil
+import tempfile
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
-from lib.platform_filters import ubuntu_gte_18_10
+from lib.platform_filters import ubuntu_gte_18_10, ubuntu_lt_18_10
 from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, root_copy
 
@@ -46,6 +48,22 @@ BASE_PACKAGES = [
 @resource(name='install-ripgrep', os=OS.UBUNTU, os_version=ubuntu_gte_18_10)
 def install_ripgrep_ubuntu_gte_18_10():
     apt_install('ripgrep')
+
+
+@resource(name='install-ripgrep', os=OS.UBUNTU, os_version=ubuntu_lt_18_10, arch='x86_64')
+def intall_ripgrep_ubuntu_lt_18_10_x86_64():
+    download_url = 'https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb'
+    response = requests.get(download_url, stream=True)
+    response.raise_for_status()
+    deb_file_name = 'ripgrep.deb'
+    try:
+        with open(deb_file_name, 'wb') as f:
+            shutil.copyfileobj(response.raw, f)
+        sh.sudo.dkpg('-i', deb_file_name)
+    finally:
+        if os.path.exists(deb_file_name):
+            os.remove(deb_file_name)
+
 
 
 @resource(name='install-cli', os=OS.UBUNTU)
