@@ -66,7 +66,6 @@ def intall_ripgrep_ubuntu_lt_18_10_x86_64():
             os.remove(deb_file_name)
 
 
-
 @resource(name='install-cli', os=OS.UBUNTU)
 def install_cli_packages_ubuntu():
     apt_install(*BASE_PACKAGES)
