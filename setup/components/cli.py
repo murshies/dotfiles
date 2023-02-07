@@ -60,7 +60,7 @@ def intall_ripgrep_ubuntu_lt_18_10_x86_64():
     try:
         with open(deb_file_name, 'wb') as f:
             shutil.copyfileobj(response.raw, f)
-        sh.sudo.dkpg('-i', deb_file_name)
+        sh.sudo.dpkg('-i', deb_file_name)
     finally:
         if os.path.exists(deb_file_name):
             os.remove(deb_file_name)
