@@ -5,6 +5,7 @@ import os.path
 import sh
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
+from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, root_copy
 
@@ -24,7 +25,7 @@ BIN_SCRIPTS = [
 ]
 
 
-@resource(name='install-gui-packages', os=OS.UBUNTU)
+@resource(name='install-gui-packages', os=debian_or_ubuntu)
 def install_gui_packages_ubuntu():
     apt_install(*GUI_PACKAGES)
 

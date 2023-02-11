@@ -1,3 +1,5 @@
+from lib.resource import OS
+
 def ubuntu_gte_18_10(plat_version: str) -> bool:
     try:
         platform_version_elts = plat_version.split('.')
@@ -9,6 +11,7 @@ def ubuntu_gte_18_10(plat_version: str) -> bool:
     except ValueError:
         return False
 
+
 def ubuntu_lt_18_10(plat_version: str) -> bool:
     try:
         platform_version_elts = plat_version.split('.')
@@ -19,3 +22,7 @@ def ubuntu_lt_18_10(plat_version: str) -> bool:
         return major_version < 18 or major_version == 18 and minor_version < 10
     except ValueError:
         return False
+
+
+def debian_or_ubuntu(os: OS) -> bool:
+    return os == OS.DEBIAN or os == OS.UBUNTU

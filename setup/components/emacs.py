@@ -7,6 +7,7 @@ import sh
 from typing import List
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR
+from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, root_copy, write_root_file
 
@@ -43,10 +44,7 @@ def gcc_major_version() -> int:
     :return: The GCC major version.
     :rtype: int
     """
-    version_output = sh.gcc('--version')
-    full_version = version_output.split('\n')[0].split(' ')[-1]
-    major_version = full_version.split('.')[0]
-    return int(major_version)
+    return int(sh.gcc('-dumpversion'))
 
 
 def emacs_build_packages() -> List[str]:
@@ -91,12 +89,12 @@ def cwd(directory: str) -> None:
         os.chdir(currdir)
 
 
-@resource(name='install-emacs-deps', os=OS.UBUNTU)
+@resource(name='install-emacs-deps', os=debian_or_ubuntu)
 def install_emacs_deps_ubuntu():
+    apt_install('build-essential')
     build_deps = [
         EMACS_TOOLKIT_PACKAGE,
         'autoconf',
-        'build-essential',
         'cmake',
         'git',
         'libfreetype6-dev',

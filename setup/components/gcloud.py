@@ -2,6 +2,7 @@
 import logging
 import sh
 
+from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, get_net_file, write_root_file
 
@@ -13,7 +14,7 @@ GCLOUD_DOWNLOAD_PACKAGES = [
 
 logger = logging.getLogger(__name__)
 
-@resource(name='install-gcloud', os=OS.UBUNTU)
+@resource(name='install-gcloud', os=debian_or_ubuntu)
 def install_gcloud_ubuntu():
     logger.info('Install packages for gcloud download')
     apt_install(*GCLOUD_DOWNLOAD_PACKAGES)
