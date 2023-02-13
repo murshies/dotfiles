@@ -22,9 +22,13 @@ class OS(Enum):
     def from_str(os: str):
         if os == 'ubuntu':
             return OS.UBUNTU
+        if os == 'debian':
+            return OS.DEBIAN
+
         raise UnknownOSError(os)
 
     UBUNTU = 1
+    DEBIAN = 2
 
 def get_current_platform() -> Platform:
     return Platform(
