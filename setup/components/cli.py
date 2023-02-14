@@ -43,6 +43,7 @@ BASE_PACKAGES = [
     'traceroute',
     'unzip',
     'wget',
+    'x2goclient',
     'zip',
 ]
 
