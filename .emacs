@@ -160,7 +160,7 @@ current directory as root."
         (eshell-buffer-name (format "*eshell ssh %s*" ssh-params)))
     (eshell t)))
 
-(setq vc-handled-backends nil
+(setq vc-handled-backends nil)
 
 ;; ============================================================================
 ;; Utility functions
