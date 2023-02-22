@@ -75,11 +75,6 @@
   (interactive)
   (shell-command "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD"))
 
-(defun dabbrev-completion-all ()
-  "dabbrev-completion, but with the prefix arg forced to search all buffers"
-  (interactive)
-  (dabbrev-completion 16))
-
 (defun set-title-prefix (title-prefix)
   (interactive "sEnter prefix: ")
   (setq frame-title-prefix title-prefix))
@@ -167,7 +162,7 @@ current directory as root."
         (eshell-buffer-name (format "*eshell ssh %s*" ssh-params)))
     (eshell t)))
 
-(setq vc-handled-backends ())
+(setq vc-handled-backends nil
 
 ;; ============================================================================
 ;; Utility functions
@@ -265,12 +260,6 @@ load the list of files/directories from disk."
    (buffer-substring (mark) (point))
    face)
   (deactivate-mark))
-
-(defun matches-any-regex (regex-list str)
-  (if (not regex-list) nil
-    (let ((next-regex (car regex-list)))
-      (if (string-match-p next-regex str) t
-        (matches-any-regex (cdr regex-list) str)))))
 
 (defun create-new-buffer ()
   (interactive)
@@ -761,10 +750,6 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-P") 'window-browser)
 (define-key my-minor-mode-map (kbd "C-c s") 'eshell)
 (define-key my-minor-mode-map (kbd "C-c a") 'eshell-cd-to-current-directory)
-(define-key my-minor-mode-map (kbd "M-I") 'windmove-up)
-(define-key my-minor-mode-map (kbd "M-K") 'windmove-down)
-(define-key my-minor-mode-map (kbd "M-J") 'windmove-left)
-(define-key my-minor-mode-map (kbd "M-L") 'windmove-right)
 (define-key my-minor-mode-map (kbd "C-x j") 'join-line)
 (define-key my-minor-mode-map (kbd "C-{") 'previous-buffer)
 (define-key my-minor-mode-map (kbd "C-}") 'next-buffer)
@@ -780,14 +765,12 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-g l") 'magit-log-buffer-file)
 (define-key my-minor-mode-map (kbd "M-S") 'loose-isearch-forward)
 (define-key my-minor-mode-map (kbd "M-R") 'loose-isearch-backward)
-(define-key my-minor-mode-map (kbd "C-x p") 'electric-pair-local-mode)
 (define-key my-minor-mode-map (kbd "C-x S") 'save-filename-full-path)
 (define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
 (define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
 (define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
-(define-key my-minor-mode-map (kbd "C-M-/") 'dabbrev-completion-all)
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
