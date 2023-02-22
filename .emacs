@@ -55,8 +55,6 @@
 (require 'dired-x nil 'noerror) ;; for dired-jump
 (require 'subr-x)
 (setq dabbrev-case-fold-search nil)
-(setq lsp-headerline-breadcrumb-enable nil
-      lsp-keymap-prefix "M-'")
 (setq mouse-wheel-scroll-amount '(4))
 (setq epa-pinentry-mode 'loopback)
 (with-eval-after-load "json"
@@ -826,6 +824,35 @@ temporarily disabled."
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
 ;; ============================================================================
+;; Eglot configuration and definitions
+;; ============================================================================
+
+(defun eglot-organize-imports ()
+  "Action to organize imports in the current buffer's file."
+  (interactive)
+  (eglot-code-action (point-min) (point-max) "source.organizeImports" t))
+
+(defun setup-eglot()
+  "Define keybindings and update symbol highlighting for eglot."
+  (define-key my-minor-mode-map (kbd "M-' r r") 'eglot-rename)
+  (define-key my-minor-mode-map (kbd "M-' g i") 'eglot-find-implementation)
+  (define-key my-minor-mode-map (kbd "M-' r o") 'eglot-organize-imports)
+  (define-key my-minor-mode-map (kbd "M-' g g") 'xref-find-definitions)
+  (define-key my-minor-mode-map (kbd "M-' g r") 'xref-find-references)
+  (define-key my-minor-mode-map (kbd "M-' a a") 'eglot-code-action)
+  (define-key my-minor-mode-map (kbd "M-' r f") 'eglot-format-buffer)
+  (define-key my-minor-mode-map (kbd "M-' g t") 'eglot-find-typeDefiniton)
+  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight))
+
+(defun eglot-hook ()
+  "Hook function to automatically enable eglot and company mode."
+  (company-mode)
+  (eglot-ensure))
+
+(with-eval-after-load "eglot" (setup-eglot))
+
+
+;; ============================================================================
 ;; Package management
 ;; ============================================================================
 
@@ -834,13 +861,13 @@ temporarily disabled."
       '(company
         counsel-projectile
         dockerfile-mode
+        eglot
         erc-hl-nicks
         go-mode
         groovy-mode
         ivy
         jinja2-mode
         kubel
-        lsp-mode
         magit
         markdown-mode
         protobuf-mode
