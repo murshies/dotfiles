@@ -830,7 +830,7 @@ temporarily disabled."
 (defun eglot-organize-imports ()
   "Action to organize imports in the current buffer's file."
   (interactive)
-  (eglot-code-action (point-min) (point-max) "source.organizeImports" t))
+  (eglot-code-actions (point-min) (point-max) "source.organizeImports" t))
 
 (defun setup-eglot()
   "Define keybindings and update symbol highlighting for eglot."
@@ -841,7 +841,7 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "M-' g r") 'xref-find-references)
   (define-key my-minor-mode-map (kbd "M-' a a") 'eglot-code-action)
   (define-key my-minor-mode-map (kbd "M-' r f") 'eglot-format-buffer)
-  (define-key my-minor-mode-map (kbd "M-' g t") 'eglot-find-typeDefiniton)
+  (define-key my-minor-mode-map (kbd "M-' g t") 'eglot-find-typeDefinition)
   (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight))
 
 (defun eglot-hook ()
