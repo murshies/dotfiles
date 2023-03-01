@@ -842,6 +842,7 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "M-' a a") 'eglot-code-action)
   (define-key my-minor-mode-map (kbd "M-' r f") 'eglot-format-buffer)
   (define-key my-minor-mode-map (kbd "M-' g t") 'eglot-find-typeDefinition)
+  (define-key my-minor-mode-map (kbd "M-' w r") 'eglot-reconnect)
   (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight))
 
 (defun eglot-hook ()
