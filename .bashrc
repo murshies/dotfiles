@@ -166,7 +166,6 @@ function eww()
     emacs $flags --eval "(eww \"$url\")"
 }
 
-alias e='emacsclient -a "" -t'
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
@@ -199,17 +198,17 @@ case "$TERM" in
 esac
 
 if [ -n "$EMACS_DAEMON" ]; then
-    # If we're running emacs in a daemon, use emacsclient as the editor.
     export EDITOR='emacsclient'
+    alias e='emacsclient -n'
 elif [ -n "$INSIDE_EMACS" ]; then
-    # If we're inside emacs but not using a daemon, use vim as the editor. This
-    # is so we don't get emacs inside of emacs when running the editor inside
-    # of something like vterm.
+    # The current shell is bring run inside of emacs, but emacs is not in
+    # daemon mode. Using an external editor like vim avoids an "emacs inside of
+    # emacs" situation.
     export EDITOR='vim'
+    alias e='vim'
 elif [ $(which emacs 2> /dev/null) ]; then
-    # Otherwise, if we're on the command line and emacs is installed, use
-    # terminal emacs as the editor.
     export EDITOR='emacs -nw'
+    alias e='emacsclient -a "" -t'
 fi
 
 if [ -f ~/local.sh ]
