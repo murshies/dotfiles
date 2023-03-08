@@ -839,11 +839,14 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "M-' r o") 'eglot-organize-imports)
   (define-key my-minor-mode-map (kbd "M-' g g") 'xref-find-definitions)
   (define-key my-minor-mode-map (kbd "M-' g r") 'xref-find-references)
-  (define-key my-minor-mode-map (kbd "M-' a a") 'eglot-code-action)
+  (define-key my-minor-mode-map (kbd "M-' a a") 'eglot-code-actions)
   (define-key my-minor-mode-map (kbd "M-' r f") 'eglot-format-buffer)
   (define-key my-minor-mode-map (kbd "M-' g t") 'eglot-find-typeDefinition)
   (define-key my-minor-mode-map (kbd "M-' w r") 'eglot-reconnect)
-  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight))
+  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight)
+  (put 'eglot-note 'flymake-overlay-control nil)
+  (put 'eglot-warning 'flymake-overlay-control nil)
+  (put 'eglot-error 'flymake-overlay-control nil))
 
 (defun eglot-hook ()
   "Hook function to automatically enable eglot and company mode."
