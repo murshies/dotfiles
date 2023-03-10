@@ -846,7 +846,9 @@ temporarily disabled."
   (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight)
   (put 'eglot-note 'flymake-overlay-control nil)
   (put 'eglot-warning 'flymake-overlay-control nil)
-  (put 'eglot-error 'flymake-overlay-control nil))
+  (put 'eglot-error 'flymake-overlay-control nil)
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 1))
 
 (defun eglot-hook ()
   "Hook function to automatically enable eglot and company mode."
