@@ -850,10 +850,13 @@ temporarily disabled."
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 1))
 
-(defun eglot-hook ()
-  "Hook function to automatically enable eglot and company mode."
+(defun eglot-managed-hook ()
+  "Hook for eglot mode setup.
+Add eglot-ensure as a major mode hook to enable eglot."
   (company-mode)
-  (eglot-ensure))
+  (setq eldoc-documentation-strategy #'eldoc-documentation-compose))
+
+(add-hook 'eglot-managed-mode-hook 'eglot-managed-hook)
 
 (with-eval-after-load "eglot" (setup-eglot))
 
