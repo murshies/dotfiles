@@ -666,21 +666,19 @@ Start with the built-in linux mode and change things from there."
 
 (defun load-project-management ()
   (interactive)
-  (if (or
-       (not (fboundp 'ivy-mode))
-       (not (fboundp 'counsel-projectile-mode)))
+  (if (not (fboundp 'ivy-mode))
       (message "Project management not installed, skipping init")
     (progn
       (ivy-mode)
-      (counsel-projectile-mode)
+      (projectile-mode)
       (set-additional-project-settings)
       (set-additional-project-keys))))
 
 (defun determine-projectile-search-program ()
   (cond
-   ((executable-find "rg") 'counsel-projectile-rg)
-   ((executable-find "ag") 'counsel-projectile-ag)
-   (t 'counsel-projectile-grep)))
+   ((executable-find "rg") 'projectile-ripgrep)
+   ((executable-find "ag") 'projectile-ag)
+   (t 'projectile-grep)))
 
 (defun find-file-default-completion ()
   "Use default completion for find-file.
@@ -692,16 +690,14 @@ temporarily disabled."
 
 (defun set-additional-project-keys ()
   (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
-  (define-key my-minor-mode-map (kbd "C-c p p") 'counsel-projectile-switch-project)
-  (define-key my-minor-mode-map (kbd "C-c p f") 'counsel-projectile-find-file)
+  (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
+  (define-key my-minor-mode-map (kbd "C-c p f") 'projectile-find-file)
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
   (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
   (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
-  (define-key my-minor-mode-map (kbd "C-x c a") 'counsel-apropos)
+  (define-key my-minor-mode-map (kbd "C-x c a") 'apropos)
   (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
-  (define-key my-minor-mode-map (kbd "M-x") 'counsel-M-x)
-  (define-key my-minor-mode-map (kbd "C-c p w") 'counsel-projectile-mode)
-  (define-key my-minor-mode-map (kbd "C-.") 'counsel-etags-list-tag)
+  (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode)
   (define-key my-minor-mode-map [f1] 'swiper-all))
 
 (defun set-additional-project-settings ()
@@ -865,7 +861,6 @@ temporarily disabled."
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
       '(company
-        counsel-projectile
         dockerfile-mode
         eglot
         erc-hl-nicks
@@ -876,6 +871,8 @@ temporarily disabled."
         kubel
         magit
         markdown-mode
+        projectile
+        projectile-ripgrep
         protobuf-mode
         undo-tree
         web-mode
