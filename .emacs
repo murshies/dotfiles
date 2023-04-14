@@ -36,6 +36,7 @@
 (setq ring-bell-function 'ignore)
 (setq smerge-command-prefix (kbd "C-c v"))
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 (setq-default major-mode 'text-mode)
 (setq-default fill-column 79)
 (when (require 'package nil 'noerror)
