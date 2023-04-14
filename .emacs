@@ -768,6 +768,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
+(define-key my-minor-mode-map (kbd "C-c $") 'toggle-truncate-lines)
 
 (defun dssh (ssh-params)
   "Open a dired session to a remote host."
