@@ -70,6 +70,14 @@
 
 (set-font-size font-size)
 
+(defun bump-font-size-up ()
+  (interactive)
+  (set-font-size (+ font-size 10)))
+
+(defun bump-font-size-down ()
+  (interactive)
+  (set-font-size (- font-size 10)))
+
 (defun git-quick-status()
   (interactive)
   (shell-command "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD"))
@@ -770,6 +778,8 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
 (define-key my-minor-mode-map (kbd "C-c $") 'toggle-truncate-lines)
+(define-key my-minor-mode-map (kbd "C-M-+") 'bump-font-size-up)
+(define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
 
 (defun dssh (ssh-params)
   "Open a dired session to a remote host."
