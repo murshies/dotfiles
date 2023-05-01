@@ -889,6 +889,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         projectile
         projectile-ripgrep
         protobuf-mode
+        rust-mode
         swiper
         undo-tree
         web-mode
