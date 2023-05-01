@@ -536,6 +536,7 @@ display, set the format string so that there is a space after each number."
         python-mode-hook
         racket-mode-hook
         ruby-mode-hook
+        rust-mode-hook
         sh-mode-hook
         sql-mode-hook
         text-mode-hook
