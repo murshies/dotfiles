@@ -6,8 +6,7 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(when (not (boundp 'font-size))
-  (setq font-size 110))
+(defvar font-size 110)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
 (global-visual-line-mode)
@@ -914,5 +913,6 @@ Add eglot-ensure as a major mode hook to enable eglot."
 
 ;; Load local lisp files last. This allows local settings to override settings
 ;; made in .emacs.
-(when (or (not (boundp 'reload-elisp)) reload-elisp)
+(defvar reload-elisp t)
+(when reload-elisp
   (load-lisp-in-dir "~/elisp"))
