@@ -6,7 +6,8 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(defvar font-size 110)
+(defconst default-font-size 110)
+(defvar font-size default-font-size)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
 (global-visual-line-mode)
@@ -71,11 +72,18 @@
 
 (defun bump-font-size-up ()
   (interactive)
-  (set-font-size (+ font-size 10)))
+  (set-font-size (+ font-size 10))
+  (message "font size %d" font-size))
 
 (defun bump-font-size-down ()
   (interactive)
-  (set-font-size (- font-size 10)))
+  (set-font-size (- font-size 10))
+  (message "font size %d" font-size))
+
+(defun bump-default-font-size ()
+  (interactive)
+  (set-font-size default-font-size)
+  (message "font size %d" font-size))
 
 (defun git-quick-status()
   (interactive)
@@ -780,6 +788,7 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-c $") 'toggle-truncate-lines)
 (define-key my-minor-mode-map (kbd "C-M-+") 'bump-font-size-up)
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
+(define-key my-minor-mode-map (kbd "C-M-0") 'bump-default-font-size)
 
 (defun dssh (ssh-params)
   "Open a dired session to a remote host."
