@@ -439,6 +439,11 @@ associated with it."
          (kill-buffer buffer))))
    (buffer-list)))
 
+(defun goto-scratch ()
+  (interactive)
+  (let ((default-directory "~/"))
+    (switch-to-buffer "*scratch*")))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
@@ -749,7 +754,7 @@ temporarily disabled."
 (define-key my-minor-mode-map [f6] 'compile)
 (define-key my-minor-mode-map [f7] 'recompile)
 (define-key my-minor-mode-map [f8] 'load-project-management)
-(define-key my-minor-mode-map [f9] 'save-or-load-file-list)
+(define-key my-minor-mode-map [f9] 'goto-scratch)
 (define-key my-minor-mode-map [f12] 'tramp-cleanup-all)
 (define-key my-minor-mode-map [(control shift delete)] 'delete-region)
 (define-key my-minor-mode-map (kbd "C-x R") 'rename-buffer)
