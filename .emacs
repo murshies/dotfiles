@@ -171,7 +171,9 @@ current directory as root."
          (if (= (user-uid) 0) " # " " $ "))))
 
 (defun essh (ssh-params)
-  (interactive "sEnter SSH host: ")
+  (interactive
+   (list
+    (completing-read "Enter SSH host: " (get-ssh-config-hosts))))
   (let ((default-directory (format "/ssh:%s:~" ssh-params))
         (eshell-buffer-name (format "*eshell ssh %s*" ssh-params)))
     (eshell t)))
