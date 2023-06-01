@@ -299,13 +299,10 @@ the eshell buffer as part of its cleanup."
 (defun sudo-conn ()
   "Open a connection to the same machine, through sudo"
   (interactive)
-  (let* ((second-slash (string-search "/" default-directory 2))
-         (conn-str-end (if second-slash (- second-slash 1) (- (length default-directory) 1)))
-         (curr-conn-str (substring default-directory 0 conn-str-end))
-         (sudo-dir (format "%s|sudo::" curr-conn-str)))
-    (if (string-search ":" curr-conn-str)
-        (find-file sudo-dir)
-      (message "Not a remote directory"))))
+  (let* ((tramp-end (cl-search ":" default-directory :from-end t))
+         (new-path (if (not tramp-end) "/sudo::"
+                     (format "%s|sudo::" (substring default-directory 0 tramp-end)))))
+    (find-file new-path)))
 
 (defun window-browser ()
   "Enter an interactive browsing mode, where the following keys are mapped to
