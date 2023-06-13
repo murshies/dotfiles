@@ -170,6 +170,8 @@ current directory as root."
                      'face '(:foreground "Sky Blue" :weight bold))
          (if (= (user-uid) 0) " # " " $ "))))
 
+(setq eshell-scroll-to-bottom-on-input t)
+
 (defun essh (ssh-params)
   (interactive
    (list
