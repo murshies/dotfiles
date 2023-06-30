@@ -620,7 +620,10 @@ Start with the built-in linux mode and change things from there."
 (defun toggle-inhibit-eww-images ()
   (interactive)
   (setq shr-inhibit-images (not shr-inhibit-images))
-  (eww-reload))
+  (eww-reload)
+  (if shr-inhibit-images
+      (message "Disabled images")
+    (message "Enabled images")))
 
 (defun eww-hook ()
   "Settings for the eww browser."
