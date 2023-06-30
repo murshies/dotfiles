@@ -617,11 +617,17 @@ Start with the built-in linux mode and change things from there."
     (linum-mode -1)
     (read-only-mode)))
 
+(defun toggle-inhibit-eww-images ()
+  (interactive)
+  (setq shr-inhibit-images (not shr-inhibit-images))
+  (eww-reload))
+
 (defun eww-hook ()
   "Settings for the eww browser."
   (setq shr-inhibit-images t)
   (define-key eww-mode-map (kbd "<prior>") 'small-scroll-down)
-  (define-key eww-mode-map (kbd "<next>") 'small-scroll-up))
+  (define-key eww-mode-map (kbd "<next>") 'small-scroll-up)
+  (define-key eww-mode-map (kbd "i") 'toggle-inhibit-eww-images))
 
 (defun python-hook ()
   "Settings for python mode."
