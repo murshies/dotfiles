@@ -902,7 +902,6 @@ Add eglot-ensure as a major mode hook to enable eglot."
 (setq packages-to-install
       '(company
         dockerfile-mode
-        eglot
         erc-hl-nicks
         go-mode
         groovy-mode
