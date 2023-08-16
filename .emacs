@@ -590,7 +590,8 @@ Start with the built-in linux mode and change things from there."
   (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file))
 
 (defun diff-hook ()
-  (when (fboundp 'linum-mode)
+  (if (fboundp 'display-line-numbers-mode)
+      (display-line-numbers-mode)
     (linum-mode))
   (diff-auto-refine-mode -1))
 
