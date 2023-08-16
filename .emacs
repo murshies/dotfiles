@@ -857,6 +857,7 @@ temporarily disabled."
   (setq vterm-max-scrollback 100000))
 
 (when (and (require 'vterm nil 'noerror)
+           (file-exists-p (or (getenv "KUBECONFIG") "~/.kube/config"))
            (require 'kubel nil 'noerror))
   (kubel-vterm-setup))
 
