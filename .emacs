@@ -96,14 +96,17 @@
 (defun get-ssh-config-hosts ()
   "Get a list of hosts from the ssh config file.
 This function filters out all hosts with wildcards (*, ?, and !)."
-  (let* ((ssh-config-contents (with-temp-buffer
-                                (insert-file-contents (format "%s/.ssh/config" (getenv "HOME")))
-                                (split-string (buffer-string) "\n" t)))
-         (hosts (delq nil (mapcar (lambda (s)
-                                    (when (string-match "^Host \\([^*?!]+\\)$" s)
-                                      (match-string 1 s)))
-                                  ssh-config-contents))))
-    hosts))
+  (let ((ssh-config-file (format "%s/.ssh/config" (getenv "HOME"))))
+    (if (file-exists-p ssh-config-file)
+        (let* ((ssh-config-contents (with-temp-buffer
+                                      (insert-file-contents ssh-config-file)
+                                      (split-string (buffer-string) "\n" t)))
+               (hosts (delq nil (mapcar (lambda (s)
+                                          (when (string-match "^Host \\([^*?!]+\\)$" s)
+                                            (match-string 1 s)))
+                                        ssh-config-contents))))
+          hosts)
+      '())))
 
 ;; eshell settings
 (defun eshell/e (file &rest files)
@@ -251,37 +254,6 @@ When a prefix argument is used, do not reload the files in ~/elisp"
   (load-file "~/.emacs")
   (setq reload-elisp t))
 
-(defun file-or-dir-name (buffer)
-  (with-current-buffer buffer
-    (or (buffer-file-name)
-        dired-directory)))
-
-(defun dump-buffer-files-to-file (file-file)
-  (delete-file file-file)
-  (mapc (lambda (filename) (append-to-file (format "%s\n" filename)
-                                           nil file-file))
-        (cl-remove-if (lambda (elt) (eq elt nil))
-                      (mapcar #'file-or-dir-name (buffer-list)))))
-
-(defun load-buffer-files-from-file (file-file)
-  (let ((files (with-temp-buffer
-                 (insert-file-contents file-file)
-                 (split-string (buffer-string) "\n"))))
-    (mapc #'find-file files)))
-
-(defun save-or-load-file-list ()
-  "Save or load the current list of files and directories to disk.
-
-Without the prefix argument provided, save the list of
-files/directories to disk. With the prefix directory provided,
-load the list of files/directories from disk."
-  (interactive)
-  (let ((file-file "~/.emacs.d/files.txt"))
-    (if current-prefix-arg
-        (load-buffer-files-from-file file-file)
-      (when (yes-or-no-p "Are you sure you want to save the file list?")
-        (dump-buffer-files-to-file file-file)))))
-
 (defun highlight-all-current-region (&optional face)
   (interactive
    (list
@@ -371,14 +343,6 @@ Entering any other key or key chord exits the browsing mode."
     (eshell)
     (eshell/cd current-directory)
     (eshell-interrupt-process)))
-
-(defun term-cd-to-starting-directory ()
-  "Change the current directory in the current term-mode buffer to its starting
-buffer. This relies on the current term-mode buffer having a variable defined
-called starting-directory."
-  (interactive)
-  (insert (concat "cd " starting-directory))
-  (term-send-input))
 
 (defun directory-for-background-command (prefix-arg command-buffer)
   "A helper function to determine the running directory for the
@@ -603,17 +567,6 @@ Start with the built-in linux mode and change things from there."
    (if (version< emacs-version "25.1")
        'show-all 'outline-show-all)))
 
-(defun term-hook ()
-  (make-local-variable 'starting-directory)
-  (setq starting-directory default-directory)
-  (define-key term-mode-map (kbd "C-c g") 'term-cd-to-starting-directory)
-  (define-key term-raw-map (kbd "C-c g") 'term-cd-to-starting-directory)
-  (define-key term-raw-map (kbd "C-c s") nil)
-  (define-key term-raw-map (kbd "M-x")
-    (lookup-key (current-global-map) (kbd "M-x")))
-  (define-key term-raw-map (kbd "M-:") 'eval-expression)
-  (define-key term-raw-map (kbd "M-P") 'window-browser))
-
 (defun all-terms-hook ()
   ;; Change ansi-color-blue and ansi-color-red to colors that are easier to
   ;; read.
@@ -666,7 +619,6 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'c-mode-hook 'c-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'org-mode-hook 'org-hook)
-(add-hook 'term-mode-hook 'term-hook)
 (add-hook 'term-mode-hook 'all-terms-hook)
 (add-hook 'comint-mode-hook 'all-terms-hook)
 (add-hook 'vterm-mode-hook 'all-terms-hook)
