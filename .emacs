@@ -590,7 +590,8 @@ Start with the built-in linux mode and change things from there."
   (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file))
 
 (defun diff-hook ()
-  (linum-mode)
+  (when (fboundp 'linum-mode)
+    (linum-mode))
   (diff-auto-refine-mode -1))
 
 (defun org-hook ()
@@ -627,7 +628,8 @@ Start with the built-in linux mode and change things from there."
   (when (> (buffer-size) (* 1024 1024))
     (buffer-disable-undo)
     (fundamental-mode)
-    (linum-mode -1)
+    (when (fboundp 'linum-mode)
+      (linum-mode -1))
     (read-only-mode)))
 
 (defun shr-enable-images ()
