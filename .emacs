@@ -124,6 +124,13 @@ the default directory as the eshell buffer's default directory."
      default-directory
      (background-command-buffer full-cmd))))
 
+(defun eshell/v (cmd &rest args)
+  "Runs an asynchronous command in a vterm buffer."
+  (let* ((full-cmd (string-join (cons cmd args) " "))
+         (vterm-buffer-name (format "*vterm async %s" full-cmd)))
+    (vterm t)
+    (vterm-insert (format "%s\n" full-cmd))))
+
 (defun eshell/ll (&rest args)
   "Shorthand for ls -l in eshell"
   (eshell/ls "-l" args))
