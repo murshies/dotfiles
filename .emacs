@@ -162,7 +162,7 @@ current directory as root."
 (defun insert-tramp-host ()
   "In remote buffers, insert the tramp host."
   (interactive)
-  (insert (file-remote-p default-directory)))
+  (insert (or (file-remote-p default-directory) "/")))
 
 (defun eshell-hook ()
   (make-local-variable 'eshell-starting-directory)
