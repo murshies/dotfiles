@@ -163,7 +163,13 @@ current directory as root."
   (make-local-variable 'eshell-starting-directory)
   (setq eshell-starting-directory default-directory))
 
+(defun insert-tramp-host ()
+  "In remote buffers, insert the tramp host."
+  (interactive)
+  (insert (file-remote-p default-directory)))
+
 (add-hook 'eshell-mode-hook 'eshell-hook)
+(define-key eshell-mode-map (kbd "C-c r") 'insert-tramp-host)
 
 ;; eshell custom prompt
 (setq eshell-prompt-function
