@@ -49,7 +49,7 @@ function basic-prompt() {
 }
 
 function normal-prompt() {
-    export PS1='\[\033[01;32m\][\w]\[\033[00m\]\n\[\033[01;34m\]\u@\h\[\033[00m\] $ '
+    export PS1='$? \[\033[01;32m\][\w]\[\033[00m\]\n\[\033[01;34m\]\u@\h\[\033[00m\] $ '
 }
 
 function goto-realdir() {
