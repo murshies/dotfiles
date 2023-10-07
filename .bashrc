@@ -100,8 +100,7 @@ function __aupdate() {
 }
 
 function aupdate() {
-    export LOG_FILE=$HOME/last_update.log
-    tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
+    tmux new -s aupdate 'LOG_FILE=$HOME/last_update.log ; bash -lc "__aupdate | tee $LOG_FILE"'
 }
 
 alias ec='emacsclient'
