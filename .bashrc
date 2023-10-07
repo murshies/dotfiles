@@ -92,6 +92,18 @@ function eww() {
     emacs $flags --eval "(eww \"$url\")"
 }
 
+function __aupdate() {
+    echo "Update at $(date +%T)"
+    sudo apt-get update
+    sudo apt-get upgrade -y
+    echo "Finished at $(date +%T)"
+}
+
+function aupdate() {
+    export LOG_FILE=$HOME/last_update.log
+    tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
