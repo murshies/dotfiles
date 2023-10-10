@@ -100,7 +100,14 @@ function __aupdate() {
 }
 
 function aupdate() {
-    tmux new -s aupdate 'LOG_FILE=$HOME/last_update.log ; bash -lc "__aupdate | tee $LOG_FILE"'
+    case "$TERM" in
+    *"xterm"*|*"screen"*)
+        tmux new -s aupdate 'LOG_FILE=$HOME/last_update.log ; bash -lc "__aupdate | tee $LOG_FILE"'
+        ;;
+    *)
+        LOG_FILE=$HOME/last_update.log ; __aupdate | tee $LOG_FILE
+        ;;
+    esac
 }
 
 alias ec='emacsclient'
