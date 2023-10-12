@@ -101,12 +101,14 @@ function __aupdate() {
 
 function aupdate() {
     case "$TERM" in
-    *"xterm"*|*"screen"*)
-        tmux new -s aupdate 'LOG_FILE=$HOME/last_update.log ; bash -lc "__aupdate | tee $LOG_FILE"'
-        ;;
-    *)
-        LOG_FILE=$HOME/last_update.log ; __aupdate | tee $LOG_FILE
-        ;;
+        *"xterm"*|*"screen"*)
+            LOG_FILE=$HOME/last_update.log
+            tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
+            cat $LOG_FILE
+            ;;
+        *)
+            LOG_FILE=$HOME/last_update.log ; __aupdate | tee $LOG_FILE
+            ;;
     esac
 }
 
