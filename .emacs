@@ -667,13 +667,14 @@ Start with the built-in linux mode and change things from there."
 
 (defun load-project-management ()
   (interactive)
-  (if (not (fboundp 'ivy-mode))
-      (message "Project management not installed, skipping init")
-    (progn
-      (ivy-mode)
-      (projectile-mode)
-      (set-additional-project-settings)
-      (set-additional-project-keys))))
+  (if (and (require 'ivy nil 'noerror)
+           (require 'projectile nil 'noerror))
+      (progn
+        (ivy-mode)
+        (projectile-mode)
+        (set-additional-project-settings)
+        (set-additional-project-keys))
+    (message "Project management not installed, skipping init")))
 
 (defun determine-projectile-search-program ()
   (cond
