@@ -713,7 +713,7 @@ temporarily disabled."
   "Run magit-status on a known projectile project."
   (interactive)
   (let ((default-directory
-          (completing-read "Select a project: " projectile-known-projects)))
+         (completing-read "Select a project: " projectile-known-projects)))
     (magit-status)))
 
 (defun projectile-open-top-level-directory ()
@@ -786,11 +786,11 @@ temporarily disabled."
     (interactive)
     (let* ((prefix-val (car current-prefix-arg))
            (default-directory
-             (cond ((eql prefix-val 4) ;; C-u pressed once
-                    (getenv "HOME"))
-                   ((eql prefix-val 16) ;; C-u pressed twice
-                    (read-directory-name "Enter starting directory: "))
-                   (t default-directory)))) ;; Any other prefix (including none)
+            (cond ((eql prefix-val 4) ;; C-u pressed once
+                   (getenv "HOME"))
+                  ((eql prefix-val 16) ;; C-u pressed twice
+                   (read-directory-name "Enter starting directory: "))
+                  (t default-directory)))) ;; Any other prefix (including none)
       (vterm t)))
   (defun vssh (ssh-params)
     (interactive
