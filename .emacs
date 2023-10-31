@@ -697,7 +697,6 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
   (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
   (define-key my-minor-mode-map (kbd "C-x c a") 'apropos)
-  (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
   (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode)
   (define-key my-minor-mode-map [f1] 'swiper-all))
 
