@@ -270,6 +270,13 @@ When a prefix argument is used, do not reload the files in ~/elisp"
     (switch-to-buffer new-buf)
     (set-buffer-major-mode new-buf)))
 
+(defun dup-buffer ()
+  (interactive)
+  (let* ((curr-buf (current-buffer))
+         (new-buf (generate-new-buffer (buffer-name curr-buf))))
+    (switch-to-buffer new-buf)
+    (insert-buffer curr-buf)))
+
 (defun tramp-cleanup-all ()
   "Clean up all tramp connections/buffers. If the current directory of the
 eshell buffer is remote, change the directory to the user's home directory
