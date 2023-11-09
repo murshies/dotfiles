@@ -61,6 +61,7 @@
 (with-eval-after-load "json"
   (setq json-encoding-default-indentation "    "))
 (setq native-comp-async-report-warnings-errors 'silent)
+(setq eldoc-documentation-strategy #'eldoc-documentation-compose)
 
 (defun set-font-size (size)
   (interactive
@@ -866,8 +867,7 @@ temporarily disabled."
 (defun eglot-managed-hook ()
   "Hook for eglot mode setup.
 Add eglot-ensure as a major mode hook to enable eglot."
-  (company-mode)
-  (setq eldoc-documentation-strategy #'eldoc-documentation-compose))
+  (company-mode))
 
 (add-hook 'eglot-managed-mode-hook 'eglot-managed-hook)
 
