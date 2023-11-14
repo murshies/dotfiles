@@ -622,6 +622,12 @@ Start with the built-in linux mode and change things from there."
   "Settings for Go mode"
   (setq tab-width 4))
 
+(defun proced-hook ()
+  "Settings for proced"
+  (setq proced-format 'medium)
+  (visual-line-mode -1)
+  (toggle-truncate-lines t))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
 (add-hook 'c-mode-hook 'c-hook)
@@ -636,6 +642,7 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'dired-mode-hook 'dired-hook)
 (add-hook 'go-mode-hook 'go-hook)
+(add-hook 'proced-mode-hook 'proced-hook)
 
 ;; Set up web-mode
 ;; Most of the following code was taken from:
