@@ -10,7 +10,6 @@
 (defvar font-size default-font-size)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
-(global-visual-line-mode)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (set-face-attribute 'default nil :height font-size)
@@ -624,9 +623,7 @@ Start with the built-in linux mode and change things from there."
 
 (defun proced-hook ()
   "Settings for proced"
-  (setq proced-format 'medium)
-  (visual-line-mode -1)
-  (toggle-truncate-lines t))
+  (setq proced-format 'medium))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
