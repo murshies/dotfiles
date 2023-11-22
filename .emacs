@@ -10,6 +10,9 @@
 (defvar font-size default-font-size)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
+(setq-default fringe-indicator-alist
+              (delq (assq 'continuation fringe-indicator-alist)
+                    fringe-indicator-alist))
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (set-face-attribute 'default nil :height font-size)
