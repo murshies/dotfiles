@@ -503,7 +503,8 @@ be applied to each major mode in a smarter way."
     (linum-mode))
   (highlight-line-mode)
   (electric-pair-local-mode)
-  (setq truncate-lines nil))
+  (setq truncate-lines nil)
+  (setq word-wrap t))
 
 (defun linum-spacing-on-terminal ()
   "A hook for determining linum-format.
