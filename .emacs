@@ -882,6 +882,9 @@ Add eglot-ensure as a major mode hook to enable eglot."
 
 (with-eval-after-load "eglot" (setup-eglot))
 
+(with-eval-after-load "magit"
+  (add-hook 'magit-log-mode-hook (lambda () (setq truncate-lines nil))))
+
 
 ;; ============================================================================
 ;; Package management
