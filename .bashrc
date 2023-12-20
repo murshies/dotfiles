@@ -100,16 +100,13 @@ function __aupdate() {
 }
 
 function aupdate() {
-    case "$TERM" in
-        *"xterm"*|*"screen"*)
-            LOG_FILE=$HOME/last_update.log
-            tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
-            cat $LOG_FILE
-            ;;
-        *)
-            LOG_FILE=$HOME/last_update.log ; __aupdate | tee $LOG_FILE
-            ;;
-    esac
+    if [[ $(which tmux) && "$TERM" = *"xterm"* ]]; then
+        LOG_FILE=$HOME/last_update.log
+        tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
+        cat $LOG_FILE
+    else
+        LOG_FILE=$HOME/last_update.log ; __aupdate | tee $LOG_FILE
+    fi
 }
 
 alias ec='emacsclient'
