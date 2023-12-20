@@ -95,7 +95,7 @@ function eww() {
 function __aupdate() {
     echo "Update at $(date +%T)"
     sudo apt-get update
-    sudo NEEDRESTART_MODE=a apt-get upgrade -y
+    sudo NEEDRESTART_MODE=a DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
     echo "Finished at $(date +%T)"
 }
 
