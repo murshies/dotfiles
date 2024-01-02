@@ -10,9 +10,8 @@
 (defvar font-size default-font-size)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
-(setq-default fringe-indicator-alist
-              (delq (assq 'continuation fringe-indicator-alist)
-                    fringe-indicator-alist))
+(global-visual-line-mode)
+(setcdr visual-line-mode-map (cdr (make-sparse-keymap)))
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (set-face-attribute 'default nil :height font-size)
@@ -505,9 +504,7 @@ be applied to each major mode in a smarter way."
       (display-line-numbers-mode)
     (linum-mode))
   (highlight-line-mode)
-  (electric-pair-local-mode)
-  (setq truncate-lines nil)
-  (setq word-wrap t))
+  (electric-pair-local-mode))
 
 (defun linum-spacing-on-terminal ()
   "A hook for determining linum-format.
@@ -628,7 +625,9 @@ Start with the built-in linux mode and change things from there."
 
 (defun proced-hook ()
   "Settings for proced"
-  (setq proced-format 'medium))
+  (setq proced-format 'medium)
+  (visual-line-mode -1)
+  (toggle-truncate-lines t))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'c++-mode-hook 'c++-hook)
@@ -881,9 +880,6 @@ Add eglot-ensure as a major mode hook to enable eglot."
 (add-hook 'eglot-managed-mode-hook 'eglot-managed-hook)
 
 (with-eval-after-load "eglot" (setup-eglot))
-
-(with-eval-after-load "magit"
-  (add-hook 'magit-log-mode-hook (lambda () (setq truncate-lines nil))))
 
 
 ;; ============================================================================
