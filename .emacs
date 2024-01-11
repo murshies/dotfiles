@@ -110,6 +110,16 @@ This function filters out all hosts with wildcards (*, ?, and !)."
           hosts)
       '())))
 
+(defun json-lint ()
+  "Lint a section of text from a buffer to check if it is valid JSON.
+
+The point should be positioned at the start of the JSON text to
+valid. This is essentially an interactive wrapper around
+`json-parse-buffer'."
+  (interactive)
+  (json-parse-buffer)
+  (message "JSON is valid"))
+
 ;; eshell settings
 (defun eshell/e (file &rest files)
   "Open a list of files.
