@@ -11,12 +11,13 @@ from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, root_copy, write_root_file
 
-EMACS_VERSION = '29.1'
+EMACS_VERSION = '29.2'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
 EMACS_INSTALL_ROOT = os.path.join('/', 'opt', f'emacs-{EMACS_VERSION}')
 EMACS_PACKAGE = os.environ.get('EMACS_PACKAGE', 'source')
+EMACS_KEEP_SOURCE = os.environ.get('EMACS_KEEP_SOURCE', 'true').lower() == 'true'
 
 EMACS_DESKTOP_ENTRY = """
 [Desktop Entry]
@@ -157,8 +158,11 @@ def emacs_from_source() -> None:
                 os.path.join(EMACS_INSTALL_ROOT, 'bin', exe),
                 os.path.join('/usr/bin', exe))
 
-    logger.info('Remove emacs source directory to conserve space')
-    sh.sudo.rm('-rf', EMACS_SOURCE_ROOT)
+    if EMACS_KEEP_SOURCE:
+        logger.info('Keeping emacs source directory')
+    else:
+        logger.info('Remove emacs source directory to conserve space')
+        sh.sudo.rm('-rf', EMACS_SOURCE_ROOT)
 
     logger.info('Install emacs icons')
     build_icons_dir = os.path.join(EMACS_INSTALL_ROOT, 'share', 'icons', '.')
