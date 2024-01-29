@@ -109,6 +109,29 @@ function aupdate() {
     fi
 }
 
+function gpgarchive-open() {
+    local archive="$1"
+    local dest="$2"
+    if [ -z "$archive" ] || [ -z "$dest" ]; then
+        echo "Usage: gpgarchive-open <archive file> <dest directory>"
+        return 1
+    fi
+    mkdir -p "$dest"
+    gpg -d "$archive" | tar -xf - -C "$dest"
+    echo "$archive extracted to $dest"
+}
+
+function gpgarchive-create() {
+    local source_dir="$1"
+    local dest_archive="$2"
+    if [ -z "$source_dir" ] || [ -z "$dest_archive" ]; then
+        echo "Usage: gpgarchive-create <source dir> <dest archive>"
+        return 1
+    fi
+    tar -cvf - -C "$source_dir" . | gpg -c > "$dest_archive"
+    echo "$source_dir saved to $dest_archive"
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
