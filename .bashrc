@@ -132,6 +132,17 @@ function gpgarchive-create() {
     echo "$source_dir saved to $dest_archive"
 }
 
+function ramdisk() {
+    local size="$1"
+    local dest="$2"
+    if [ -z "$size" ] || [ -z "$dest" ] || [ "$dest" == "-h" ]; then
+        echo "Usage: ramdisk <size> <dest dir>"
+        return 1
+    fi
+    mkdir -p "$dest"
+    sudo mount -t tmpfs -o "size=$size" tmpfs "$dest"
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
