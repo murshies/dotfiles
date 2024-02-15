@@ -140,7 +140,7 @@ function ramdisk() {
         return 1
     fi
     mkdir -p "$dest"
-    sudo mount -t tmpfs -o "size=$size" tmpfs "$dest"
+    sudo mount -t tmpfs -o "size=$size,uid=$(id -u),gid=$(id -g)" tmpfs "$dest"
 }
 
 alias ec='emacsclient'
