@@ -15,6 +15,9 @@ def install_kubectl_ubuntu():
     logger.info('Install packages for kubectl download')
     apt_install('apt-transport-https', 'ca-certificates', 'curl')
 
+    logger.info('Ensure that /etc/apt/keyrings exists')
+    sh.sudo.mkdir('-p', '/etc/apt/keyrings')
+
     logger.info('Add apt key for kubectl')
     get_net_file(f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/Release.key',
                  '/tmp/kube-release.key')
