@@ -1,6 +1,7 @@
 """Component for installing the Kubernetes CLI interface."""
 import logging
 import sh
+import textwrap
 
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
@@ -28,6 +29,15 @@ def install_kubectl_ubuntu():
         'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] '
         f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/ /',
         '/etc/apt/sources.list.d/kubernetes.list',
+        '0644')
+    # Prefer kubectl from this repo instead of the Google Cloud repo.
+    write_root_file(
+        textwrap.dedent('''
+        Package: kubectl
+        Pin: origin pkgs.k8s.io
+        Pin-Priority: 900
+        ''').strip(),
+        '/etc/apt/preferences.d/kubectl',
         '0644')
     sh.sudo('apt-get', 'update')
 
