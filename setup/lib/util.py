@@ -33,7 +33,7 @@ def get_net_file(url: str, dst: str, mode: str = None) -> None:
     :param dst str: The destination file name.
     :param mode str: The mode of the dst file. This is optional.
     """
-    sh.sudo.tee(sh.curl('--output', '-', url), dst)
+    sh.sudo.tee(sh.curl('-L', '--output', '-', url), dst)
     if mode:
         sh.sudo.chmod(mode, dst)
 

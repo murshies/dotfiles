@@ -2,23 +2,29 @@
 import logging
 import sh
 
+from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
 from lib.util import apt_install, get_net_file, write_root_file
 
 logger = logging.getLogger(__name__)
 
-@resource(name='install-kubectl', os=OS.UBUNTU)
+KUBECTL_VERSION = '1.29'
+
+@resource(name='install-kubectl', os=debian_or_ubuntu)
 def install_kubectl_ubuntu():
     logger.info('Install packages for kubectl download')
     apt_install('apt-transport-https', 'ca-certificates', 'curl')
 
     logger.info('Add apt key for kubectl')
-    get_net_file('https://packages.cloud.google.com/apt/doc/apt-key.gpg',
-                 '/usr/share/keyrings/kubernetes-archive-keyring.gpg')
+    get_net_file(f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/Release.key',
+                 '/tmp/kube-release.key')
+    sh.sudo.gpg('--yes', '--dearmor',
+                '-o', '/etc/apt/keyrings/kubernetes-apt-keyring.gpg',
+                '/tmp/kube-release.key')
     write_root_file(
-        'deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] '
-        'https://apt.kubernetes.io/ kubernetes-xenial main',
-        '/etc/apt/sources.list.d/kubectl.list',
+        'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] '
+        f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/ /',
+        '/etc/apt/sources.list.d/kubernetes.list',
         '0644')
     sh.sudo('apt-get', 'update')
 
