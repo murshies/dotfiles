@@ -381,7 +381,8 @@ run-async-shell-command command."
   "Helper function for run-async-shell-command.
 This defines the actual command logic."
   (let ((default-directory directory))
-    (async-shell-command command command-buffer)))
+    (with-environment-variables (("PAGER" "cat"))
+      (async-shell-command command command-buffer))))
 
 (defun run-async-shell-command (prefix-arg command)
   "Run an asynchronous command.
