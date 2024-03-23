@@ -718,6 +718,7 @@ Start with the built-in linux mode and change things from there."
 
 (defun set-additional-project-keys ()
   (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
+  (define-key my-minor-mode-map (kbd "C-x b") 'consult-buffer)
   (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
   (define-key my-minor-mode-map (kbd "C-c p f") 'projectile-find-file)
   (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
