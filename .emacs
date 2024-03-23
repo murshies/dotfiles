@@ -696,10 +696,15 @@ Start with the built-in linux mode and change things from there."
 
 (defun load-project-management ()
   (interactive)
-  (if (and (require 'ivy nil 'noerror)
+  (if (and (require 'vertico nil 'noerror)
+           (require 'marginalia nil 'noerror)
+           (require 'orderless nil 'noerror)
            (require 'projectile nil 'noerror))
       (progn
-        (ivy-mode)
+        (vertico-mode)
+        (marginalia-mode)
+        (setq completion-styles '(orderless basic)
+              completion-category-overrides '((file (styles basic partial-completion))))
         (projectile-mode)
         (set-additional-project-settings)
         (set-additional-project-keys))
@@ -711,14 +716,6 @@ Start with the built-in linux mode and change things from there."
    ((executable-find "ag") 'projectile-ag)
    (t 'projectile-grep)))
 
-(defun find-file-default-completion ()
-  "Use default completion for find-file.
-For example, if ivy is enabled, this function will call find-file with ivy
-temporarily disabled."
-  (interactive)
-  (let ((completing-read-function 'completing-read-default))
-    (call-interactively 'find-file)))
-
 (defun set-additional-project-keys ()
   (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
   (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
@@ -727,16 +724,11 @@ temporarily disabled."
   (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
   (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
   (define-key my-minor-mode-map (kbd "C-x c a") 'apropos)
-  (define-key ivy-minibuffer-map (kbd "<backtab>") 'ivy-backward-delete-char)
   (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode))
 
 (defun set-additional-project-settings ()
   "Additional settings related to project management."
-  (setq ivy-height 15
-        ivy-initial-inputs-alist nil
-        ivy-on-del-error-function nil
-        ivy-dynamic-exhibit-delay-ms 250
-        projectile-track-known-projects-automatically nil))
+  (setq projectile-track-known-projects-automatically nil))
 
 (defun projectile-open-magit-status ()
   "Run magit-status on a known projectile project."
@@ -793,7 +785,6 @@ temporarily disabled."
 (define-key my-minor-mode-map (kbd "C-c d") 'kill-whole-line)
 (define-key my-minor-mode-map (kbd "C-x C-j") 'dired-jump)
 (define-key my-minor-mode-map (kbd "C-x ;") 'comment-line)
-(define-key my-minor-mode-map (kbd "C-x F") 'find-file-default-completion)
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
@@ -901,21 +892,23 @@ Add eglot-ensure as a major mode hook to enable eglot."
 ;; The list of packages to install when calling install-selected-packages.
 (setq packages-to-install
       '(company
+        consult
         dockerfile-mode
         erc-hl-nicks
         go-mode
         groovy-mode
-        ivy
         jinja2-mode
         kubel
         magit
+        marginalia
         markdown-mode
+        orderless
         projectile
         projectile-ripgrep
         protobuf-mode
         rust-mode
-        swiper
         undo-tree
+        vertico
         web-mode
         yaml-mode))
 
