@@ -744,6 +744,8 @@ Start with the built-in linux mode and change things from there."
          (completing-read "Select a project: " projectile-known-projects)))
     (dired selected-project)))
 
+(load-project-management)
+
 ;; ============================================================================
 ;; Global key bindings
 ;; ============================================================================
@@ -753,7 +755,6 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map [f5] 'reload-emacs-config)
 (define-key my-minor-mode-map [f6] 'compile)
 (define-key my-minor-mode-map [f7] 'recompile)
-(define-key my-minor-mode-map [f8] 'load-project-management)
 (define-key my-minor-mode-map [f9] 'goto-scratch)
 (define-key my-minor-mode-map [f12] 'tramp-cleanup-all)
 (define-key my-minor-mode-map [(control shift delete)] 'delete-region)

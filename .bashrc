@@ -146,7 +146,7 @@ function ramdisk() {
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
-alias startemacs='emacs --daemon --eval "(load-project-management)"'
+alias startemacs='emacs --daemon"'
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
