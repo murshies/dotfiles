@@ -1,41 +1,54 @@
 """Module for utility functions shared across components."""
 import os
 import sh
+import typing
 
 
-def apt_install(*packages) -> None:
+def apt_install(*packages: typing.List[str]) -> None:
     """
     Install a set of packages.
 
-    :param packages list[str]: The listo of packages.
+    :param packages: The list of packages.
     """
     sh.sudo('apt-get', 'install', '-y', *packages)
 
 
-def write_root_file(contents: str, dst: str, mode: str = None) -> None:
+def write_root_file(contents: str, dst: str, mode: str=None) -> None:
     """
     Write a file as root.
 
-    :param contents str: The contents of the file.
-    :param dst str: The destination file name.
-    :param mode str: The mode of the dst file. This is optional.
+    :param contents: The contents of the file.
+    :param dst: The destination file name.
+    :param mode: The mode of the dst file. This is optional.
     """
     sh.sudo.tee(sh.echo(contents), dst)
     if mode:
         sh.sudo.chmod(mode, dst)
 
 
-def get_net_file(url: str, dst: str, mode: str = None) -> None:
+def get_net_file(url: str, dst: str, mode: str=None) -> None:
     """
     Retrieve a file from the network and write it to disk.
 
-    :param url str: The URL of the file.
-    :param dst str: The destination file name.
-    :param mode str: The mode of the dst file. This is optional.
+    :param url: The URL of the file.
+    :param dst: The destination file name.
+    :param mode: The mode of the dst file. This is optional.
     """
     sh.sudo.tee(sh.curl('-L', '--output', '-', url), dst)
     if mode:
         sh.sudo.chmod(mode, dst)
+
+
+def get_gpg_key(url: str, dst: str) -> None:
+    """
+    Download a GPG key from the network and dearmor it.
+
+    :param url: The URL of the GPG key
+    :param dst: The location on disk to put the GPG key
+    """
+    sh.sudo.gpg(sh.curl('-L', '--output', '-', url),
+                '--batch', '--yes', '-o', dst, '--dearmor')
+    sh.sudo.chmod('0644', dst)
 
 
 def root_copy(src: str, dst: str, filename: str) -> None:

@@ -5,7 +5,7 @@ import textwrap
 
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, get_net_file, write_root_file
+from lib.util import apt_install, get_gpg_key, write_root_file
 
 logger = logging.getLogger(__name__)
 
@@ -18,13 +18,11 @@ def install_kubectl_ubuntu():
 
     logger.info('Ensure that /etc/apt/keyrings exists')
     sh.sudo.mkdir('-p', '/etc/apt/keyrings')
+    sh.sudo.chmod('0755', '/etc/apt/keyrings')
 
     logger.info('Add apt key for kubectl')
-    get_net_file(f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/Release.key',
-                 '/tmp/kube-release.key')
-    sh.sudo.gpg('--yes', '--dearmor',
-                '-o', '/etc/apt/keyrings/kubernetes-apt-keyring.gpg',
-                '/tmp/kube-release.key')
+    get_gpg_key(f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/Release.key',
+                '/etc/apt/keyrings/kubernetes-apt-keyring.gpg')
     write_root_file(
         'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] '
         f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/ /',
