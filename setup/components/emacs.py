@@ -130,11 +130,13 @@ def emacs_from_source() -> None:
 
     logger.info('Download emacs source')
     sh.sudo.git.clone(
+        '--single-branch',
+        f'--branch=emacs-{EMACS_VERSION}',
+        '--depth=1',
         'https://git.savannah.gnu.org/git/emacs.git',
         EMACS_SOURCE_ROOT)
 
     with cwd(EMACS_SOURCE_ROOT):
-        sh.sudo.git.checkout(f'emacs-{EMACS_VERSION}')
         logger.info('Run autogen.sh for emacs')
         sh.sudo('./autogen.sh')
 
