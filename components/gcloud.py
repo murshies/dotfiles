@@ -15,7 +15,7 @@ GCLOUD_DOWNLOAD_PACKAGES = [
 logger = logging.getLogger(__name__)
 
 @resource(name='install-gcloud', os=debian_or_ubuntu)
-def install_gcloud_ubuntu():
+def install_gcloud_debian():
     logger.info('Install packages for gcloud download')
     apt_install(*GCLOUD_DOWNLOAD_PACKAGES)
 
@@ -25,7 +25,7 @@ def install_gcloud_ubuntu():
 
     logger.info('Add apt key for Google Cloud')
     get_gpg_key('https://packages.cloud.google.com/apt/doc/apt-key.gpg',
-                 '/etc/apt/keyrings/cloud.google.gpg')
+                '/etc/apt/keyrings/cloud.google.gpg')
 
     logger.info('Add Cloud SDK package source')
     write_root_file('deb [signed-by=/etc/apt/keyrings/cloud.google.gpg] '
