@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-a
 ENV TZ=Etc/UTC
 RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen
+
 RUN echo keyboard-configuration keyboard-configuration/layout select 'English (US)' | sudo debconf-set-selections && \
     echo keyboard-configuration keyboard-configuration/layoutcode select 'us' | sudo debconf-set-selections
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
