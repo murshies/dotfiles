@@ -21,6 +21,6 @@ else
     . $venv_name/bin/activate
 fi
 
-export PYTHONPATH=$(dirname $(realpath "$0"))
+export PYTHONPATH="$(dirname $(realpath "$0"))"
 echo "PYTHONPATH is $PYTHONPATH"
 ./setup.py "$@"

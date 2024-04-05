@@ -1,9 +1,11 @@
+# Example of running this in server mode:
+# docker run -v /var/run/docker.sock:/var/run/docker.sock  -p $ssh_port:22 --name "$container_name" -d devenv:latest /home/user/bin/server-mode.sh
 FROM debian:12
 
 ENV USERNAME=user
 ENV USER=${USERNAME}
 
-RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils
+RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils locales
 
 ENV TZ=Etc/UTC
 RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
@@ -21,4 +23,5 @@ RUN chown -R ${USERNAME}:${USERNAME} /setup
 USER ${USERNAME}
 ENV CLEANUP_SETUP_VENV=t
 RUN ./setup.sh
+RUN /usr/local/bin/bootstrap-user.sh
 WORKDIR /home/${USERNAME}

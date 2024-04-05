@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 SCRIPTS = [
     'aupdate',
     'bootstrap-user.sh',
-    'install-gopls.sh',
     'new-user.sh',
     'pull-dotfiles.sh',
     'server-mode.sh',
