@@ -14,13 +14,21 @@ from . import gcloud
 from . import golang
 from . import gui
 from . import kubectl
+from . import syncthing
 
 COMPONENTS = OrderedDict([
     ('cli', cli.run),
     ('docker', docker.run),
-    ('gcloud', gcloud.run),
-    ('kubectl', kubectl.run),
     ('emacs', emacs.run),
+    ('gcloud', gcloud.run),
     ('golang', golang.run),
     ('gui', gui.run),
+    ('kubectl', kubectl.run),
+    ('syncthing', syncthing.run),
+])
+
+ESSENTIAL_COMPONENTS = OrderedDict([
+    ('cli', cli.run),
+    ('docker', docker.run),
+    ('emacs', emacs.run),
 ])

@@ -24,6 +24,6 @@ WORKDIR /setup
 RUN chown -R ${USERNAME}:${USERNAME} /setup
 USER ${USERNAME}
 ENV CLEANUP_SETUP_VENV=t
-RUN ./setup.sh
+RUN ./setup.sh -c cli,docker,emacs,gui
 RUN /usr/local/bin/bootstrap-user.sh
 WORKDIR /home/${USERNAME}

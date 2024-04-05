@@ -7,7 +7,7 @@ import os
 import sh
 import sys
 
-from components import COMPONENTS
+from components import COMPONENTS, ESSENTIAL_COMPONENTS
 from lib.consts import SKEL_DIR
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import resource, ResourceManager
@@ -23,7 +23,11 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         '-c', '--components', required=False, default=None,
         help=('A common-separated list of components to run. If not '
-              'specified, run all components.'))
+              'specified, run only essential components.'))
+    parser.add_argument(
+        '-a', '--all-components', dest='all_components', required=False,
+        action='store_true', default=False,
+        help='When specified, run all components. This overrides -c.')
     parser.add_argument(
         '-l', '--list-components', dest='list_components', required=False,
         action='store_true', default=False,
@@ -75,8 +79,10 @@ def main() -> int:
     logger.info('Remove any existing skeleton directory')
     sh.sudo.rm('-rf', SKEL_DIR)
 
-    components_to_run = COMPONENTS.keys()
-    if args.components:
+    components_to_run = ESSENTIAL_COMPONENTS.keys()
+    if args.all_components:
+        components_to_run = COMPONENTS.keys()
+    elif args.components:
         components_to_run = [
             component.strip() for component in args.components.split(',')
         ]
