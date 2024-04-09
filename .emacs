@@ -167,6 +167,8 @@ current directory as root."
   "Change to the starting directory of the eshell buffer"
   (eshell/cd eshell-starting-directory))
 
+(defvar eshell-buffer-name)
+
 (defun eshell-in-dir (starting-dir)
   "Start a new eshell in a specific directory"
   (interactive "DEnter the starting directory: ")
