@@ -793,7 +793,7 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
 (define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
 (define-key my-minor-mode-map (kbd "C-c $") 'toggle-truncate-lines)
-(define-key my-minor-mode-map (kbd "C-M-+") 'bump-font-size-up)
+(define-key my-minor-mode-map (kbd "C-M-=") 'bump-font-size-up)
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
 (define-key my-minor-mode-map (kbd "C-M-0") 'bump-default-font-size)
 (define-key my-minor-mode-map (kbd "C-c C-v") 'ansi-term)
