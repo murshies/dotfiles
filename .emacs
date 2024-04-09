@@ -799,6 +799,7 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "C-M-+") 'bump-font-size-up)
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
 (define-key my-minor-mode-map (kbd "C-M-0") 'bump-default-font-size)
+(define-key my-minor-mode-map (kbd "C-c C-v") 'ansi-term)
 
 (defun dssh (ssh-params)
   "Open a dired session to a remote host."
