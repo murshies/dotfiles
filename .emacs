@@ -710,9 +710,20 @@ Start with the built-in linux mode and change things from there."
         (marginalia-mode)
         (setq completion-styles '(orderless basic)
               completion-category-overrides '((file (styles basic partial-completion))))
+        (setq consult-ripgrep-args
+              "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
+   --smart-case --no-heading --with-filename --line-number --search-zip --hidden")
         (projectile-mode)
-        (set-additional-project-settings)
-        (set-additional-project-keys))
+        (setq projectile-track-known-projects-automatically nil)
+        (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
+        (define-key my-minor-mode-map (kbd "C-x b") 'consult-buffer)
+        (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
+        (define-key my-minor-mode-map (kbd "C-c p f") 'projectile-find-file)
+        (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
+        (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
+        (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
+        (define-key my-minor-mode-map (kbd "C-x c a") 'apropos)
+        (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode))
     (message "Project management not installed, skipping init")))
 
 (defun determine-projectile-search-program ()
@@ -720,21 +731,6 @@ Start with the built-in linux mode and change things from there."
    ((executable-find "rg") 'consult-ripgrep)
    ((executable-find "ag") 'projectile-ag)
    (t 'projectile-grep)))
-
-(defun set-additional-project-keys ()
-  (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
-  (define-key my-minor-mode-map (kbd "C-x b") 'consult-buffer)
-  (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
-  (define-key my-minor-mode-map (kbd "C-c p f") 'projectile-find-file)
-  (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
-  (define-key my-minor-mode-map (kbd "C-c p g") 'projectile-open-magit-status)
-  (define-key my-minor-mode-map (kbd "C-c p d") 'projectile-open-top-level-directory)
-  (define-key my-minor-mode-map (kbd "C-x c a") 'apropos)
-  (define-key my-minor-mode-map (kbd "C-c p w") 'projectile-mode))
-
-(defun set-additional-project-settings ()
-  "Additional settings related to project management."
-  (setq projectile-track-known-projects-automatically nil))
 
 (defun projectile-open-magit-status ()
   "Run magit-status on a known projectile project."
