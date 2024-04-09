@@ -166,7 +166,7 @@ export HISTTIMEFORMAT="%Y/%m/%d %T "
 normal-prompt
 
 case "$TERM" in
-    *"xterm"*|*"screen"*)
+    *"xterm"*|*"screen"*|*"eterm"*)
         export PROMPT_COMMAND='printf "\n"'
         ;;
     *)
