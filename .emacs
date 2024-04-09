@@ -703,7 +703,8 @@ Start with the built-in linux mode and change things from there."
   (if (and (require 'vertico nil 'noerror)
            (require 'marginalia nil 'noerror)
            (require 'orderless nil 'noerror)
-           (require 'projectile nil 'noerror))
+           (require 'projectile nil 'noerror)
+           (require 'consult nil 'noerror))
       (progn
         (vertico-mode)
         (marginalia-mode)
@@ -716,7 +717,7 @@ Start with the built-in linux mode and change things from there."
 
 (defun determine-projectile-search-program ()
   (cond
-   ((executable-find "rg") 'projectile-ripgrep)
+   ((executable-find "rg") 'consult-ripgrep)
    ((executable-find "ag") 'projectile-ag)
    (t 'projectile-grep)))
 
