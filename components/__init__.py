@@ -15,11 +15,13 @@ from . import golang
 from . import gui
 from . import kubectl
 from . import syncthing
+from . import firefox
 
 COMPONENTS = OrderedDict([
     ('cli', cli.run),
     ('docker', docker.run),
     ('emacs', emacs.run),
+    ('firefox', firefox.run),
     ('gcloud', gcloud.run),
     ('golang', golang.run),
     ('gui', gui.run),
