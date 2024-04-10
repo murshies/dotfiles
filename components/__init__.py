@@ -14,6 +14,7 @@ from . import gcloud
 from . import golang
 from . import gui
 from . import kubectl
+from . import mullvad
 from . import syncthing
 from . import firefox
 
@@ -26,6 +27,7 @@ COMPONENTS = OrderedDict([
     ('golang', golang.run),
     ('gui', gui.run),
     ('kubectl', kubectl.run),
+    ('mullvad', mullvad.run),
     ('syncthing', syncthing.run),
 ])
 
