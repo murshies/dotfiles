@@ -100,7 +100,10 @@ function __aupdate() {
 }
 
 function aupdate() {
-    if [[ $(which tmux) && "$TERM" = *"xterm"* ]]; then
+    if [[ $(which tmux) &&
+              ("$TERM" = *"xterm"* ||
+                   "$TERM" = *"eterm"* ||
+                   "$TERM" = *"linux") ]]; then
         LOG_FILE=$HOME/last_update.log
         tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
         cat $LOG_FILE
@@ -166,7 +169,7 @@ export HISTTIMEFORMAT="%Y/%m/%d %T "
 normal-prompt
 
 case "$TERM" in
-    *"xterm"*|*"screen"*|*"eterm"*)
+    *"xterm"*|*"screen"*|*"eterm"*|*"linux"*)
         export PROMPT_COMMAND='printf "\n"'
         ;;
     *)
