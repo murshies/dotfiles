@@ -22,7 +22,6 @@
 (setq compilation-scroll-output t)
 (setq create-lockfiles nil)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(setq erc-join-buffer 'bury)
 (setq-default
  header-line-format
  '(:eval (let* ((full-header buffer-file-name)
@@ -89,13 +88,9 @@
   (set-font-size default-font-size)
   (message "font size %d" font-size))
 
-(defun git-quick-status()
+(defun git-quick-status ()
   (interactive)
   (shell-command "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD"))
-
-(defun set-title-prefix (title-prefix)
-  (interactive "sEnter prefix: ")
-  (setq frame-title-prefix title-prefix))
 
 (defun get-ssh-config-hosts ()
   "Get a list of hosts from the ssh config file.
@@ -141,13 +136,6 @@ the default directory as the eshell buffer's default directory."
      default-directory
      (background-command-buffer full-cmd))))
 
-(defun eshell/v (cmd &rest args)
-  "Runs an asynchronous command in a vterm buffer."
-  (let* ((full-cmd (string-join (cons cmd args) " "))
-         (vterm-buffer-name (format "*vterm async %s" full-cmd)))
-    (vterm t)
-    (vterm-insert (format "%s\n" full-cmd))))
-
 (defun eshell/ll (&rest args)
   "Shorthand for ls -l in eshell"
   (eshell/ls "-l" args))
@@ -183,10 +171,29 @@ current directory as root."
   (interactive)
   (insert (or (file-remote-p default-directory) "/")))
 
+(defun eshell-jump-and-send-input ()
+  "Jump to the end of the current eshell buffer and send the input."
+  (interactive)
+  (goto-char (point-max))
+  (eshell-send-input))
+
+(defun eshell-ctrl-d (arg)
+  "Define function to make ctrl+d in eshell behave like bash."
+  (interactive "p")
+  (let ((current-input
+         (save-excursion
+           (goto-char (point-max))
+           (eshell-get-old-input))))
+    (if (string= current-input "")
+        (eshell-life-is-too-much)
+      (delete-char arg))))
+
 (defun eshell-hook ()
   (make-local-variable 'eshell-starting-directory)
   (setq eshell-starting-directory default-directory)
-  (define-key eshell-mode-map (kbd "C-c r") 'insert-tramp-host))
+  (define-key eshell-mode-map (kbd "C-c r") 'insert-tramp-host)
+  (define-key eshell-mode-map (kbd "RET") 'eshell-jump-and-send-input)
+  (define-key eshell-mode-map (kbd "C-d") 'eshell-ctrl-d))
 
 (add-hook 'eshell-mode-hook 'eshell-hook)
 
@@ -286,13 +293,6 @@ When a prefix argument is used, do not reload the files in ~/elisp"
     (switch-to-buffer new-buf)
     (set-buffer-major-mode new-buf)))
 
-(defun dup-buffer ()
-  (interactive)
-  (let* ((curr-buf (current-buffer))
-         (new-buf (generate-new-buffer (buffer-name curr-buf))))
-    (switch-to-buffer new-buf)
-    (insert-buffer curr-buf)))
-
 (defun tramp-cleanup-all ()
   "Clean up all tramp connections/buffers. If the current directory of the
 eshell buffer is remote, change the directory to the user's home directory
@@ -359,13 +359,6 @@ Entering any other key or key chord exits the browsing mode."
   "Search all open buffers for lines matching regex."
   (interactive "sList lines match regex: ")
   (multi-occur-in-matching-buffers ".*" regex))
-
-(defun eshell-cd-to-current-directory ()
-  (interactive)
-  (let ((current-directory default-directory))
-    (eshell)
-    (eshell/cd current-directory)
-    (eshell-interrupt-process)))
 
 (defun directory-for-background-command (prefix-arg command-buffer)
   "A helper function to determine the running directory for the
@@ -517,21 +510,9 @@ python-mode."
 There are many modes on which these should be enabled, so instead of defining a
 function for each and then adding the mode hook separately, this function can
 be applied to each major mode in a smarter way."
-  (if (fboundp 'display-line-numbers-mode)
-      (display-line-numbers-mode)
-    (linum-mode))
+  (display-line-numbers-mode)
   (highlight-line-mode)
   (electric-pair-local-mode))
-
-(defun linum-spacing-on-terminal ()
-  "A hook for determining linum-format.
-In terminal buffers, there is no fringe between the line numbers and the buffer
-content. To compensate for this, whenever a file is opened in a non-graphical
-display, set the format string so that there is a space after each number."
-  (when (not (display-graphic-p))
-    (set (make-local-variable 'linum-format) "%d ")))
-
-(add-hook 'find-file-hook 'linum-spacing-on-terminal)
 
 (setq modes-for-linum-and-hl-line
       '(c++-mode-hook
@@ -556,7 +537,6 @@ display, set the format string so that there is a space after each number."
         sh-mode-hook
         sql-mode-hook
         text-mode-hook
-        web-mode-hook
         yaml-mode-hook))
 
 (mapc (lambda (mode-name) (add-hook mode-name 'linum-and-hl-line-hook))
@@ -573,16 +553,8 @@ Start with the built-in linux mode and change things from there."
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
 
-(defun c++-hook ()
-  (define-key c++-mode-map (kbd "C-c o") 'ff-find-other-file))
-
-(defun c-hook ()
-  (define-key c-mode-map (kbd "C-c o") 'ff-find-other-file))
-
 (defun diff-hook ()
-  (if (fboundp 'display-line-numbers-mode)
-      (display-line-numbers-mode)
-    (linum-mode))
+  (display-line-numbers-mode)
   (diff-auto-refine-mode -1))
 
 (defun org-hook ()
@@ -647,8 +619,6 @@ Start with the built-in linux mode and change things from there."
   (toggle-truncate-lines t))
 
 (add-hook 'c-mode-common-hook 'c-common-hook)
-(add-hook 'c++-mode-hook 'c++-hook)
-(add-hook 'c-mode-hook 'c-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'org-mode-hook 'org-hook)
 (add-hook 'term-mode-hook 'all-terms-hook)
@@ -661,30 +631,6 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'dired-mode-hook 'dired-hook)
 (add-hook 'go-mode-hook 'go-hook)
 (add-hook 'proced-mode-hook 'proced-hook)
-
-;; Set up web-mode
-;; Most of the following code was taken from:
-;; http://emacs.stackexchange.com/questions/17010/in-web-mode-php-block-in-html-file-doesnt-syntax-highlight
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.inc$" . web-mode))
-(setq web-mode-engines-alist
-      '(("php"   . "\\.html\\'")
-        ("php"   . "\\.phtml\\'")
-        ("blade" . "\\.blade\\.")))
-
-;; Use conf-mode for rc and yang files
-(add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
-(add-to-list 'auto-mode-alist '("yang\\'" . conf-mode))
 
 ;; Open C/C++ header files in c++-mode instead of c-mode.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -768,7 +714,6 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "M-N") 'create-new-buffer)
 (define-key my-minor-mode-map (kbd "M-P") 'window-browser)
 (define-key my-minor-mode-map (kbd "C-c s") 'eshell)
-(define-key my-minor-mode-map (kbd "C-c a") 'eshell-cd-to-current-directory)
 (define-key my-minor-mode-map (kbd "C-x j") 'join-line)
 (define-key my-minor-mode-map (kbd "C-{") 'previous-buffer)
 (define-key my-minor-mode-map (kbd "C-}") 'next-buffer)
@@ -833,6 +778,12 @@ Start with the built-in linux mode and change things from there."
     (interactive)
     (vterm-insert (format "cd %s\n" default-directory)))
   (define-key vterm-mode-map (kbd "C-c C-d") 'vterm-default-directory)
+  (defun eshell/v (cmd &rest args)
+    "Runs an asynchronous command in a vterm buffer."
+    (let* ((full-cmd (string-join (cons cmd args) " "))
+           (vterm-buffer-name (format "*vterm async %s" full-cmd)))
+      (vterm t)
+      (vterm-insert (format "%s\n" full-cmd))))
   (setq vterm-max-scrollback 100000))
 
 (when (and (require 'vterm nil 'noerror)
@@ -908,12 +859,10 @@ Add eglot-ensure as a major mode hook to enable eglot."
         markdown-mode
         orderless
         projectile
-        projectile-ripgrep
         protobuf-mode
         rust-mode
         undo-tree
         vertico
-        web-mode
         yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
