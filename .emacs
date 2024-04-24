@@ -51,10 +51,6 @@
   (setenv "EMACS_DAEMON" "yes"))
 ;; Note: loading features that were downloaded from the package manager must be
 ;; done after calling package-initialize.
-(when (require 'undo-tree nil 'noerror)
-  (global-undo-tree-mode)
-  (setq undo-tree-auto-save-history nil
-        undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree"))))
 (require 'dired-x nil 'noerror) ;; for dired-jump
 (require 'subr-x)
 (setq dabbrev-case-fold-search nil)
@@ -742,6 +738,8 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
 (define-key my-minor-mode-map (kbd "C-M-0") 'bump-default-font-size)
 (define-key my-minor-mode-map (kbd "C-c C-v") 'ansi-term)
+(define-key my-minor-mode-map (kbd "C-_") 'undo-only)
+(define-key my-minor-mode-map (kbd "M-_") 'undo-redo)
 
 (defun dssh (ssh-params)
   "Open a dired session to a remote host."
@@ -861,7 +859,6 @@ Add eglot-ensure as a major mode hook to enable eglot."
         projectile
         protobuf-mode
         rust-mode
-        undo-tree
         vertico
         yaml-mode))
 
