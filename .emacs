@@ -657,6 +657,7 @@ Start with the built-in linux mode and change things from there."
    --smart-case --no-heading --with-filename --line-number --search-zip --hidden")
         (projectile-mode)
         (setq projectile-track-known-projects-automatically nil)
+        (setq magit-diff-refine-hunk 'all)
         (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
         (define-key my-minor-mode-map (kbd "C-x b") 'consult-buffer)
         (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
