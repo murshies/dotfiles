@@ -827,7 +827,8 @@ Start with the built-in linux mode and change things from there."
   (put 'eglot-warning 'flymake-overlay-control nil)
   (put 'eglot-error 'flymake-overlay-control nil)
   (setq company-idle-delay 0.1
-        company-minimum-prefix-length 1))
+        company-minimum-prefix-length 1
+        eglot-report-progress nil))
 
 (defun eglot-managed-hook ()
   "Hook for eglot mode setup.
