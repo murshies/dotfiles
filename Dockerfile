@@ -17,13 +17,14 @@ RUN echo keyboard-configuration keyboard-configuration/layout select 'English (U
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
 
 RUN useradd -m -s /bin/bash -u 5000 -G sudo ${USERNAME}
-RUN echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 COPY . /setup
 WORKDIR /setup
+RUN sed s/__user__/${USERNAME}/g user-sudo-all > /etc/sudoers.d/${USERNAME}
 
 RUN chown -R ${USERNAME}:${USERNAME} /setup
 USER ${USERNAME}
 ENV CLEANUP_SETUP_VENV=t
 RUN ./setup.sh -c cli,docker,emacs,gui
 RUN /usr/local/bin/bootstrap-user.sh
+RUN sed s/__user__/${USERNAME}/g user-sudo | sudo tee /etc/sudoers.d/${USERNAME}
 WORKDIR /home/${USERNAME}
