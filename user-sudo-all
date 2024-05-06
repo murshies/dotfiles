@@ -1,3 +1,0 @@
-# Copy this file to /etc/sudoers.d and change the user placeholder to the
-# target user in order to get passwordless sudo for all commands.
-__user__	ALL=(ALL) NOPASSWD: ALL
