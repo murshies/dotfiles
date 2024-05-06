@@ -18,7 +18,3 @@ def run():
     """Run the docker component installation."""
     logger.info('Installing docker')
     ResourceManager.run('install-docker')
-
-    logger.info('Add user to docker group')
-    if os.environ['USER'] != 'root':
-        sh.sudo.usermod('-a', '-G', 'docker', os.environ['USER'])
