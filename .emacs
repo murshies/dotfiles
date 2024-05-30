@@ -84,9 +84,22 @@
   (set-font-size default-font-size)
   (message "font size %d" font-size))
 
+(defun call-process-to-string (proc-name &rest args)
+  "Call a process synchronously without the use of a shell.
+Return a dotted pair with the return code of the command and the
+stdout and stderr of the command."
+  (with-temp-buffer
+    (let ((ret-code (apply #'call-process proc-name nil t nil args))
+          (output (string-trim (buffer-string))))
+      (cons ret-code output))))
+
 (defun git-quick-status ()
   (interactive)
-  (shell-command "git rev-parse --abbrev-ref HEAD && git rev-parse HEAD"))
+  (let ((git-branch-name-out (call-process-to-string "git" "rev-parse" "--abbrev-ref" "HEAD"))
+        (git-commit-hash-out (call-process-to-string "git" "rev-parse" "HEAD")))
+    (if (not (= (car git-branch-name-out) 0))
+        (message "%s" (cdr git-branch-name-out))
+      (message "%s\n%s" (cdr git-branch-name-out) (cdr git-commit-hash-out)))))
 
 (defun get-ssh-config-hosts ()
   "Get a list of hosts from the ssh config file.
