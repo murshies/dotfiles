@@ -25,6 +25,7 @@ RUN chown -R ${USERNAME}:${USERNAME} /setup
 USER ${USERNAME}
 ENV CLEANUP_SETUP_VENV=t
 RUN ./setup.sh -c cli,docker,emacs,gui
+ENV CLEANUP_SETUP_VENV=
 RUN /usr/local/bin/bootstrap-user.sh
 RUN ./user-sudo.sh ${USERNAME}
 WORKDIR /home/${USERNAME}
