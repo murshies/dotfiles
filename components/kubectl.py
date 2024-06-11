@@ -9,7 +9,7 @@ from lib.util import apt_install, get_gpg_key, write_root_file
 
 logger = logging.getLogger(__name__)
 
-KUBECTL_VERSION = '1.29'
+KUBECTL_VERSION = '1.30'
 
 @resource(name='install-kubectl', os=debian_or_ubuntu)
 def install_kubectl_ubuntu():
