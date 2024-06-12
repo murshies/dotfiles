@@ -3,4 +3,6 @@
 dind.sh
 sudo service ssh start
 
-sleep infinity
+if [ "$$" -eq 1 ]; then
+    sleep infinity
+fi
