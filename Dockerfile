@@ -1,5 +1,5 @@
 # Example of running this in server mode:
-# docker run -v /var/run/docker.sock:/var/run/docker.sock  -p $ssh_port:22 --name "$container_name" -d devenv:latest /usr/local/bin/server-mode.sh
+# docker run -v /var/run/docker.sock:/var/run/docker.sock  -p $ssh_port:22 --name "$container_name" -d $image_name /usr/local/bin/server-mode.sh
 FROM debian:12
 
 ENV USERNAME=user
