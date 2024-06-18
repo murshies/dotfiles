@@ -752,8 +752,13 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
 (define-key my-minor-mode-map (kbd "C-M-0") 'bump-default-font-size)
 (define-key my-minor-mode-map (kbd "C-c C-v") 'ansi-term)
-(define-key my-minor-mode-map (kbd "C-_") 'undo-only)
-(define-key my-minor-mode-map (kbd "M-_") 'undo-redo)
+
+(if (require 'undo-tree nil 'noerror)
+    (progn (global-undo-tree-mode)
+           (setq undo-tree-auto-save-history nil
+                 undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree"))))
+  (define-key my-minor-mode-map (kbd "C-_") 'undo-only)
+  (define-key my-minor-mode-map (kbd "M-_") 'undo-redo))
 
 (defun dssh (ssh-params)
   "Open a dired session to a remote host."
@@ -874,6 +879,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         projectile
         protobuf-mode
         rust-mode
+        undo-tree
         vertico
         yaml-mode))
 
