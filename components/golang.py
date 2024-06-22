@@ -1,7 +1,6 @@
 """Component for installing golang."""
 import logging
 import os
-import sh
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR
 from lib.platform_filters import debian_or_ubuntu

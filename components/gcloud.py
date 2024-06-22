@@ -1,10 +1,9 @@
 """Component for installing the google cloud sdk."""
 import logging
-import sh
 
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, get_gpg_key, write_root_file
+from lib.util import apt_install, get_gpg_key, run_cmd, write_root_file
 
 GCLOUD_DOWNLOAD_PACKAGES = [
     'apt-transport-https',
@@ -20,8 +19,8 @@ def install_gcloud_debian():
     apt_install(*GCLOUD_DOWNLOAD_PACKAGES)
 
     logger.info('Ensure that /etc/apt/keyrings exists')
-    sh.sudo.mkdir('-p', '/etc/apt/keyrings')
-    sh.sudo.chmod('0755', '/etc/apt/keyrings')
+    run_cmd(['sudo', 'mkdir', '-p', '/etc/apt/keyrings'])
+    run_cmd(['sudo', 'chmod', '0755', '/etc/apt/keyrings'])
 
     logger.info('Add apt key for Google Cloud')
     get_gpg_key('https://packages.cloud.google.com/apt/doc/apt-key.gpg',
@@ -34,7 +33,7 @@ def install_gcloud_debian():
                     '0644')
 
     logger.info('Update apt cache and install google-cloud-sdk package')
-    sh.sudo('apt-get', 'update')
+    run_cmd(['sudo', 'apt-get', 'update'])
     apt_install('google-cloud-sdk')
 
 

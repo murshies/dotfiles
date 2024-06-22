@@ -1,7 +1,6 @@
 """Component for installing docker."""
 import logging
 import os
-import sh
 
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager

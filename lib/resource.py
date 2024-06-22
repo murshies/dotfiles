@@ -5,8 +5,9 @@ from enum import Enum
 import functools
 import logging
 import platform
-import sh
 import typing
+
+from lib.util import run_cmd
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +33,8 @@ class OS(Enum):
 
 def get_current_platform() -> Platform:
     return Platform(
-        os=OS.from_str(str(sh.lsb_release('-si').strip().lower())),
-        os_version=str(sh.lsb_release('-sr').strip()),
+        os=OS.from_str(run_cmd(['lsb_release', '-si']).decode('utf-8').strip().lower()),
+        os_version=run_cmd(['lsb_release', '-sr']).decode('utf-8').strip(),
         arch=platform.machine()
     )
 

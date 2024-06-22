@@ -1,11 +1,10 @@
 """Component for installing syncthing"""
 import logging
-import sh
 import textwrap
 
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import resource, ResourceManager
-from lib.util import apt_install, get_net_file, write_root_file
+from lib.util import apt_install, get_net_file, run_cmd, write_root_file
 
 logger = logging.getLogger(__name__)
 
@@ -15,8 +14,8 @@ def install_syncthing_debian():
     apt_install('apt-transport-https', 'ca-certificates', 'curl')
 
     logger.info('Ensure that /etc/apt/keyrings exists')
-    sh.sudo.mkdir('-p', '/etc/apt/keyrings')
-    sh.sudo.chmod('0755', '/etc/apt/keyrings')
+    run_cmd(['sudo', 'mkdir', '-p', '/etc/apt/keyrings'])
+    run_cmd(['sudo', 'chmod', '0755', '/etc/apt/keyrings'])
 
     logger.info('Add apt key for syncthing')
     # Syncthing does not an ASCII armored GPG key, so simply download the file.
@@ -37,7 +36,7 @@ def install_syncthing_debian():
         ''').strip(),
         '/etc/apt/preferences.d/syncthing',
         '0644')
-    sh.sudo('apt-get', 'update')
+    run_cmd(['sudo', 'apt-get', 'update'])
 
     logger.info('Install syncthing from apt repo')
     apt_install('syncthing')

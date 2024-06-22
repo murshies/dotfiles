@@ -2,15 +2,14 @@
 import logging
 import os
 import os.path
-import requests
-import sh
 import shutil
 import tempfile
+from urllib.request import urlopen
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
 import lib.platform_filters as pf
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, root_copy
+from lib.util import apt_install, root_copy, run_cmd
 
 logger = logging.getLogger(__name__)
 
@@ -53,18 +52,20 @@ def install_ripgrep_ubuntu_gte_18_10():
 
 
 @resource(name='install-ripgrep', os=OS.UBUNTU, os_version=pf.ubuntu_lt_18_10, arch='x86_64')
-def intall_ripgrep_ubuntu_lt_18_10_x86_64():
+def install_ripgrep_ubuntu_lt_18_10_x86_64():
     download_url = 'https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb'
-    response = requests.get(download_url, stream=True)
-    response.raise_for_status()
     deb_file_name = 'ripgrep.deb'
-    try:
-        with open(deb_file_name, 'wb') as f:
-            shutil.copyfileobj(response.raw, f)
-        sh.sudo.dpkg('-i', deb_file_name)
-    finally:
-        if os.path.exists(deb_file_name):
-            os.remove(deb_file_name)
+    with urlopen(download_url) as response:
+        code = response.getcode()
+        if code != 200:
+            raise Exception(f'Download of {download_url} failed with code {code}')
+        try:
+            with open(deb_file_name, 'wb') as f:
+                shutil.copyfileobj(response, f)
+            run_cmd(['sudo', 'dpkg', '-i', deb_file_name])
+        finally:
+            if os.path.exists(deb_file_name):
+                os.remove(deb_file_name)
 
 
 @resource(name='install-cli', os=pf.debian_or_ubuntu)
@@ -79,11 +80,11 @@ def run() -> None:
     ResourceManager.run('install-cli')
 
     logger.info('Copying scripts to %s', SCRIPTS_DIR)
-    sh.sudo.mkdir('-p', SCRIPTS_DIR)
+    run_cmd(['sudo', 'mkdir', '-p', SCRIPTS_DIR])
     for script in SCRIPTS:
         root_copy(FILES_DIR, SCRIPTS_DIR, script)
 
     logger.info('Copying files to %s', SKEL_DIR)
-    sh.sudo.mkdir('-p', SKEL_DIR)
+    run_cmd(['sudo', 'mkdir', '-p', SKEL_DIR])
     for f in SKEL_FILES:
         root_copy(FILES_DIR, SKEL_DIR, f)

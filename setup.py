@@ -4,11 +4,11 @@
 import argparse
 import logging
 import os
-import sh
 import sys
 
 from components import COMPONENTS, ESSENTIAL_COMPONENTS
 from lib.consts import SKEL_DIR
+from lib.util import run_cmd
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import resource, ResourceManager
 
@@ -37,8 +37,8 @@ def get_args() -> argparse.Namespace:
 
 @resource(name='init-package-upgrade', os=debian_or_ubuntu)
 def init_package_upgrade_ubuntu():
-    sh.sudo('apt-get', 'update')
-    sh.sudo('apt-get', 'upgrade', '-y')
+    run_cmd(['sudo', 'apt-get', 'update'])
+    run_cmd(['sudo', 'apt-get', 'upgrade', '-y'])
 
 
 def main() -> int:
@@ -77,7 +77,7 @@ def main() -> int:
         f.writelines(profile_lines)
 
     logger.info('Remove any existing skeleton directory')
-    sh.sudo.rm('-rf', SKEL_DIR)
+    run_cmd(['sudo', 'rm', '-rf', SKEL_DIR])
 
     components_to_run = ESSENTIAL_COMPONENTS.keys()
     if args.all_components:

@@ -1,11 +1,10 @@
 """Component for installing the Kubernetes CLI interface."""
 import logging
-import sh
 import textwrap
 
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, get_gpg_key, write_root_file
+from lib.util import apt_install, get_gpg_key, run_cmd, write_root_file
 
 logger = logging.getLogger(__name__)
 
@@ -17,8 +16,8 @@ def install_kubectl_ubuntu():
     apt_install('apt-transport-https', 'ca-certificates', 'curl')
 
     logger.info('Ensure that /etc/apt/keyrings exists')
-    sh.sudo.mkdir('-p', '/etc/apt/keyrings')
-    sh.sudo.chmod('0755', '/etc/apt/keyrings')
+    run_cmd(['sudo', 'mkdir', '-p', '/etc/apt/keyrings'])
+    run_cmd(['sudo', 'chmod', '0755', '/etc/apt/keyrings'])
 
     logger.info('Add apt key for kubectl')
     get_gpg_key(f'https://pkgs.k8s.io/core:/stable:/v{KUBECTL_VERSION}/deb/Release.key',
@@ -37,7 +36,7 @@ def install_kubectl_ubuntu():
         ''').strip(),
         '/etc/apt/preferences.d/kubectl',
         '0644')
-    sh.sudo('apt-get', 'update')
+    run_cmd(['sudo', 'apt-get', 'update'])
 
     logger.info('Install kubectl from apt repo')
     apt_install('kubectl')

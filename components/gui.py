@@ -2,12 +2,11 @@
 import logging
 import os
 import os.path
-import sh
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR, SKEL_DIR
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, root_copy
+from lib.util import apt_install, root_copy, run_cmd
 
 logger = logging.getLogger(__name__)
 
@@ -36,21 +35,21 @@ def run() -> None:
     ResourceManager.run('install-gui-packages')
 
     logger.info("Copying scripts to %s", SCRIPTS_DIR)
-    sh.mkdir('-p', SCRIPTS_DIR)
+    run_cmd(['mkdir', '-p', SCRIPTS_DIR])
     for bin_script in BIN_SCRIPTS:
         root_copy(FILES_DIR, SCRIPTS_DIR, bin_script)
 
     logger.info('Add config files to skeleton directory')
 
     openbox_skel_dir = os.path.join(SKEL_DIR, '.config', 'openbox')
-    sh.sudo.mkdir('-p', openbox_skel_dir)
+    run_cmd(['sudo', 'mkdir', '-p', openbox_skel_dir])
     for script in ('autostart.sh', 'rc.xml'):
         root_copy(FILES_DIR, openbox_skel_dir, script)
 
     xfce4_skel_dir = os.path.join(SKEL_DIR, '.config', 'xfce4', 'terminal')
-    sh.sudo.mkdir('-p', xfce4_skel_dir)
+    run_cmd(['sudo', 'mkdir', '-p', xfce4_skel_dir])
     root_copy(FILES_DIR, xfce4_skel_dir, 'terminalrc')
 
     tint2rc_skel_dir = os.path.join(SKEL_DIR, '.config', 'tint2')
-    sh.sudo.mkdir('-p', tint2rc_skel_dir)
+    run_cmd(['sudo', 'mkdir', '-p', tint2rc_skel_dir])
     root_copy(FILES_DIR, tint2rc_skel_dir, 'tint2rc')

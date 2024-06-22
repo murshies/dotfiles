@@ -5,7 +5,7 @@ FROM debian:12
 ENV USERNAME=user
 ENV USER=${USERNAME}
 
-RUN apt-get update && apt-get install -y python-is-python3 python3-pip python3-apt python3-venv sudo debconf-utils locales
+RUN apt-get update && apt-get install -y python-is-python3 sudo debconf-utils locales lsb-release
 
 ENV TZ=Etc/UTC
 RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
@@ -23,9 +23,7 @@ RUN ./user-sudo-all.sh ${USERNAME}
 
 RUN chown -R ${USERNAME}:${USERNAME} /setup
 USER ${USERNAME}
-ENV CLEANUP_SETUP_VENV=t
 RUN ./setup.sh -c cli,docker,emacs,gui
-ENV CLEANUP_SETUP_VENV=
 RUN /usr/local/bin/bootstrap-user.sh
 RUN ./user-sudo.sh ${USERNAME}
 WORKDIR /home/${USERNAME}

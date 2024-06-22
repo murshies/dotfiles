@@ -3,13 +3,12 @@ from contextlib import contextmanager
 import logging
 import os
 import os.path
-import sh
 from typing import List
 
 from lib.consts import FILES_DIR, SCRIPTS_DIR
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, root_copy, write_root_file
+from lib.util import apt_install, root_copy, run_cmd, write_root_file
 
 EMACS_VERSION = '29.3'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
@@ -45,38 +44,7 @@ def gcc_major_version() -> int:
     :return: The GCC major version.
     :rtype: int
     """
-    return int(sh.gcc('-dumpversion'))
-
-
-def emacs_build_packages() -> List[str]:
-    """
-    Generate the list of packages to install to build emacs.
-
-    :return: The list of package names.
-    :rtype: List[str]
-    """
-    return [
-        EMACS_TOOLKIT_PACKAGE,
-        'autoconf',
-        'build-essential',
-        'cmake',
-        'git',
-        'libfreetype6-dev',
-        f'libgccjit-{gcc_major_version()}-dev',
-        'libgif-dev',
-        'libgnutls28-dev',
-        'libjansson-dev',
-        'libjpeg-dev',
-        'libncurses5-dev',
-        'libpng-dev',
-        'libtiff5-dev',
-        'libtool',
-        'libtool-bin',
-        'libxft-dev',
-        'libxml2-dev',
-        'libxpm-dev',
-        'texinfo',
-    ]
+    return int(run_cmd(['gcc', '-dumpversion']).decode('utf-8').strip())
 
 
 @contextmanager
@@ -98,10 +66,12 @@ def install_emacs_deps_ubuntu():
         'autoconf',
         'cmake',
         'git',
+        'libcairo2-dev',
         'libfreetype6-dev',
         f'libgccjit-{gcc_major_version()}-dev',
         'libgif-dev',
         'libgnutls28-dev',
+        'libharfbuzz-dev',
         'libjansson-dev',
         'libjpeg-dev',
         'libncurses5-dev',
@@ -125,50 +95,50 @@ def emacs_from_source() -> None:
 
     logger.info('Reset emacs source and install directories')
     for directory in (EMACS_SOURCE_ROOT, EMACS_INSTALL_ROOT):
-        sh.sudo.rm('-rf', directory)
-        sh.sudo.mkdir('-p', '-m', '0755', directory)
+        run_cmd(['sudo', 'rm', '-rf', directory])
+        run_cmd(['sudo', 'mkdir', '-p', '-m', '0755', directory])
 
     logger.info('Download emacs source')
-    sh.sudo.git.clone(
-        '--single-branch',
-        f'--branch=emacs-{EMACS_VERSION}',
-        '--depth=1',
-        'https://git.savannah.gnu.org/git/emacs.git',
-        EMACS_SOURCE_ROOT)
+    run_cmd(['sudo', 'git', 'clone',
+             '--single-branch',
+             f'--branch=emacs-{EMACS_VERSION}',
+             '--depth=1',
+             'https://git.savannah.gnu.org/git/emacs.git',
+             EMACS_SOURCE_ROOT])
 
     with cwd(EMACS_SOURCE_ROOT):
         logger.info('Run autogen.sh for emacs')
-        sh.sudo('./autogen.sh')
+        run_cmd(['sudo', './autogen.sh'])
 
         logger.info('Configure emacs')
-        sh.sudo('./configure',
-                '--with-native-compilation',
-                f'--prefix={EMACS_INSTALL_ROOT}',
-                f'--with-x-toolkit={EMACS_TOOLKIT}')
+        run_cmd(['sudo', './configure',
+                 '--with-native-compilation',
+                 f'--prefix={EMACS_INSTALL_ROOT}',
+                 f'--with-x-toolkit={EMACS_TOOLKIT}'])
 
         logger.info('Build emacs')
-        nproc = sh.nproc().strip()
-        sh.sudo.make('-j', nproc)
+        nproc = run_cmd(['nproc']).decode('utf-8').strip()
+        run_cmd(['sudo', 'make', '-j', nproc])
 
         logger.info('Install emacs to installation root')
-        sh.sudo.make.install()
+        run_cmd(['sudo', 'make', 'install'])
 
         logger.info('Make emacs symlinks')
         for exe in ('emacs', 'emacsclient'):
-            sh.sudo.ln(
-                '-sf',
-                os.path.join(EMACS_INSTALL_ROOT, 'bin', exe),
-                os.path.join('/usr/bin', exe))
+            run_cmd(['sudo', 'ln',
+                     '-sf',
+                     os.path.join(EMACS_INSTALL_ROOT, 'bin', exe),
+                     os.path.join('/usr/bin', exe)])
 
     if EMACS_KEEP_SOURCE:
         logger.info('Keeping emacs source directory')
     else:
         logger.info('Remove emacs source directory to conserve space')
-        sh.sudo.rm('-rf', EMACS_SOURCE_ROOT)
+        run_cmd(['sudo', 'rm', '-rf', EMACS_SOURCE_ROOT])
 
     logger.info('Install emacs icons')
     build_icons_dir = os.path.join(EMACS_INSTALL_ROOT, 'share', 'icons', '.')
-    sh.sudo.cp('-r', build_icons_dir, '/usr/share/icons')
+    run_cmd(['sudo', 'cp', '-r', build_icons_dir, '/usr/share/icons'])
 
 
 def run() -> None:
@@ -176,7 +146,7 @@ def run() -> None:
     emacs_from_source()
 
     logger.info('Copy install-emacs-packages.sh to %s', SCRIPTS_DIR)
-    sh.sudo.mkdir('-p', SCRIPTS_DIR)
+    run_cmd(['sudo', 'mkdir', '-p', SCRIPTS_DIR])
     root_copy(FILES_DIR, SCRIPTS_DIR, 'install-emacs-packages.sh')
 
     logger.info('Create emacs.desktop file in applications directory')
