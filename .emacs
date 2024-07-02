@@ -53,6 +53,7 @@
 ;; done after calling package-initialize.
 (require 'dired-x nil 'noerror) ;; for dired-jump
 (require 'subr-x)
+(require 'vlf-setup nil 'noerror) ;; To offer vlf as an option when opening large files
 (setq dabbrev-case-fold-search nil)
 (setq mouse-wheel-scroll-amount '(4))
 (setq epa-pinentry-mode 'loopback)
