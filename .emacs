@@ -881,6 +881,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         rust-mode
         undo-tree
         vertico
+        vlf
         yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
