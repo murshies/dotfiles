@@ -85,7 +85,7 @@
   (set-font-size default-font-size)
   (message "font size %d" font-size))
 
-(defun call-process-to-string (proc-name &rest args)
+(defun call-sync-process (proc-name &rest args)
   "Call a process synchronously without the use of a shell.
 Return a dotted pair with the return code of the command and the
 stdout and stderr of the command."
@@ -94,13 +94,68 @@ stdout and stderr of the command."
           (output (string-trim (buffer-string))))
       (cons ret-code output))))
 
+(defun call-sync-process-to-string (proc-name &rest args)
+  "Call a process synchronously without the use of a shell.
+If the command succeeds, return the stdout/stderr as a
+string. Otherwise, raise an error."
+  (with-temp-buffer
+    (let ((ret-code (apply #'call-process proc-name nil t nil args))
+          (output (string-trim (buffer-string))))
+      (when (not (= ret-code 0))
+        (error "Command %s failed with code %d: %s"
+               (string-join (append (list proc-name) args) " ")
+               ret-code
+               output))
+      output)))
+
 (defun git-quick-status ()
   (interactive)
-  (let ((git-branch-name-out (call-process-to-string "git" "rev-parse" "--abbrev-ref" "HEAD"))
-        (git-commit-hash-out (call-process-to-string "git" "rev-parse" "HEAD")))
+  (let ((git-branch-name-out (call-sync-process "git" "rev-parse" "--abbrev-ref" "HEAD"))
+        (git-commit-hash-out (call-sync-process "git" "rev-parse" "HEAD")))
     (if (not (= (car git-branch-name-out) 0))
         (message "%s" (cdr git-branch-name-out))
       (message "%s\n%s" (cdr git-branch-name-out) (cdr git-commit-hash-out)))))
+
+(defun github-web-url ()
+  "Generate a GitHub URL to the current file and line.
+
+The current commit hash is used as part of the URL, so even if a
+branch that commonly changes is checked out like master, the URL
+will remain valid after further commits are made to the branch.
+
+The generated URL will be displayed in the minibuffer and will be
+added as a kill in the kill ring."
+  (interactive)
+  (let* ((git-remote-url
+          (string-replace
+           "com:" "com/"
+           (string-replace
+            "git@" "https://"
+            (call-sync-process-to-string "git" "config" "--get" "remote.origin.url"))))
+         (relative-file-path
+          (call-sync-process-to-string
+           "git" "ls-files" "--full-name"
+           (if (and (boundp 'magit-buffer-file-name)
+                    magit-buffer-file-name)
+               magit-buffer-file-name
+             buffer-file-name)))
+         (current-git-hash
+          (if (and (boundp 'magit-buffer-revision)
+                   magit-buffer-revision)
+              magit-buffer-revision
+            (call-sync-process-to-string "git" "rev-parse" "HEAD")))
+         (web-url (if current-prefix-arg
+                      (format "%s/blob/%s/%s"
+                              git-remote-url
+                              current-git-hash
+                              relative-file-path)
+                    (format "%s/blob/%s/%s#L%d"
+                            git-remote-url
+                            current-git-hash
+                            relative-file-path
+                            (line-number-at-pos)))))
+    (message web-url)
+    (kill-new web-url)))
 
 (defun get-ssh-config-hosts ()
   "Get a list of hosts from the ssh config file.
