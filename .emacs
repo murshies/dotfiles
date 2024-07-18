@@ -738,6 +738,7 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "M-g d") 'magit-diff-range)
 (define-key my-minor-mode-map (kbd "M-g b") 'magit-blame-addition)
 (define-key my-minor-mode-map (kbd "M-g l") 'magit-log-buffer-file)
+(define-key my-minor-mode-map (kbd "M-g f") 'magit-find-file)
 (define-key my-minor-mode-map (kbd "M-S") 'loose-isearch-forward)
 (define-key my-minor-mode-map (kbd "M-R") 'loose-isearch-backward)
 (define-key my-minor-mode-map (kbd "C-x S") 'save-filename-full-path)
