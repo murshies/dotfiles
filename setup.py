@@ -36,7 +36,7 @@ def get_args() -> argparse.Namespace:
 
 
 @resource(name='init-package-upgrade', os=debian_or_ubuntu)
-def init_package_upgrade_ubuntu():
+def init_package_upgrade_debian():
     run_cmd(['sudo', 'apt-get', 'update'])
     run_cmd(['sudo', 'apt-get', 'upgrade', '-y'])
 

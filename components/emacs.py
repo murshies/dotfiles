@@ -59,7 +59,7 @@ def cwd(directory: str) -> None:
 
 
 @resource(name='install-emacs-deps', os=debian_or_ubuntu)
-def install_emacs_deps_ubuntu():
+def install_emacs_deps_debian():
     apt_install('build-essential')
     build_deps = [
         EMACS_TOOLKIT_PACKAGE,
@@ -76,6 +76,7 @@ def install_emacs_deps_ubuntu():
         'libjpeg-dev',
         'libncurses5-dev',
         'libpng-dev',
+        'libsqlite3-dev',
         'libtiff5-dev',
         'libtool',
         'libtool-bin',
@@ -113,6 +114,7 @@ def emacs_from_source() -> None:
         logger.info('Configure emacs')
         run_cmd(['sudo', './configure',
                  '--with-native-compilation',
+                 '--with-sqlite3',
                  f'--prefix={EMACS_INSTALL_ROOT}',
                  f'--with-x-toolkit={EMACS_TOOLKIT}'])
 
