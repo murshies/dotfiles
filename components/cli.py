@@ -28,6 +28,7 @@ BASE_PACKAGES = [
     'aspell',
     'ca-certificates',
     'curl',
+    'dnsutils',
     'git',
     'gnupg2',
     'htop',
