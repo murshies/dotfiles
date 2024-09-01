@@ -14,5 +14,7 @@ if ! grep -F 'NOPASSWD: ALL' /etc/sudoers.d/$(whoami) > /dev/null 2>&1 && [[ "$@
 fi
 
 export PYTHONPATH="$(dirname $(realpath "$0"))"
+export NEEDRESTART_MODE=a
+export DEBIAN_FRONTEND=noninteractive
 echo "PYTHONPATH is $PYTHONPATH"
-./setup.py "$@"
+$PYTHONPATH/setup.py "$@"
