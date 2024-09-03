@@ -150,6 +150,7 @@ alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
 alias startemacs='emacs --daemon'
+alias emacs-upgrade-packages='emacs --batch --eval "(progn (load-file \"$HOME/.emacs\") (package-upgrade-all))"'
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
