@@ -53,3 +53,8 @@ def run() -> None:
     tint2rc_skel_dir = os.path.join(SKEL_DIR, '.config', 'tint2')
     run_cmd(['sudo', 'mkdir', '-p', tint2rc_skel_dir])
     root_copy(FILES_DIR, tint2rc_skel_dir, 'tint2rc')
+
+    logger.info('Set dpi settings')
+    xresources_file_name = os.path.join(os.environ['HOME'], '.Xresources')
+    with open(xresources_file_name, 'w') as f:
+        f.write('Xft.dpi: 96')
