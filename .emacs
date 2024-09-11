@@ -8,7 +8,7 @@
 (column-number-mode)
 (delete-selection-mode)
 (show-paren-mode)
-(defconst default-font-size 110)
+(defconst default-font-size 120)
 (defvar font-size default-font-size)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-hi-lock-mode)
