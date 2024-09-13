@@ -18,6 +18,7 @@ GUI_PACKAGES = [
     'xfce4-terminal',
     'rofi',
     'pcmanfm',
+    'gpicview',
 ]
 BIN_SCRIPTS = [
     'dind.sh',
