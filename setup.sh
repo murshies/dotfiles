@@ -18,5 +18,4 @@ fi
 export PYTHONPATH="$SCRIPT_PATH"
 export NEEDRESTART_MODE=a
 export DEBIAN_FRONTEND=noninteractive
-echo "PYTHONPATH is $PYTHONPATH"
 $PYTHONPATH/setup.py "$@"
