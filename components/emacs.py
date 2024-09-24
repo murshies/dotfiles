@@ -147,10 +147,6 @@ def run() -> None:
     """Run the emacs component installation."""
     emacs_from_source()
 
-    logger.info('Copy install-emacs-packages.sh to %s', SCRIPTS_DIR)
-    run_cmd(['sudo', 'mkdir', '-p', SCRIPTS_DIR])
-    root_copy(FILES_DIR, SCRIPTS_DIR, 'install-emacs-packages.sh')
-
     logger.info('Create emacs.desktop file in applications directory')
     emacs_package = 'emacs' if EMACS_PACKAGE == 'source' else EMACS_PACKAGE
     emacs_desktop = EMACS_DESKTOP_ENTRY.format(
