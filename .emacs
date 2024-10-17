@@ -809,6 +809,7 @@ Start with the built-in linux mode and change things from there."
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
 (define-key my-minor-mode-map (kbd "C-M-0") 'bump-default-font-size)
 (define-key my-minor-mode-map (kbd "C-c C-v") 'ansi-term)
+(define-key my-minor-mode-map (kbd "C-x F") 'dssh)
 
 (if (require 'undo-tree nil 'noerror)
     (progn (global-undo-tree-mode)
