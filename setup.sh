@@ -10,7 +10,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-if ! grep -F 'NOPASSWD: ALL' /etc/sudoers.d/$(whoami) > /dev/null 2>&1 && [[ "$@" != *"-l"* ]]; then
+if ! sudo -l | grep -F 'NOPASSWD: ALL' > /dev/null 2>&1 && [[ "$@" != *"-l"* ]]; then
     $SCRIPT_PATH/user-sudo-all.sh
     switch_to_permissive_sudo=y
 fi
