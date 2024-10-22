@@ -8,7 +8,7 @@ from typing import List
 from lib.consts import FILES_DIR, SCRIPTS_DIR
 from lib.platform_filters import debian_or_ubuntu
 from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, root_copy, run_cmd, write_root_file
+from lib.util import apt_install, download_url, root_copy, run_cmd, write_root_file
 
 EMACS_VERSION = '29.3'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
@@ -100,12 +100,10 @@ def emacs_from_source() -> None:
         run_cmd(['sudo', 'mkdir', '-p', '-m', '0755', directory])
 
     logger.info('Download emacs source')
-    run_cmd(['sudo', 'git', 'clone',
-             '--single-branch',
-             f'--branch=emacs-{EMACS_VERSION}',
-             '--depth=1',
-             'https://git.savannah.gnu.org/git/emacs.git',
-             EMACS_SOURCE_ROOT])
+
+    emacs_tar = download_url(f'https://ftp.gnu.org/gnu/emacs/emacs-{EMACS_VERSION}.tar.gz')
+    run_cmd(['sudo', 'tar', '-C', f'{EMACS_SOURCE_ROOT}/..', '-xzvf', '-'],
+            input=emacs_tar)
 
     with cwd(EMACS_SOURCE_ROOT):
         logger.info('Run autogen.sh for emacs')
