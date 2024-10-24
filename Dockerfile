@@ -16,7 +16,8 @@ RUN echo keyboard-configuration keyboard-configuration/layout select 'English (U
     echo keyboard-configuration keyboard-configuration/layoutcode select 'us' | sudo debconf-set-selections
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
 
-RUN useradd -m -s /bin/bash -u 5000 -G sudo ${USERNAME}
+ARG USER_ID=5000
+RUN useradd -m -s /bin/bash -u ${USER_ID} -G sudo ${USERNAME}
 COPY . /setup
 WORKDIR /setup
 RUN ./user-sudo-all.sh ${USERNAME}
