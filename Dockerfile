@@ -2,8 +2,8 @@
 # docker run -v /var/run/docker.sock:/var/run/docker.sock  -p $ssh_port:22 --name "$container_name" -d $image_name sleep infinity
 FROM debian:12
 
-ENV USERNAME=user
-ENV USER=${USERNAME}
+ARG username=user
+ENV USER=${username}
 
 RUN apt-get update && apt-get install -y python-is-python3 sudo debconf-utils locales lsb-release
 
@@ -16,15 +16,16 @@ RUN echo keyboard-configuration keyboard-configuration/layout select 'English (U
     echo keyboard-configuration keyboard-configuration/layoutcode select 'us' | sudo debconf-set-selections
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
 
-ARG USER_ID=5000
-RUN useradd -m -s /bin/bash -u ${USER_ID} -G sudo ${USERNAME}
+ARG user_id=5000
+RUN useradd -m -s /bin/bash -u ${user_id} -G sudo ${username}
 COPY . /setup
 WORKDIR /setup
-RUN ./user-sudo-all.sh ${USERNAME}
+RUN ./user-sudo-all.sh ${username}
 
-RUN chown -R ${USERNAME}:${USERNAME} /setup
-USER ${USERNAME}
-RUN ./setup.sh -c cli,docker,emacs,gui
+RUN chown -R ${username}:${username} /setup
+USER ${username}
+ARG components=cli,docker,emacs,gui
+RUN ./setup.sh -c ${components}
 RUN /usr/local/bin/bootstrap-user.sh
-RUN ./user-sudo.sh ${USERNAME}
-WORKDIR /home/${USERNAME}
+RUN ./user-sudo.sh ${username}
+WORKDIR /home/${username}
