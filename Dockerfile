@@ -27,7 +27,11 @@ RUN ./user-sudo-all.sh ${username}
 RUN chown -R ${username}:${username} /setup
 USER ${username}
 ARG components=cli,docker,emacs,gui
-RUN ./setup.sh -c ${components}
-RUN bash -c 'source /setup/.bashrc && bootstrap-user && cd /setup && link-dotfiles'
-RUN ./user-sudo.sh ${username}
+RUN ./setup.sh -c ${components} && \
+    bash -c 'source /setup/.bashrc && \
+    bootstrap-user && \
+    cd /setup && \
+    link-dotfiles && \
+    echo $(whoami):$(whoami) | sudo chpasswd' && \
+    ./user-sudo.sh ${username}
 WORKDIR /home/${username}
