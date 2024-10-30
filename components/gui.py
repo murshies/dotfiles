@@ -20,9 +20,6 @@ GUI_PACKAGES = [
     'pcmanfm',
     'gpicview',
 ]
-BIN_SCRIPTS = [
-    'dind.sh',
-]
 
 
 @resource(name='install-gui-packages', os=debian_or_ubuntu)
@@ -34,11 +31,6 @@ def run() -> None:
     """Run the gui component installation."""
     logger.info('Install packages')
     ResourceManager.run('install-gui-packages')
-
-    logger.info("Copying scripts to %s", SCRIPTS_DIR)
-    run_cmd(['mkdir', '-p', SCRIPTS_DIR])
-    for bin_script in BIN_SCRIPTS:
-        root_copy(FILES_DIR, SCRIPTS_DIR, bin_script)
 
     logger.info('Add config files to skeleton directory')
 

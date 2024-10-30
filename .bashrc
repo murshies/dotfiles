@@ -146,6 +146,10 @@ function ramdisk() {
     sudo mount -t tmpfs -o "size=$size,uid=$(id -u),gid=$(id -g)" tmpfs "$dest"
 }
 
+function bootstrap-user() {
+    cp -r /etc/skel/. $HOME
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'

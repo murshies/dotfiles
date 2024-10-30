@@ -13,13 +13,6 @@ from lib.util import apt_install, root_copy, run_cmd
 
 logger = logging.getLogger(__name__)
 
-SCRIPTS = [
-    'aupdate',
-    'bootstrap-user.sh',
-    'new-user.sh',
-    'pull-dotfiles.sh',
-    'server-mode.sh',
-]
 SKEL_FILES = [
     '.bash_profile',
 ]
@@ -79,11 +72,6 @@ def run() -> None:
     """Run the cli component installation."""
     logger.info('Installing cli packages')
     ResourceManager.run('install-cli')
-
-    logger.info('Copying scripts to %s', SCRIPTS_DIR)
-    run_cmd(['sudo', 'mkdir', '-p', SCRIPTS_DIR])
-    for script in SCRIPTS:
-        root_copy(FILES_DIR, SCRIPTS_DIR, script)
 
     logger.info('Copying files to %s', SKEL_DIR)
     run_cmd(['sudo', 'mkdir', '-p', SKEL_DIR])

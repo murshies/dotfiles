@@ -1,5 +1,7 @@
 # Example of running this in server mode:
 # docker run -v /var/run/docker.sock:/var/run/docker.sock  -p $ssh_port:22 --name "$container_name" -d $image_name sleep infinity
+# Example of running this with X11 display sharing:
+# docker run -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY --name "$container_name" $image_name
 FROM debian:12
 
 ARG username=user
@@ -26,6 +28,6 @@ RUN chown -R ${username}:${username} /setup
 USER ${username}
 ARG components=cli,docker,emacs,gui
 RUN ./setup.sh -c ${components}
-RUN /usr/local/bin/bootstrap-user.sh
+RUN bash -c 'source /setup/.bashrc && bootstrap-user && cd /setup && link-dotfiles'
 RUN ./user-sudo.sh ${username}
 WORKDIR /home/${username}

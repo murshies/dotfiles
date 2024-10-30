@@ -1,6 +1,0 @@
-#!/bin/bash
-
-LOG_FILE=$HOME/last_update.log
-
-sudo apt-get update | tee $LOG_FILE
-sudo apt-get upgrade -y | tee -a $LOG_FILE
