@@ -29,18 +29,18 @@ function tmagit() {
 
 function link-dotfiles() {
     local curr_dir=$(pwd -P)
-    grep 'url.*dotfiles' .git/config > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo 'Not in the dotfiles repo, exiting'
-        return
-    fi
-    for f in $(find -maxdepth 1 -type f -name '.*'); do
-        local base_f=$(basename "$f")
-        local target="$HOME/$base_f"
+    local dotfiles=(.bashrc .emacs .inputrc .tmux.conf)
+    for f in "${dotfiles[@]}"; do
+        local src="$curr_dir/$f"
+        local target="$HOME/$f"
+        if [ ! -f "$src" ]; then
+            echo "Warning: $src does not exist, skipping"
+            continue
+        fi
         if [ -f "$target" ]; then
             echo "Warning: $target exists already, overwriting"
         fi
-        ln -sf "$curr_dir/$base_f" "$target"
+        ln -sf "$src" "$target"
     done
 }
 
