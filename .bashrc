@@ -150,6 +150,31 @@ function bootstrap-user() {
     cp -r /etc/skel/. $HOME
 }
 
+function dockenv-build() {
+    sudo docker build --build-arg user_id=$(id -u) -t murshies/env .
+}
+
+function dockenv-bg() {
+    sudo docker run -d \
+         -v /var/run/docker.sock:/var/run/docker.sock \
+         -v /tmp/.X11-unix:/tmp/.X11-unix \
+         --name murshies-env \
+         murshies/env \
+         sleep infinity
+}
+
+function dockenv-exec() {
+    sudo docker exec -it -e DISPLAY=$DISPLAY murshies-env bash -il
+}
+
+function dockenv-fg() {
+    sudo docker run --rm -it \
+         -v /var/run/docker.sock:/var/run/docker.sock \
+         -v /tmp/.X11-unix:/tmp/.X11-unix \
+         -e DISPLAY=$DISPLAY \
+         murshies/env
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
