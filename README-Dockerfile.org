@@ -1,0 +1,9 @@
+* Build the docker image, matching the container's user id with the current user id
+sudo docker build --build-arg user_id=$(id -u) -t murshies/env .
+* Run Options
+** Mount the docker daemon socket
+-v /var/run/docker.sock:/var/run/docker.sock
+** Use the machine's X11 server
+-v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY
+
+Both of these options should be specified to =docker run= when running the container interactively in the foreground. For background execution, mount the X11 unix socket when running =docker run=, and set =DISPLAY= when running a command in the container using =docker exec=
