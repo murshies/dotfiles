@@ -723,11 +723,13 @@ Start with the built-in linux mode and change things from there."
               completion-category-overrides '((file (styles basic partial-completion))))
         (setq consult-ripgrep-args
               "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
-   --smart-case --no-heading --with-filename --line-number --search-zip --hidden")
+   --smart-case --no-heading --with-filename --line-number --search-zip --hidden"
+              consult-project-function nil)
         (projectile-mode)
         (setq projectile-track-known-projects-automatically nil)
         (setq magit-diff-refine-hunk 'all)
         (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
+        (define-key my-minor-mode-map (kbd "C-x b") 'consult-buffer)
         (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
         (define-key my-minor-mode-map (kbd "C-c p f") 'projectile-find-file)
         (define-key my-minor-mode-map (kbd "C-c p i") 'projectile-invalidate-cache)
