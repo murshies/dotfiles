@@ -858,7 +858,8 @@ Start with the built-in linux mode and change things from there."
            (vterm-buffer-name (format "*vterm async %s" full-cmd)))
       (vterm t)
       (vterm-insert (format "%s\n" full-cmd))))
-  (setq vterm-max-scrollback 100000))
+  (setq vterm-max-scrollback 100000
+        vterm-shell "/bin/bash"))
 
 (when (and (require 'vterm nil 'noerror)
            (file-exists-p (or (getenv "KUBECONFIG") "~/.kube/config"))
