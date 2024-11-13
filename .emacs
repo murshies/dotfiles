@@ -721,10 +721,17 @@ Start with the built-in linux mode and change things from there."
         (marginalia-mode)
         (setq completion-styles '(orderless basic)
               completion-category-overrides '((file (styles basic partial-completion))))
+        (defun consult-no-remote-project-function (may-prompt)
+          "A custom function to use as `consult-project-function'.
+This function disables project discovery in consult commands if
+the current buffer is visiting a remote file. Otherwise, use the
+default behavior."
+          (if (file-remote-p default-directory) nil
+            (consult--default-project-function may-prompt)))
         (setq consult-ripgrep-args
               "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
    --smart-case --no-heading --with-filename --line-number --search-zip --hidden"
-              consult-project-function nil)
+              consult-project-function 'consult-no-remote-project-function)
         (projectile-mode)
         (setq projectile-track-known-projects-automatically nil)
         (setq magit-diff-refine-hunk 'all)
