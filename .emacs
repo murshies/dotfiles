@@ -849,9 +849,12 @@ default behavior."
      (list
       (completing-read "Enter SSH host: " (get-ssh-config-hosts))))
     (let ((vterm-buffer-name (format "*vterm ssh %s*" ssh-params))
-          (default-directory (getenv "HOME")))
+          (default-directory (getenv "HOME"))
+          (cmd (if current-prefix-arg
+                   (format "exec bash -c 'if ! ssh %s; then read -n 1 -r -s -p \"Press any key to continue...\"; fi'\n" ssh-params)
+                 (format "exec ssh %s\n" ssh-params))))
       (vterm t)
-      (vterm-insert (format "exec bash -c 'if ! ssh %s; then read -n 1 -r -s -p \"Press any key to continue...\"; fi'\n" ssh-params))
+      (vterm-insert cmd)
       (setq default-directory (format "/ssh:%s:" ssh-params))))
   (defun vbash ()
     (interactive)
