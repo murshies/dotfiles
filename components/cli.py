@@ -76,4 +76,4 @@ def run() -> None:
     logger.info('Copying files to %s', SKEL_DIR)
     run_cmd(['sudo', 'mkdir', '-p', SKEL_DIR])
     for f in SKEL_FILES:
-        root_copy(FILES_DIR, SKEL_DIR, f)
+        root_copy(FILES_DIR, SKEL_DIR, f, '0644')

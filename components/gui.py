@@ -37,15 +37,15 @@ def run() -> None:
     openbox_skel_dir = os.path.join(SKEL_DIR, '.config', 'openbox')
     run_cmd(['sudo', 'mkdir', '-p', openbox_skel_dir])
     for script in ('autostart.sh', 'rc.xml'):
-        root_copy(FILES_DIR, openbox_skel_dir, script)
+        root_copy(FILES_DIR, openbox_skel_dir, script, '0644')
 
     xfce4_skel_dir = os.path.join(SKEL_DIR, '.config', 'xfce4', 'terminal')
     run_cmd(['sudo', 'mkdir', '-p', xfce4_skel_dir])
-    root_copy(FILES_DIR, xfce4_skel_dir, 'terminalrc')
+    root_copy(FILES_DIR, xfce4_skel_dir, 'terminalrc', '0644')
 
     tint2rc_skel_dir = os.path.join(SKEL_DIR, '.config', 'tint2')
     run_cmd(['sudo', 'mkdir', '-p', tint2rc_skel_dir])
-    root_copy(FILES_DIR, tint2rc_skel_dir, 'tint2rc')
+    root_copy(FILES_DIR, tint2rc_skel_dir, 'tint2rc', '0644')
 
     logger.info('Set dpi settings')
     xresources_file_name = os.path.join(os.environ['HOME'], '.Xresources')

@@ -70,7 +70,7 @@ def get_gpg_key(url: str, dst: str) -> None:
     run_cmd(['sudo', 'chmod', '0644', dst])
 
 
-def root_copy(src: str, dst: str, filename: str) -> None:
+def root_copy(src: str, dst: str, filename: str, mode: str=None) -> None:
     """
     Copy a file from one directory to another as root.
 
@@ -81,6 +81,8 @@ def root_copy(src: str, dst: str, filename: str) -> None:
     :param filename: The name of the file to copy
     :type filename: str
     """
-    run_cmd(['sudo', 'cp',
-             os.path.join(src, filename),
-             os.path.join(dst, filename)])
+    full_src = os.path.join(src, filename)
+    full_dst = os.path.join(dst, filename)
+    run_cmd(['sudo', 'cp', full_src, full_dst])
+    if mode:
+        run_cmd(['sudo', 'chmod', mode, full_dst])
