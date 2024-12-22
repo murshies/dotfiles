@@ -1,7 +1,7 @@
 FROM debian:12
 
-ARG username=user
-ENV USER=${username}
+ARG USERNAME=user
+ENV USER=${USERNAME}
 
 RUN apt-get update && apt-get install -y python-is-python3 sudo debconf-utils locales lsb-release
 
@@ -14,14 +14,16 @@ RUN echo keyboard-configuration keyboard-configuration/layout select 'English (U
     echo keyboard-configuration keyboard-configuration/layoutcode select 'us' | sudo debconf-set-selections
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
 
-ARG user_id=5000
-RUN useradd -m -s /bin/bash -u ${user_id} -G sudo ${username}
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g ${GID} ${USERNAME} && \
+    useradd -m -s /bin/bash -u ${UID} -g ${GID} -G sudo ${USERNAME}
 COPY . /setup
 WORKDIR /setup
-RUN ./user-sudo-all.sh ${username}
+RUN ./user-sudo-all.sh ${USERNAME}
 
-RUN chown -R ${username}:${username} /setup
-USER ${username}
+RUN chown -R ${USERNAME}:${USERNAME} /setup
+USER ${USERNAME}
 ARG components=cli,docker,emacs,gui
 RUN ./setup.sh -c ${components} && \
     bash -c 'source /setup/.bashrc && \
@@ -29,5 +31,5 @@ RUN ./setup.sh -c ${components} && \
     cd /setup && \
     link-dotfiles && \
     echo $(whoami):$(whoami) | sudo chpasswd' && \
-    ./user-sudo.sh ${username}
-WORKDIR /home/${username}
+    ./user-sudo.sh ${USERNAME}
+WORKDIR /home/${USERNAME}
