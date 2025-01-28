@@ -182,6 +182,13 @@ valid. This is essentially an interactive wrapper around
   (json-parse-buffer)
   (message "JSON is valid"))
 
+(defun json-pretty-view ()
+  "Pretty print the current buffer and turn on json-mode."
+  (interactive)
+  (json-pretty-print-buffer)
+  (js-json-mode)
+  (goto-char (point-min)))
+
 ;; eshell settings
 (defun eshell/e (file &rest files)
   "Open a list of files.
