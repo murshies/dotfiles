@@ -742,6 +742,7 @@ default behavior."
         (projectile-mode)
         (setq projectile-track-known-projects-automatically nil)
         (setq magit-diff-refine-hunk 'all)
+        (projectile-load-known-projects)
         (define-key my-minor-mode-map (kbd "C-c h") (determine-projectile-search-program))
         (define-key my-minor-mode-map (kbd "C-x b") 'consult-buffer)
         (define-key my-minor-mode-map (kbd "C-c p p") 'projectile-switch-project)
