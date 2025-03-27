@@ -597,6 +597,7 @@ be applied to each major mode in a smarter way."
         go-dot-mod-mode-hook
         groovy-mode-hook
         java-mode-hook
+        js-json-mode-hook
         js-mode-hook
         lisp-mode-hook
         makefile-mode-hook
