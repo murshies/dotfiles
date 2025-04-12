@@ -61,6 +61,7 @@
   (setq json-encoding-default-indentation "    "))
 (setq native-comp-async-report-warnings-errors 'silent)
 (setq eldoc-documentation-strategy #'eldoc-documentation-compose)
+(setq vterm-always-compile-module t)
 
 (defun set-font-size (size)
   (interactive
@@ -954,6 +955,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         undo-tree
         vertico
         vlf
+        vterm
         yaml-mode))
 
 ;; General function for ensuring that a list of packages is installed.
