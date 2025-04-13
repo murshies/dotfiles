@@ -837,7 +837,9 @@ default behavior."
   (dired (format "/ssh:%s:" ssh-params)))
 
 (defun load-vterm ()
-  (and (executable-find "cmake") (require 'vterm nil 'noerror)))
+  (and (executable-find "cmake")
+       (executable-find "libtool")
+       (require 'vterm nil 'noerror)))
 
 (when (load-vterm)
   (defun vterm-new-term ()
