@@ -836,7 +836,10 @@ default behavior."
     (completing-read "Enter SSH host: " (get-ssh-config-hosts))))
   (dired (format "/ssh:%s:" ssh-params)))
 
-(when (require 'vterm nil 'noerror)
+(defun load-vterm ()
+  (and (executable-find "cmake") (require 'vterm nil 'noerror)))
+
+(when (load-vterm)
   (defun vterm-new-term ()
     (interactive)
     (let* ((prefix-val (car current-prefix-arg))
@@ -876,7 +879,7 @@ default behavior."
   (setq vterm-max-scrollback 100000
         vterm-shell "/bin/bash"))
 
-(when (and (require 'vterm nil 'noerror)
+(when (and (load-vterm)
            (file-exists-p (or (getenv "KUBECONFIG") "~/.kube/config"))
            (require 'kubel nil 'noerror))
   (kubel-vterm-setup))
