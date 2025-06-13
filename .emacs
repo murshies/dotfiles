@@ -62,6 +62,9 @@
 (setq native-comp-async-report-warnings-errors 'silent)
 (setq eldoc-documentation-strategy #'eldoc-documentation-compose)
 (setq vterm-always-compile-module t)
+(when (require 'highlight-indent-guides nil 'noerror)
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-auto-enabled nil))
 
 (defun set-font-size (size)
   (interactive
@@ -685,6 +688,11 @@ Start with the built-in linux mode and change things from there."
   (visual-line-mode -1)
   (toggle-truncate-lines t))
 
+(defun yaml-hook ()
+  "Settings for yaml-mode"
+  (when (featurep 'highlight-indent-guides)
+    (highlight-indent-guides-mode)))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'org-mode-hook 'org-hook)
@@ -698,6 +706,7 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'dired-mode-hook 'dired-hook)
 (add-hook 'go-mode-hook 'go-hook)
 (add-hook 'proced-mode-hook 'proced-hook)
+(add-hook 'yaml-mode-hook 'yaml-hook)
 
 ;; Open C/C++ header files in c++-mode instead of c-mode.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -948,6 +957,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         erc-hl-nicks
         go-mode
         groovy-mode
+        highlight-indent-guides
         jinja2-mode
         kubel
         magit
