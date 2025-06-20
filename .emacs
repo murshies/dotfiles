@@ -823,7 +823,7 @@ default behavior."
 (define-key my-minor-mode-map (kbd "M-&") 'run-async-shell-command)
 (define-key my-minor-mode-map (kbd "M-o a") 'org-agenda)
 (define-key my-minor-mode-map (kbd "M-g s") 'git-quick-status)
-(define-key my-minor-mode-map (kbd "C-M-y") 'xref-pop-marker-stack)
+(define-key my-minor-mode-map (kbd "C-M-y") 'xref-go-back)
 (define-key my-minor-mode-map (kbd "C-c $") 'toggle-truncate-lines)
 (define-key my-minor-mode-map (kbd "C-M-=") 'bump-font-size-up)
 (define-key my-minor-mode-map (kbd "C-M--") 'bump-font-size-down)
