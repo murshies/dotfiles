@@ -33,8 +33,9 @@
                  full-header)
              "%b"))))
 (setq inhibit-startup-screen t)
-(setq org-replace-disputed-keys t)
-(setq org-todo-keyword-faces '(("TODO" . hi-yellow)))
+(setq org-replace-disputed-keys t
+      org-todo-keyword-faces '(("TODO" . hi-yellow))
+      org-edit-src-content-indentation 0)
 (setq ring-bell-function 'ignore)
 (setq smerge-command-prefix (kbd "C-c v"))
 (setq-default indent-tabs-mode nil)
