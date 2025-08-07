@@ -860,7 +860,11 @@ default behavior."
                    (getenv "HOME"))
                   ((eql prefix-val 16) ;; C-u pressed twice
                    (read-directory-name "Enter starting directory: "))
-                  (t default-directory)))) ;; Any other prefix (including none)
+                  (t default-directory))) ;; Any other prefix (including none)
+           (vterm-buffer-name
+            (format "*vterm %s*"
+                    (file-name-nondirectory
+                     (directory-file-name default-directory)))))
       (vterm t)))
   (defun vssh (ssh-params)
     (interactive
