@@ -33,10 +33,14 @@
                  full-header)
              "%b"))))
 (setq inhibit-startup-screen t)
-(setq org-replace-disputed-keys t
-      org-todo-keyword-faces '(("TODO" . hi-yellow))
-      org-edit-src-content-indentation 0
-      org-deadline-warning-days 0)
+(with-eval-after-load "org"
+  (setq org-replace-disputed-keys t
+        org-todo-keyword-faces '(("TODO" . hi-yellow))
+        org-edit-src-content-indentation 0
+        org-deadline-warning-days 0)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t))))
 (setq ring-bell-function 'ignore)
 (setq smerge-command-prefix (kbd "C-c v"))
 (setq-default indent-tabs-mode nil)
