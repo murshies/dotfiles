@@ -903,7 +903,8 @@ default behavior."
 (when (and (load-vterm)
            (file-exists-p (or (getenv "KUBECONFIG") "~/.kube/config"))
            (require 'kubel nil 'noerror))
-  (kubel-vterm-setup))
+  (kubel-vterm-setup)
+  (define-key my-minor-mode-map (kbd "C-x B") 'kubel-switch-to-buffer))
 
 ;; ============================================================================
 ;; Backup file behavior
