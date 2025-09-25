@@ -898,7 +898,17 @@ default behavior."
       (vterm t)
       (vterm-insert (format "%s\n" full-cmd))))
   (setq vterm-max-scrollback 100000
-        vterm-shell "/bin/bash"))
+        vterm-shell "/bin/bash")
+  (defun vterm-switch-to-buffer ()
+    (interactive)
+    (let ((buffers))
+      (dolist (buf (buffer-list))
+        (when (string-prefix-p "*vterm" (buffer-name buf))
+          (push buf buffers)))
+      (let ((predicate
+             (lambda (buffer) (memq (cdr buffer) buffers))))
+        (switch-to-buffer (read-buffer "Switch to vterm buffer: " nil t predicate)))))
+  (define-key my-minor-mode-map (kbd "C-x v") 'vterm-switch-to-buffer))
 
 (when (and (load-vterm)
            (file-exists-p (or (getenv "KUBECONFIG") "~/.kube/config"))
