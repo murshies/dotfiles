@@ -676,9 +676,26 @@ Start with the built-in linux mode and change things from there."
   (define-key eww-mode-map (kbd "<prior>") 'small-scroll-down)
   (define-key eww-mode-map (kbd "<next>") 'small-scroll-up))
 
+(defun python-venv-setup (venv-dir)
+  (let* ((venv-bin-dir (expand-file-name "bin" venv-dir))
+         (venv-exe (expand-file-name "python" venv-bin-dir)))
+    (setq-local python-shell-interpreter
+                venv-exe
+                eglot-workspace-configuration
+                `((:python (:pythonPath ,venv-exe))))
+    (make-local-variable 'exec-path)
+    (add-to-list 'exec-path venv-bin-dir)
+    (eglot-ensure)))
+
 (defun python-hook ()
   "Settings for python mode."
-  (setq python-indent-offset 4))
+  (setq python-indent-offset 4)
+  (when (project-current nil default-directory)
+    (let ((project-venv-dir (expand-file-name
+                             ".venv"
+                             (project-root (project-current nil default-directory)))))
+      (when (file-directory-p project-venv-dir)
+        (python-venv-setup project-venv-dir)))))
 
 (defun dired-hook ()
   "Settings for dired mode"

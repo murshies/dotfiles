@@ -150,6 +150,15 @@ function bootstrap-user() {
     cp -r /etc/skel/. $HOME
 }
 
+function python-install-lsp() {
+    local venv_dir="$1"
+    if [ -d "$venv_dir" ]; then
+        bash -c "source '$venv_dir/bin/activate'; pip install python-lsp-server[all]"
+    else
+        echo "virtualenv directory '$venv_dir' does not exist"
+    fi
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
