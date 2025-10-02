@@ -920,7 +920,7 @@ default behavior."
     (interactive)
     (let ((buffers))
       (dolist (buf (buffer-list))
-        (when (string-prefix-p "*vterm" (buffer-name buf))
+        (when (string-match-p "vterm" (buffer-name buf))
           (push buf buffers)))
       (let ((predicate
              (lambda (buffer) (memq (cdr buffer) buffers))))
