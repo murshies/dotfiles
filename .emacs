@@ -37,7 +37,11 @@
   (setq org-replace-disputed-keys t
         org-todo-keyword-faces '(("TODO" . hi-yellow))
         org-edit-src-content-indentation 0
-        org-deadline-warning-days 0)
+        org-deadline-warning-days 0
+        org-capture-templates
+        '(("t" "TODO" entry
+           (file+headline org-default-notes-file "Tasks")
+           "* TODO %?")))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t))))
