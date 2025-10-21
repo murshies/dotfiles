@@ -41,7 +41,10 @@
         org-capture-templates
         '(("t" "TODO" entry
            (file+headline org-default-notes-file "Tasks")
-           "* TODO %?")))
+           "* TODO %?")
+          ("n" "Note" entry
+           (file+headline org-default-notes-file "Tasks")
+           "* %?")))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t))))
