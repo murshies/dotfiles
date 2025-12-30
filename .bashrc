@@ -108,7 +108,7 @@ function aupdate() {
         tmux new -s aupdate "bash -lc '__aupdate | tee $LOG_FILE'"
         cat $LOG_FILE
     else
-        LOG_FILE=$HOME/last_update.log ; __aupdate | tee $LOG_FILE
+        LOG_FILE=$HOME/last_update.log ; __aupdate 2>&1 | tee $LOG_FILE
     fi
 }
 
