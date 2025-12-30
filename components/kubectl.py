@@ -8,7 +8,7 @@ from lib.util import apt_install, get_gpg_key, run_cmd, write_root_file
 
 logger = logging.getLogger(__name__)
 
-KUBECTL_VERSION = '1.33'
+KUBECTL_VERSION = '1.34'
 
 @resource(name='install-kubectl', os=debian_or_ubuntu)
 def install_kubectl_ubuntu():
