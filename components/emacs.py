@@ -77,6 +77,7 @@ def install_emacs_deps_debian():
         'libncurses5-dev',
         'libpng-dev',
         'libsqlite3-dev',
+        'libsystemd-dev',
         'libtiff5-dev',
         'libtool',
         'libtool-bin',
@@ -113,6 +114,7 @@ def emacs_from_source() -> None:
         run_cmd(['sudo', './configure',
                  '--with-native-compilation',
                  '--with-sqlite3',
+                 '--with-libsystemd',
                  f'--prefix={EMACS_INSTALL_ROOT}',
                  f'--with-x-toolkit={EMACS_TOOLKIT}'])
 

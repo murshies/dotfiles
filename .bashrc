@@ -159,6 +159,13 @@ function python-install-lsp() {
     fi
 }
 
+function install-emacs-daemon() {
+    mkdir -p ~/.config/systemd/user
+    cp $(dirname $(readlink $(which emacs)))/../lib/systemd/user/emacs.service \
+       ~/.config/systemd/user/emacs.service
+    systemctl --user enable --now emacs
+}
+
 alias ec='emacsclient'
 alias ecn='emacsclient -n'
 alias en='emacs -nw'
