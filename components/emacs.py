@@ -3,36 +3,17 @@ from contextlib import contextmanager
 import logging
 import os
 import os.path
-from typing import List
 
-from lib.consts import FILES_DIR, SCRIPTS_DIR
 from lib.platform_filters import debian_or_ubuntu
-from lib.resource import OS, resource, ResourceManager
-from lib.util import apt_install, download_url, root_copy, run_cmd, write_root_file
+from lib.resource import resource, ResourceManager
+from lib.util import apt_install, download_url, run_cmd
 
 EMACS_VERSION = '30.2'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
 EMACS_INSTALL_ROOT = os.path.join('/', 'opt', f'emacs-{EMACS_VERSION}')
-EMACS_PACKAGE = os.environ.get('EMACS_PACKAGE', 'source')
 EMACS_KEEP_SOURCE = os.environ.get('EMACS_KEEP_SOURCE', 'true').lower() == 'true'
-
-EMACS_DESKTOP_ENTRY = """
-[Desktop Entry]
-Name=Emacs
-GenericName=Text Editor
-Comment=Edit text
-MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
-Exec=emacsclient -a '' -c %F
-Icon={emacs_package}
-Type=Application
-Terminal=false
-Categories=Development;TextEditor;
-StartupWMClass=Emacs
-Keywords=Text;Editor;
-
-"""
 
 logger = logging.getLogger(__name__)
 
@@ -88,6 +69,7 @@ def install_emacs_deps_debian():
     ]
     apt_install(*build_deps)
 
+
 def emacs_from_source() -> None:
     """Install emacs from source."""
     logger.info('Installing emacs from source')
@@ -141,19 +123,11 @@ def emacs_from_source() -> None:
     logger.info('Install emacs icons')
     build_icons_dir = os.path.join(EMACS_INSTALL_ROOT, 'share', 'icons', '.')
     run_cmd(['sudo', 'cp', '-r', build_icons_dir, '/usr/share/icons'])
+    emacsclient_desktop_file = os.path.join(
+        EMACS_INSTALL_ROOT, 'share', 'applications', 'emacsclient.desktop')
+    run_cmd(['sudo', 'cp', emacsclient_desktop_file, '/usr/share/applications/emacs.desktop'])
 
 
 def run() -> None:
     """Run the emacs component installation."""
     emacs_from_source()
-
-    logger.info('Create emacs.desktop file in applications directory')
-    emacs_package = 'emacs' if EMACS_PACKAGE == 'source' else EMACS_PACKAGE
-    emacs_desktop = EMACS_DESKTOP_ENTRY.format(
-        emacs_package=emacs_package
-    )
-    write_root_file(
-        emacs_desktop,
-        '/usr/share/applications/emacs.desktop',
-        '0644'
-    )
