@@ -643,6 +643,7 @@ Start with the built-in linux mode and change things from there."
 (defun org-hook ()
   (org-indent-mode)
   (setq org-log-done "time")
+  (auto-revert-mode)
   (local-set-key
    (kbd "C-c o")
    (if (version< emacs-version "25.1")
