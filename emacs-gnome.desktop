@@ -1,0 +1,9 @@
+# Copy this file to the ~/.config/autostart/ directory
+[Desktop Entry]
+Type=Application
+Name=Update Emacs Environment
+Comment=Updates emacs running under systemd with GNOME environment variables
+Exec=/usr/bin/systemctl --user restart emacs
+Icon=emacs
+Terminal=false
+X-GNOME-Autostart-enabled=true
