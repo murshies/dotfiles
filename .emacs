@@ -48,6 +48,13 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t))))
+(when (require 'org-alert nil 'noerror)
+  (setq org-alert-interval 60
+        alert-default-style 'mode-line ; Can use libnotify on supported systems
+        org-alert-notify-cutoff 0
+        org-alert-notify-after-event-cutoff 1
+        org-alert-notification-title "emacs")
+  (org-alert-enable))
 (setq ring-bell-function 'ignore)
 (setq smerge-command-prefix (kbd "C-c v"))
 (setq-default indent-tabs-mode nil)
@@ -1011,6 +1018,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         marginalia
         markdown-mode
         orderless
+        org-alert
         projectile
         protobuf-mode
         rust-mode
