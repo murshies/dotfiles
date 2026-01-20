@@ -50,7 +50,7 @@
    '((python . t))))
 (when (require 'org-alert nil 'noerror)
   (setq org-alert-interval 60
-        alert-default-style 'mode-line ; Can use libnotify on supported systems
+        alert-default-style 'message ; Can use libnotify on supported systems
         org-alert-notify-cutoff 0
         org-alert-notify-after-event-cutoff 1
         org-alert-notification-title "emacs")
