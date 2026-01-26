@@ -35,6 +35,7 @@
 (setq inhibit-startup-screen t)
 (with-eval-after-load "org"
   (setq org-replace-disputed-keys t
+        org-support-shift-select t
         org-todo-keyword-faces '(("TODO" . hi-yellow))
         org-edit-src-content-indentation 0
         org-deadline-warning-days 0
