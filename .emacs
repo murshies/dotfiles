@@ -529,6 +529,11 @@ associated with it."
   (let ((default-directory "~/"))
     (switch-to-buffer "*scratch*")))
 
+(defun org-now ()
+  "Insert the current timestamp, in the same active format used by org mode."
+  (interactive)
+  (insert (format-time-string "<%Y-%m-%d %a %H:%M>")))
+
 ;; ============================================================================
 ;; Hooks and mode-specific setup
 ;; ============================================================================
