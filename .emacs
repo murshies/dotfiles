@@ -698,7 +698,10 @@ Start with the built-in linux mode and change things from there."
   (define-key eww-mode-map (kbd "<next>") 'small-scroll-up))
 
 (defun python-venv-setup (venv-dir)
-  (let* ((venv-bin-dir (expand-file-name "bin" venv-dir))
+  (let* ((venv-bin-dir
+          (if (eq system-type 'windows-nt)
+              (expand-file-name "Scripts" venv-dir)
+            (expand-file-name "bin" venv-dir)))
          (venv-exe (expand-file-name "python" venv-bin-dir)))
     (setq-local python-shell-interpreter
                 venv-exe
