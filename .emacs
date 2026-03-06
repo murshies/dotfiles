@@ -623,6 +623,7 @@ be applied to each major mode in a smarter way."
         js-json-mode-hook
         js-mode-hook
         lisp-mode-hook
+        lua-mode-hook
         makefile-mode-hook
         org-mode-hook
         perl-mode-hook
@@ -1023,6 +1024,7 @@ Add eglot-ensure as a major mode hook to enable eglot."
         highlight-indent-guides
         jinja2-mode
         kubel
+        lua-mode
         magit
         marginalia
         markdown-mode
