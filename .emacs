@@ -45,7 +45,8 @@
            "* TODO %?")
           ("n" "Note" entry
            (file+headline org-default-notes-file "Tasks")
-           "* %?")))
+           "* %?"))
+        org-agenda-start-on-weekday nil)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t))))
