@@ -1,5 +1,5 @@
 * Build the docker image, matching the container's user id with the current user id
-sudo docker build --build-arg user_id=$(id -u) -t murshies/env .
+docker build --build-arg user_id=$(id -u) -t murshies/env .
 * Run Options
 ** Mount the docker daemon socket
 -v /var/run/docker.sock:/var/run/docker.sock
