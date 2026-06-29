@@ -611,7 +611,8 @@ be applied to each major mode in a smarter way."
   (electric-pair-local-mode))
 
 (setq modes-for-linum-and-hl-line
-      '(c++-mode-hook
+      '(asm-mode-hook
+        c++-mode-hook
         c-mode-hook
         conf-mode-hook
         css-mode-hook
@@ -674,15 +675,6 @@ Start with the built-in linux mode and change things from there."
                       :foreground "Orchid"
                       :background "Orchid"))
 
-(defun large-file-hook ()
-  "Settings for large files."
-  (when (> (buffer-size) (* 1024 1024))
-    (buffer-disable-undo)
-    (fundamental-mode)
-    (when (fboundp 'linum-mode)
-      (linum-mode -1))
-    (read-only-mode)))
-
 (defun shr-enable-images ()
   "Enable images for modes using shr.el"
   (interactive)
@@ -742,6 +734,11 @@ Start with the built-in linux mode and change things from there."
   (when (featurep 'highlight-indent-guides)
     (highlight-indent-guides-mode)))
 
+(defun asm-hook ()
+  "Settings for assembly files"
+  (indent-tabs-mode)
+  (electric-indent-local-mode -1))
+
 (add-hook 'c-mode-common-hook 'c-common-hook)
 (add-hook 'diff-mode-hook 'diff-hook)
 (add-hook 'org-mode-hook 'org-hook)
@@ -749,13 +746,13 @@ Start with the built-in linux mode and change things from there."
 (add-hook 'comint-mode-hook 'all-terms-hook)
 (add-hook 'vterm-mode-hook 'all-terms-hook)
 (add-hook 'before-save-hook 'before-save)
-(add-hook 'find-file-hook 'large-file-hook)
 (add-hook 'eww-mode-hook 'eww-hook)
 (add-hook 'python-mode-hook 'python-hook)
 (add-hook 'dired-mode-hook 'dired-hook)
 (add-hook 'go-mode-hook 'go-hook)
 (add-hook 'proced-mode-hook 'proced-hook)
 (add-hook 'yaml-mode-hook 'yaml-hook)
+(add-hook 'asm-mode-hook 'asm-hook)
 
 ;; Open C/C++ header files in c++-mode instead of c-mode.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
