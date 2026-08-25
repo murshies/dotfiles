@@ -8,7 +8,7 @@ from lib.platform_filters import debian_or_ubuntu
 from lib.resource import resource, ResourceManager
 from lib.util import apt_install, download_url, run_cmd
 
-EMACS_VERSION = '30.2'
+EMACS_VERSION = '31.1'
 EMACS_TOOLKIT = 'athena'  # For gtk, use gkt2
 EMACS_TOOLKIT_PACKAGE = 'libxaw7-dev'  # For gtk, use libgtk2.0-dev
 EMACS_SOURCE_ROOT = os.path.join('/', 'src', f'emacs-{EMACS_VERSION}')
