@@ -172,7 +172,7 @@ alias en='emacs -nw'
 alias startemacs='emacs --daemon'
 alias epu='emacs --batch --eval "(progn (load-file \"$HOME/.emacs\") (package-upgrade-all))"'
 alias epi='emacs --batch --eval "(progn (load-file \"$HOME/.emacs\") (install-selected-packages))"'
-alias epc='rm -rf $HOME/.emacs.d/elpa && epi'
+alias epr='rm -rf $HOME/.emacs.d/elpa && epi'
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
