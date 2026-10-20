@@ -316,11 +316,12 @@ current directory as root."
 ;; Utility functions
 ;; ============================================================================
 
+(defvar line-highlighting-enabled nil)
+
 (defun highlight-line-mode ()
-  (if (display-graphic-p)
-      (progn
-        (hl-line-mode t)
-        (set-face-background 'hl-line hl-line-color))))
+  (when line-highlighting-enabled
+    (hl-line-mode t)
+    (set-face-background 'hl-line hl-line-color)))
 
 (defun copy-line-at-indentation ()
   "Copies the current line to the kill ring, excluding indentation."
