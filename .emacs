@@ -316,7 +316,7 @@ current directory as root."
 ;; Utility functions
 ;; ============================================================================
 
-(defvar line-highlighting-enabled nil)
+(defvar line-highlighting-enabled t)
 
 (defun highlight-line-mode ()
   (when line-highlighting-enabled
