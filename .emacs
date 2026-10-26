@@ -565,12 +565,11 @@ associated with it."
           (set-frame-font "DejaVu Sans Mono")
         ('error t)))))
 
-(setq using-dark-theme t)
-
 (defun use-dark-theme ()
   (interactive)
   (setq hl-line-color "#3E3D32")
-  (highlight-line-mode)
+  (when line-highlighting-enabled
+    (highlight-line-mode))
   (set-foreground-color "#DFDFD9")
   (set-background-color "#272822")
   (set-cursor-color "#FFFFFF")
@@ -579,11 +578,15 @@ associated with it."
 (defun use-light-theme ()
   (interactive)
   (setq hl-line-color "cyan")
-  (highlight-line-mode)
+  (when line-highlighting-enabled
+    (highlight-line-mode))
   (set-foreground-color "black")
   (set-background-color "white")
   (set-cursor-color "black")
   (setq using-dark-theme nil))
+
+(setq using-dark-theme t)
+(use-dark-theme)
 
 ;; We need to do this check + call, since apparently starting emacs in
 ;; non-daemon mode doesn't count as creating a frame.
